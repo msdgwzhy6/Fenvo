@@ -1,0 +1,57 @@
+//
+//  Fenvo-Prefix.pch
+//  Fenvo
+//
+//  Created by Caesar on 15/4/1.
+//  Copyright (c) 2015年 Caesar. All rights reserved.
+//
+
+#ifndef Fenvo_Fenvo_Prefix_pch
+#define Fenvo_Fenvo_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
+#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+
+#define IPHONE_SCREEN_WIDTH [[UIScreen mainScreen]bounds].size.width
+#define IPHONE_SCREEN_HEIGHT [[UIScreen mainScreen]bounds].size.height
+
+#define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+#define WBNOTIFICATION_LOGINCHANGE @"loginStateChange"
+#define WBNOTIFICATION_DOWNLOADDATA @"DownloadDataNow"
+
+//
+#define WBColor(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
+#define WBStatusGrayColor WBColor(0,0,0)
+#define WBStatusLightGrayColor WBColor(120,120,180)
+//
+#define WBStatusCellControlSpacing 10//控件间距
+#define WBStatusCellBackgroundColor WBColor(255,255,255)
+//头像、会员标识长宽
+#define WBStatusCellAvatarWidth 40
+#define WBStatusCellAvatarHeight 40
+#define WBStatusCellMBTypeWidth 13
+#define WBStatusCellMBTypeHeight 13
+//微博各个字体
+#define WBStatusCellUserNameFont [UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:15.0]
+#define WBStatusCellSourceFont   [UIFont fontWithName:@ "STHeitiJ-Light" size:10.0]
+#define WBStatusCellCreatTimeFont [UIFont fontWithName:@ "STHeitiJ-Light" size:10.0]
+#define WBStatusCellDetailFont    [UIFont fontWithName:@ "TimesNewRomanPSMT" size:14.0]
+#define WBStatusCellForwardFont   [UIFont fontWithName:@ "TimesNewRomanPSMT" size:14.0]
+#define WBStatusHUDTextFont   [UIFont fontWithName:@ "STHeitiJ-Light" size:12.0]
+
+#endif
+/*
+#ifdef __OPTIMIZE__
+#define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#define NSLog(...){}
+#endif
+*/
