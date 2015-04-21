@@ -33,6 +33,43 @@
     return _backingStore;
 }
 
-- (void)
+- (void)setAttributes:(NSDictionary *)attrs range:(NSRange)range{
+    [self beginEditing];
+    [_backingStore setAttributes:attrs range:range];
+    [self edited:NSTextStorageEditedAttributes range:range changeInLength:0];
+    [self endEditing];
+}
+
+- (void)addAttributes:(NSDictionary *)attrs range:(NSRange)range{
+    [self beginEditing];
+    [_backingStore addAttributes:attrs range:range];
+    [self edited:NSTextStorageEditedAttributes range:range changeInLength:0];
+    [self endEditing];
+}
+
+- (void)removeAttribute:(NSString *)name range:(NSRange)range{
+    [self beginEditing];
+    [_backingStore removeAttribute:name range:range];
+    [self edited:NSTextStorageEditedAttributes range:range changeInLength:0];
+    [self endEditing];
+}
+
+- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)str{
+    [self beginEditing];
+    [_backingStore replaceCharactersInRange:range withString:str];
+    [self edited:(NSTextStorageEditedCharacters | NSTextStorageEditedAttributes) range:range changeInLength:str.length - range.length];
+    [self endEditing];
+}
+
+#pragma mark Private methods
+
+- (BOOL)isValidRange:(NSRange)range isString:(NSMutableAttributedString *)str{
+    if (range.location < str.length && range.location + range.length <= str.length) {
+        return YES;
+    }
+    else{
+        return NO;
+    }
+}
 
 @end
