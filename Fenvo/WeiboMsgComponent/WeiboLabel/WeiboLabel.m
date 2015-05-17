@@ -9,7 +9,8 @@
 #import "WeiboLabel.h"
 #import "WeiboTextStorage.h"
 
-#define STURLRegex @"(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))"
+#define STURLRegex @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)"
+//@"(?i)\\b((?:[a-z][\\w-]+:(?:/{1,3}|[a-z0-9%])|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?«»“”‘’]))"
 
 @interface WeiboLabel () <UITextViewDelegate>
 
@@ -103,8 +104,8 @@
     _selectionColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     
     _attributesText = @{NSForegroundColorAttributeName: self.textColor, NSFontAttributeName: WBStatusCellDetailFont};
-    _attributesAccount = @{NSForegroundColorAttributeName: RGBACOLOR(140, 140, 140, 1), NSFontAttributeName: WBStatusCellDetailFont};
-    _attributesHashtag = @{NSForegroundColorAttributeName: RGBACOLOR(120, 120, 120, 1), NSFontAttributeName: WBStatusCellDetailFont};
+    _attributesAccount = @{NSForegroundColorAttributeName: RGBACOLOR(110, 180, 250, 1), NSFontAttributeName: WBStatusCellDetailFont};
+    _attributesHashtag = @{NSForegroundColorAttributeName: RGBACOLOR(110, 180, 250, 1), NSFontAttributeName: WBStatusCellDetailFont};
     _attributesLink = @{NSForegroundColorAttributeName: RGBACOLOR(0, 0, 250, 1), NSFontAttributeName: WBStatusCellDetailFont};
     
     self.validProtocols = @[@"http", @"https"];
@@ -164,18 +165,30 @@
         // Determine the length of the hot word
         int length = (int)range.length;
         
-        while (range.location + length < tmpText.length) {
-            BOOL charIsMember = [validCharactersSet characterIsMember:[tmpText characterAtIndex:range.location + length]];
-            
-            if (charIsMember)
-                length++;
-            else
-                break;
+        if(hotWord == WeiboAccount){
+            while (range.location + length < tmpText.length) {
+                BOOL charIsMember = [validCharactersSet characterIsMember:[tmpText characterAtIndex:range.location + length]];
+                
+                if (charIsMember)
+                    length++;
+                else
+                    break;
+            }
+        }else if (hotWord == WeiboHashtag){
+            while (range.location +length < tmpText.length) {
+                if ([tmpText characterAtIndex:range.location + length] != '#') {
+                    length ++;
+                }else
+                    break;
+            }
         }
         
         // Register the hot word and its range
-        if (length > 1)
+        if (length > 1 && hotWord == WeiboAccount){
             [_rangesOfHotWords addObject:@{@"hotWord": @(hotWord), @"range": [NSValue valueWithRange:NSMakeRange(range.location, length)]}];
+        }else if(length > 1 && hotWord == WeiboHashtag){
+            [_rangesOfHotWords addObject:@{@"hotWord": @(hotWord), @"range": [NSValue valueWithRange:NSMakeRange(range.location, length+1)]}];
+        }
     }
     
     [self determineLinks];
@@ -430,6 +443,7 @@
     @try {
         [_textStorage addAttribute:NSBackgroundColorAttributeName value:_selectionColor range:_selectableRange];
     } @catch (NSException *exception) {
+        
     }
 }
 

@@ -147,6 +147,10 @@
 - (void) setUserAvatar:(UIImage *)image{
     self.user_avatar = image;
 }
+
+- (void) setCellHeight:(NSInteger)height{
+    self.height = height;
+}
  
 #pragma mark - 静态方法初始化微博对象
 + (WeiboMsg *)statusWithDictionary:(NSDictionary *)dic{

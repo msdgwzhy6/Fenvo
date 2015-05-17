@@ -20,7 +20,7 @@
 - (WeiboAvatarView *)initWithStyle{
     self = [super init];
     if (self) {
-        self.layer.cornerRadius = 5.0;
+        self.layer.cornerRadius = 20;
         self.layer.masksToBounds = YES;
         //self.layer.borderWidth = 1.0;
         //此处使用cgcolor

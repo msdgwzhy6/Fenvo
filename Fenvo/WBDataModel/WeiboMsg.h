@@ -79,4 +79,5 @@
 + (WeiboMsg *)statusWithDictionary:(NSDictionary *)dic;
 
 - (void) addWeibo_pics:(UIImage *)image;
+- (void) setCellHeight:(NSInteger)height;
 @end

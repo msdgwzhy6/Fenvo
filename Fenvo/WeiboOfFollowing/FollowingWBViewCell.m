@@ -10,6 +10,7 @@
 #import "WebImageView.h"
 #import "WeiboAvatarView.h"
 #import "WeiboMsg.h"
+#import "WeiboLabel.h"
 
 @interface FollowingWBViewCell(){
     WeiboAvatarView *_avatar;
@@ -17,8 +18,8 @@
     UILabel *_userName;
     UILabel *_createTime;
     UILabel *_source;
-    UILabel *_wbForwardText;
-    UILabel *_wbDetail;
+    WeiboLabel *_wbForwardText;
+    WeiboLabel *_wbDetail;
     
     //配图集合
     WebImageView *_imageView0;
@@ -81,13 +82,13 @@
     _source.font = WBStatusCellSourceFont;
     [self.containView addSubview:_source];
     //微博转发信息
-    _wbForwardText = [[UILabel alloc]init];
+    _wbForwardText = [[WeiboLabel alloc]init];
     _wbForwardText.numberOfLines = 0;
     _wbForwardText.textColor = WBStatusGrayColor;
     _wbForwardText.font = WBStatusCellForwardFont;
     [self.containView addSubview:_wbForwardText];
     //微博详情
-    _wbDetail = [[UILabel alloc]init];
+    _wbDetail = [[WeiboLabel alloc]init];
     _wbDetail.textColor = WBStatusGrayColor;
     _wbDetail.font = WBStatusCellDetailFont;
     //如果label行数没有设置则默认为1，设置为0则是不限行数
@@ -186,11 +187,14 @@
     CGFloat wbDetailX = 10;
     CGFloat wbDetailY = CGRectGetMaxY(_avatar.frame) + WBStatusCellControlSpacing;
     CGFloat wbDetailWidth = self.frame.size.width - WBStatusCellControlSpacing * 2;
-    CGSize wbDetailSize = [weiboMsg.wbDetail boundingRectWithSize:CGSizeMake(wbDetailWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:WBStatusCellDetailFont} context:nil].size;
+    [_wbDetail setText:weiboMsg.wbDetail];
+    CGSize wbDetailSize = [_wbDetail suggestedFrameSizeToFitEntireStringConstraintedToWidth:wbDetailWidth];
     CGRect wbDetailRect = CGRectMake(wbDetailX, wbDetailY, wbDetailSize.width, wbDetailSize.height);
-    _wbDetail.text = weiboMsg.wbDetail;
     _wbDetail.frame = wbDetailRect;
-    [_wbDetail drawTextInRect:wbDetailRect];
+    [_wbDetail setDetectionBlock:^(WeiboHotWord hotWord, NSString *string,NSString *protocol, NSRange range){
+        NSArray *hotWords = @[@"Handle", @"Hashtag", @"Link"];
+        NSLog(@"%@",hotWords[hotWord]);
+    }];
     
     CGRect containViewRect;
     //初始化 － 是否为转发
@@ -199,11 +203,14 @@
         CGFloat wbForwardTextY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellControlSpacing;
         CGFloat wbForwardTextWidth = self.frame.size.width - WBStatusCellControlSpacing*2;
         NSString *retweeted_text = [NSString stringWithFormat:@"@%@：%@",weiboMsg.retweeted_status.user.screen_name ,weiboMsg.retweeted_status.wbDetail];
-        CGSize wbForwardTextSize = [retweeted_text boundingRectWithSize:CGSizeMake(wbForwardTextWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:WBStatusCellForwardFont} context:nil].size;
-        CGRect wbForwardTextRect = CGRectMake(wbForwardTextX, wbForwardTextY, wbForwardTextSize.width, wbForwardTextSize.height);
         _wbForwardText.text = retweeted_text;
-        [_wbForwardText drawTextInRect:wbForwardTextRect];
+        CGSize wbForwardTextSize = [_wbForwardText suggestedFrameSizeToFitEntireStringConstraintedToWidth:wbForwardTextWidth];
+        CGRect wbForwardTextRect = CGRectMake(wbForwardTextX, wbForwardTextY, wbForwardTextSize.width, wbForwardTextSize.height);
         _wbForwardText.frame = wbForwardTextRect;
+        [_wbForwardText setDetectionBlock:^(WeiboHotWord hotWord, NSString *string,NSString *protocol, NSRange range){
+            NSArray *hotWords = @[@"Handle", @"Hashtag", @"Link"];
+            NSLog(@"%@",hotWords[hotWord]);
+        }];
         //转发。 有配图
         
         if (weiboMsg.retweeted_status.thumbnail_pic) {
@@ -496,6 +503,9 @@
     }
     
     self.containView.frame = containViewRect;
+    
+    NSInteger height = CGRectGetHeight(self.containView.frame)+ 10;
+    [weiboMsg setCellHeight:height];
 }
 - (void)awakeFromNib {
     // Initialization code
