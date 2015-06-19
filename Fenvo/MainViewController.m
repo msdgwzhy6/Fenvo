@@ -8,12 +8,12 @@
 
 #import "MainViewController.h"
 #import "FollowingWBViewController.h"
-#import "TmpViewController.h"
+#import "ProfileViewController.h"
 
 @interface MainViewController ()<UITabBarDelegate,UITabBarControllerDelegate>
 {
     FollowingWBViewController *_followingWeiboVC;
-    TmpViewController *_followingWeiboVC1;
+    ProfileViewController *_profileVC;
     
     UIBarButtonItem *_writeNewWeibo;
     UIBarButtonItem *_settingBtn;
@@ -28,8 +28,8 @@ NSString *access_token;
     [self initSubView];
     self.selectedIndex = 0;
     _writeNewWeibo = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(writeWeibo)];
-    _writeNewWeibo.tintColor = RGBACOLOR(200, 20, 20, 1);
-    [self.tabBar setTintColor:RGBACOLOR(220, 0, 0, 1)];
+    _writeNewWeibo.tintColor = RGBACOLOR(30, 40, 50, 1);
+    [self.tabBar setTintColor:RGBACOLOR(30, 40, 50, 1)];
     [self tabBar:self.tabBar didSelectItem:_followingWeiboVC.tabBarItem];
     // Do any additional setup after loading the view.
     
@@ -41,7 +41,7 @@ NSString *access_token;
     [rootTabBar setDelegate:self];
     [rootTabBar setBackgroundColor:[UIColor clearColor]];
     [rootTabBar setFrame:self.tabBar.frame];
-    [rootTabBar setAlpha:0.7];
+    [rootTabBar setAlpha:1];
     
     [self.view addSubview:rootTabBar];
     [self setValue:rootTabBar forKey:@"tabBar"];
@@ -55,17 +55,16 @@ NSString *access_token;
     [self unselectedTapTabBarItems:_followingWeiboVC.tabBarItem];
     
     
-    _followingWeiboVC1 = [[TmpViewController alloc]init];
+    _profileVC = [[ProfileViewController alloc]init];
+    [_profileVC setAccess_token:_followingWeiboVC.access_token];
+    [_profileVC initWithComponent];
     //_followingWeiboVC1.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:nil tag:1];
-    _followingWeiboVC1.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemHistory tag:1];
-    _followingWeiboVC1.tabBarItem.title = @"Message";
-    [self selectedTapTabBarItems:_followingWeiboVC1.tabBarItem];
-    [self unselectedTapTabBarItems:_followingWeiboVC1.tabBarItem];
+    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemHistory tag:1];
+    _profileVC.tabBarItem.title = @"Message";
+    [self selectedTapTabBarItems:_profileVC.tabBarItem];
+    [self unselectedTapTabBarItems:_profileVC.tabBarItem];
     
-    self.viewControllers = @[_followingWeiboVC,_followingWeiboVC1];
-    //self.selectedViewController = _followingWeiboVC;
-    //self.selectedIndex = 1;//在选择0之前先选择1，然后再选择第0个Item，这样就能解决了
-    //self.selectedIndex = 0;
+    self.viewControllers = @[_followingWeiboVC,_profileVC];
     for (UIViewController *controller in self.viewControllers) {
         UIViewController *view= controller.view;
     }
@@ -81,10 +80,17 @@ NSString *access_token;
         case 0:
             self.title = @"Home";
             self.navigationItem.rightBarButtonItem = _writeNewWeibo;
+            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_b.png"] forBarMetrics:UIBarMetricsDefault];
+            self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    
+         
             break;
         case 1:
-            self.title = @"Message";
+            self.title = @"Profile";
             self.navigationItem.rightBarButtonItem = nil;
+            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_bg.png"] forBarMetrics:UIBarMetricsDefault];
+            self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+            self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
             break;
         case 2:
             self.title = @"Hot";
@@ -101,11 +107,11 @@ NSString *access_token;
 
 - (void)selectedTapTabBarItems: (UITabBarItem *)tabBarItem{
     [tabBarItem setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:14.0],UITextAttributeFont,RGBACOLOR(200, 20, 20, 1.0),UITextAttributeTextColor,nil] forState:UIControlStateSelected];
+     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:14.0],UITextAttributeFont,RGBACOLOR(30, 40, 50, 1.0),UITextAttributeTextColor,nil] forState:UIControlStateSelected];
 }
 - (void)unselectedTapTabBarItems: (UITabBarItem *)tabBarItem{
     [tabBarItem setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:14.0],UITextAttributeFont,RGBACOLOR(0, 0, 0, 1.0),UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:14.0],UITextAttributeFont,RGBACOLOR(150, 150, 150, 1.0),UITextAttributeTextColor,nil] forState:UIControlStateNormal];
 }
 /*
 #pragma mark - Navigation

@@ -37,7 +37,7 @@
 #pragma mark - 根据download的字典信息初始化微博对象
 - (WeiboMsg *)initWithDictionary:(NSDictionary *)dic{
     if (self = [super init]) {
-        self.id = [dic[@"id"] longLongValue];
+        self.ids = [dic[@"id"] longLongValue];
         self.mid = [dic[@"mid"]longLongValue];
         self.idstr = dic[@"idstr"];
         self.wbDetail = dic[@"text"];
@@ -61,6 +61,7 @@
             self.retweeted_status = [[WeiboMsg alloc]initWithDictionary:retweeted_weibo];
         }
         // attitudes_count	int	表态数
+        self.attitudes_count = [dic[@"attitudes_count"]integerValue];
         self.reposts_count = [dic[@"reposts_count"]integerValue];
         self.comments_count = [dic[@"comments_count"]integerValue];
         //
@@ -148,7 +149,7 @@
     self.user_avatar = image;
 }
 
-- (void) setCellHeight:(NSInteger)height{
+- (void) setCellHeight:(CGFloat)height{
     self.height = height;
 }
  

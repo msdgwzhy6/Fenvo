@@ -40,13 +40,13 @@
 //gender	string	性别，m：男、f：女、n：未知
 @property (nonatomic, copy)NSString *gender;
 //followers_count	int	粉丝数
-@property (nonatomic, assign)NSInteger followers_count;
+@property (nonatomic, assign)long long followers_count;
 //friends_count	int	关注数
-@property (nonatomic, assign)NSInteger friends_count;
+@property (nonatomic, assign)long long friends_count;
 //statuses_count	int	微博数
-@property (nonatomic, assign)NSInteger statuses_count;
+@property (nonatomic, assign)long long statuses_count;
 //favourites_count	int	收藏数
-@property (nonatomic, assign)NSInteger favourites_count;
+@property (nonatomic, assign)long long favourites_count;
 //created_at	string	用户创建（注册）时间
 @property (nonatomic, copy)NSString *created_at;
 //allow_all_act_msg	boolean	是否允许所有人给我发私信，true：是，false：否
@@ -67,6 +67,9 @@
 @property (nonatomic, copy)NSString *verified_reason;
 //follow_me	boolean	该用户是否关注当前登录用户，true：是，false：否
 @property (nonatomic, assign)Boolean follow_me;
+//是否同样关注。API未说明。待验证
+@property (nonatomic, assign)Boolean following;
+
 //online_status	int	用户的在线状态，0：不在线、1：在线
 @property (nonatomic, assign)NSInteger online_status;
 //bi_followers_count	int	用户的互粉数
@@ -77,6 +80,9 @@
 //
 @property (nonatomic, assign)NSInteger mbtype;
 
+
+/////////
+@property (nonatomic, strong)UIImage *user_avatar;
 
 //////////////////
 #pragma mark - 根据download的字典信息初始化微博用户对象

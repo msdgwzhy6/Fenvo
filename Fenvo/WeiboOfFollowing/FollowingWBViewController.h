@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WebImageView.h"
-@interface FollowingWBViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
+#import "WeiboLabel.h"
+@interface FollowingWBViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,WeiboLabelDelegate>
 @property(strong, nonatomic)NSString *access_token;
 @end

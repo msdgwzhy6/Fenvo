@@ -16,38 +16,28 @@
 @end
 
 @implementation AppDelegate
-
+@synthesize access_token = _access_token;
+@synthesize uid = _uid;
+@synthesize expires_in = _expires_in;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    
+    [self.window makeKeyAndVisible];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(loginStateChange:)
                                                name:WBNOTIFICATION_LOGINCHANGE
                                                object:nil];
     
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0) {
-        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"opaque_b.png"] forBarMetrics:UIBarMetricsDefault];
-        [UINavigationBar appearance].barStyle = UIBarStyleBlackTranslucent;
         
-        //[[UINavigationBar appearance] setBarTintColor:RGBACOLOR(255, 255, 255, 0)];
         [[UINavigationBar appearance] setTitleTextAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:RGBACOLOR(200, 20, 20, 1.0), NSForegroundColorAttributeName, [UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
+         [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
     }
     
-   /*
-    self.loginView = [[ViewController alloc]init];
-   
-    self.loginView.title = @"登录授权";
-    self.nav = [[UINavigationController alloc]initWithRootViewController:self.loginView];
-    self.window.rootViewController = self.nav;
-    [self.nav setNavigationBarHidden:YES];
-    [self.nav setNavigationBarHidden:NO];
-    */
     [self loginStateChange:nil];
     
-    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -56,6 +46,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //[userDefaults synchronize];
     NSString *access_token = [userDefaults stringForKey:@"access_token"];
+    NSString *uid = [userDefaults stringForKey:@"uid"];
     if (access_token) {
         if (_mainVC == nil) {
             _mainVC = [[MainViewController alloc]init];
@@ -64,15 +55,14 @@
         }else{
             nav = _mainVC.navigationController;
         }
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObject:access_token forKey:@"token"];
+        _access_token = access_token;
+        _uid = uid;
+        NSDictionary *userInfo = @{@"token":access_token,@"uid":uid};
         [[NSNotificationCenter defaultCenter]postNotificationName:WBNOTIFICATION_DOWNLOADDATA object:nil userInfo:userInfo];
     }else{
   
     BOOL loginSuccess = [notification.object boolValue];
-    
     if (loginSuccess) {
-        //[nav popViewControllerAnimated:YES];
-        //[nav pushViewController:_mainVC animated:YES];
         
         if (_mainVC == nil) {
             _mainVC = [[MainViewController alloc]init];
@@ -81,10 +71,16 @@
         }else{
             nav = _mainVC.navigationController;
         }
-        NSDictionary *token = [notification.userInfo objectForKey:@"token"];
+        NSString *token = [notification.userInfo objectForKey:@"token"];
+        NSString *uid = [notification.userInfo objectForKey:@"uid"];
+        _access_token = token;
+        _uid = uid;
+        
         [userDefaults setObject: token forKey:@"access_token"];
+        [userDefaults setObject: uid forKey:@"uid"];
         [userDefaults synchronize];
         [[NSNotificationCenter defaultCenter]postNotificationName:WBNOTIFICATION_DOWNLOADDATA object:nil userInfo:notification.userInfo];
+        
         
     }
     else{
@@ -94,10 +90,11 @@
         loginVC.title = @"登陆授权";
            }
     }
-    self.window.rootViewController =nav;
+    self.window.rootViewController = nav;
 
     [nav setNavigationBarHidden:YES];
     [nav setNavigationBarHidden:NO];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

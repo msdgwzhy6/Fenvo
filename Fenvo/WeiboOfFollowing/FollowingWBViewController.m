@@ -5,48 +5,62 @@
 //  Created by Caesar on 15/3/19.
 //  Copyright (c) 2015年 Caesar. All rights reserved.
 //
-
 #import "FollowingWBViewController.h"
 #import "WeiboMsg.h"
 #import "FollowingWBViewCell.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "ViewController.h"
 #import "JSONKit.h"
-#import "MBProgressHUD.h"
+#import "FeSpinnerTenDot.h"
 #import "MJRefresh.h"
 #import "WeiboAvatarView.h"
+#import "WebViewController.h"
+#import "UIColor+flat.h"
+#import "KVNProgress.h"
 
-#define WBAPIURL_FRIENDS @"https://api.weibo.com/2/statuses/home_timeline.json"
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 
 
-@interface FollowingWBViewController (){
-    //UITableView *_tableView;
+@interface FollowingWBViewController ()<WeiboLabelDelegate,FeSpinnerTenDotDelegate,UIScrollViewDelegate>{
     NSMutableArray *_weiboMsgArray;
     NSMutableArray *_weiboCells;
-    MBProgressHUD *_hud;
+    FeSpinnerTenDot *_spinnerHud;
+    UIView *_spinnerView;
     NSMutableArray *_array;
     UIButton *_bottomRefresh;
+    
+    CGSize screenSize;
+    NSInteger page;
+    NSMutableArray *_tmp;
+    NSInteger refreshtime;
+    
+    //刷新微博
+    //下次返回比since_id晚的微博
+    long long _since_id;
+    //根据max_id返回比max_id早的微博
+    long long _max_id;
+    //next_cursor、previous_cursor指定返回的之后、之前的游标值。暂未支持
+    long long _next_cursor;
+    long long _previous_cursor;
 }
 @end
 @implementation FollowingWBViewController
 
-CGSize screenSize;
-int page = 0;
-NSMutableArray *_tmp;
-int refreshtime = 1;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //
+    
+    //仅做去除重用标志
+    refreshtime = 1;
+    //设置TableView样式
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
     self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
     
-    screenSize = [[UIScreen mainScreen]bounds].size;
     //取消tableview向下延伸。避免被tabBar遮盖
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.tableView.frame = CGRectMake(0, 0, screenSize.width, self.view.bounds.size.height);
-    NSLog(@"%f%f%f",self.tableView.frame.size.height, self.tabBarController.tabBar.frame.size.height,self.navigationController.navigationBar.frame.size.height);
+    self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
     NSNotificationCenter  *center = [NSNotificationCenter defaultCenter];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WBNOTIFICATION_DOWNLOADDATA object:nil];
     [center addObserver:self selector:@selector(getWeiboMsg:) name:WBNOTIFICATION_DOWNLOADDATA object:nil];
@@ -55,7 +69,7 @@ int refreshtime = 1;
 }
 - (void)addRefreshViewController{
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(refreshWeiboMsg)];
-    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getWeiboMsgWithPage)];
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getMoreWeibo)];
     
     //
     self.tableView.header.font = [UIFont systemFontOfSize:15];
@@ -73,32 +87,32 @@ int refreshtime = 1;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
 - (void)getWeiboMsg:(NSNotification *)notification {
-    page ++;
     _access_token = [notification.userInfo objectForKey:@"token"];
-   // NSLog(@"在FollowingVC中的access_token是：%@",_access_token);
-            _hud = [[MBProgressHUD alloc]initWithView:self.view];
-            _hud.dimBackground = YES;
-            _hud.mode = MBProgressHUDModeCustomView;
-            _hud.labelText = @"大爷姑奶奶您稍等...";
-            _hud.labelFont = WBStatusHUDTextFont;
-            [_hud show:YES];
-            [self.view addSubview:_hud];
-    //dispatch_queue_t queue;
-    
+
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                
+                
+                _spinnerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT)];
+                _spinnerView.backgroundColor = [UIColor colorWithHexCode:@"#32ce55"];
+                _spinnerHud = [[FeSpinnerTenDot alloc]initWithView:_spinnerView withBlur:NO andColor:RGBACOLOR(30, 40, 50, 1)];
+                _spinnerHud.titleLabelText = @"Loading...";
+                _spinnerHud.fontTitleLabel = [UIFont fontWithName:@"Neou-Thin" size:36];
+                _spinnerHud.delegate = self;
+                [_spinnerView addSubview:_spinnerHud];
+                [_spinnerHud show];
+                [[UIApplication sharedApplication].keyWindow addSubview:_spinnerView];
+                
+                
                 
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
                 manager.responseSerializer = [[AFJSONResponseSerializer alloc]init];
                 //http请求头应该添加text/plain。接受类型内容无text/plain
                 manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
                 NSString *getPublicWeiboTmp = WBAPIURL_FRIENDS;
-                NSString *getPublicWeibo = [getPublicWeiboTmp stringByAppendingString:_access_token];
-                NSLog(@"%@",getPublicWeibo);
                 NSDictionary *dict0 = [NSDictionary
                                        dictionaryWithObject:_access_token
                                        forKey:@"access_token"];
@@ -112,13 +126,11 @@ int refreshtime = 1;
                     NSString *jsonStrings = [[NSString alloc]
                                             initWithData:jsonDatas
                                             encoding:NSUTF8StringEncoding];
-                    
-                    //NSLog(@"%@",[self getNormalJSONString:jsonString]);
+                         NSLog(@"%@",jsonStrings);
                     jsonStrings = [self getNormalJSONString:jsonStrings];
                     
                     
                     NSArray *weiboMsgDictionary = [jsonStrings objectFromJSONString];
-                    NSLog(@"%d",weiboMsgDictionary.count);
                     if (weiboMsgDictionary.count > 0) {
 
                        for (int i = 0; i < weiboMsgDictionary.count; i ++) {
@@ -130,9 +142,10 @@ int refreshtime = 1;
                         }
                         }
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            NSLog(@"reloadData success.%d",_weiboMsgArray.count);
+                            NSLog(@"%lld",_max_id);
                             [self.tableView reloadData];
-                            [_hud removeFromSuperview];
+                            [_spinnerHud removeFromSuperview];
+                            [_spinnerView removeFromSuperview];
                             [self downloadUserAvatar];
                         });
                     
@@ -149,7 +162,6 @@ int refreshtime = 1;
    
 }
 - (void)refreshWeiboMsg{
-    page = 1;
     refreshtime ++;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -158,11 +170,9 @@ int refreshtime = 1;
         //http请求头应该添加text/plain。接受类型内容无text/plain
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
         NSString *getPublicWeiboTmp = WBAPIURL_FRIENDS;
-        NSString *getPublicWeibo = [getPublicWeiboTmp stringByAppendingString:_access_token];
-        NSLog(@"%@",getPublicWeibo);
-        NSDictionary *dict0 = [NSDictionary
-                               dictionaryWithObject:_access_token
-                               forKey:@"access_token"];
+        NSDictionary *dict0 = [[NSDictionary alloc]init];
+        NSNumber *since_id = [NSNumber numberWithLongLong:_since_id];
+        dict0= @{@"access_token":_access_token, @"since_id":since_id};
         [manager GET:getPublicWeiboTmp
           parameters:dict0
              success:^(AFHTTPRequestOperation *operation, id responserObject){
@@ -178,18 +188,20 @@ int refreshtime = 1;
                  
                  
                  NSArray *weiboMsgDictionary = [jsonStrings objectFromJSONString];
-                 NSLog(@"%lu",weiboMsgDictionary.count);
                  if (weiboMsgDictionary.count > 0) {
-                     _weiboMsgArray = [[NSMutableArray alloc]init];
-                     for (int i = 0; i < weiboMsgDictionary.count; i ++) {
+                     
+                     for (long i = (weiboMsgDictionary.count - 1); i >= 0; i --) {
                          NSDictionary *dict = weiboMsgDictionary[i];
                          WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
                          weiboMsg = [weiboMsg initWithDictionary:dict];
-                         [_weiboMsgArray addObject:weiboMsg];
+                         [_weiboMsgArray insertObject:weiboMsg atIndex:0];
                          
                      }
+                 }else {
+                     [KVNProgress showSuccessWithStatus:@"No More Weibo"];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
+                     NSLog(@"%lld",_since_id);
                      [self.tableView reloadData];
                      [self.tableView.header endRefreshing];
                      [self downloadUserAvatar];
@@ -205,9 +217,7 @@ int refreshtime = 1;
     });
     
 }
-- (void)getWeiboMsgWithPage{
-    page++;
-    NSLog(@"在FollowingVC中的access_token是：%@",_access_token);
+- (void)getMoreWeibo{
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -218,11 +228,9 @@ int refreshtime = 1;
         [manager.responseSerializer.acceptableContentTypes
          setByAddingObject:@"text/plain"];
         NSString *getPublicWeiboTmp = WBAPIURL_FRIENDS;
-        NSString *getPublicWeibo = [getPublicWeiboTmp stringByAppendingString:_access_token];
-        NSLog(@"%@",getPublicWeibo);
         NSDictionary *dict0 = [[NSDictionary alloc]init];
-        NSNumber *pages = [NSNumber numberWithInt:page];
-        dict0= @{@"access_token":_access_token, @"page":pages};
+        NSNumber *max_id = [NSNumber numberWithLongLong:_max_id];
+        dict0= @{@"access_token":_access_token, @"max_id":max_id};
         //
         [manager GET:getPublicWeiboTmp
           parameters:dict0
@@ -233,12 +241,10 @@ int refreshtime = 1;
                                       error:&error];
                  NSString *jsonString = [[NSString alloc] initWithData:jsonDatas encoding:NSUTF8StringEncoding];
                  
-                 NSLog(@"%@",[self getNormalJSONString:jsonString]);
                  jsonString = [self getNormalJSONString:jsonString];
                  
                  
                  NSArray *weiboMsgDictionary = [jsonString objectFromJSONString];
-                 NSLog(@"%d",weiboMsgDictionary.count);
                  if (weiboMsgDictionary.count > 0) {
                      
                      for (int i = 0; i < weiboMsgDictionary.count; i ++) {
@@ -250,6 +256,7 @@ int refreshtime = 1;
                      }
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
+                     NSLog(@"%lld",_max_id);
                      [self.tableView reloadData];
                      [self.tableView.footer endRefreshing];
                      [self downloadUserAvatar];
@@ -271,14 +278,11 @@ int refreshtime = 1;
         WeiboMsg *weiboMsg = _weiboMsgArray[i];
         NSString *url = weiboMsg.user.profile_image_url;
         [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-            NSLog(@"%d %d",receivedSize,expectedSize);
         } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
             [_weiboMsgArray[i] setUser_avatar:aImage];
-            NSLog(@"成功了:%d",UIImageJPEGRepresentation(aImage, 1).length);
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
-            NSLog(@"downloadAvatar over.");
         });
         //有转发
         if (weiboMsg.retweeted_status != nil) {
@@ -286,7 +290,6 @@ int refreshtime = 1;
             if (weiboMsg.retweeted_status.thumbnail_pic != nil) {
                 for (int j = 0; j < weiboMsg.retweeted_status.pic_urls.count; j++) {
                     NSString *pic_url = weiboMsg.retweeted_status.pic_urls[j];
-                    NSLog(@"第%d个微博:%@",i,pic_url);
                     /*
                     NSData *dataOfPic = [NSData dataWithContentsOfURL:[NSURL URLWithString:pic_url]];
                     UIImage *image = [[UIImage alloc]initWithData:dataOfPic];
@@ -297,13 +300,12 @@ int refreshtime = 1;
                         NSLog(@"%d image is nil", i);
                     }*/
                     [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:pic_url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-                        NSLog(@"%d %d",receivedSize,expectedSize);
                     } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
                         if (aImage) {
                             [_weiboMsgArray[i] addWeibo_pics:aImage];
                            
                         }else{
-                             NSLog(@"吃屎了:%d",UIImageJPEGRepresentation(aImage, 1).length);
+                             NSLog(@"吃屎了:%ld",UIImageJPEGRepresentation(aImage, 1).length);
                         }
                     }];
                     
@@ -311,7 +313,6 @@ int refreshtime = 1;
                 if (weiboMsg.retweeted_status.pic_urls.count == weiboMsg.retweeted_status.weibo_pics.count) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];
-                        NSLog(@"%d in*** idownloadAvatar over.",i);
                     });
                 }
             }
@@ -322,9 +323,7 @@ int refreshtime = 1;
             if (weiboMsg.thumbnail_pic != nil) {
                 for (int j = 0; j < weiboMsg.pic_urls.count; j++) {
                     NSString *pic_url = weiboMsg.pic_urls[j];
-                    NSLog(@"第%d个微博:%@",i,pic_url);
                     [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:pic_url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-                        NSLog(@"%ld %ld",receivedSize,expectedSize);
                     } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
                         if (aImage) {
                             [_weiboMsgArray[i] addWeibo_pics:aImage];
@@ -338,7 +337,6 @@ int refreshtime = 1;
                 if (weiboMsg.pic_urls.count == weiboMsg.weibo_pics.count) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.tableView reloadData];
-                       NSLog(@"%d in ====idownloadAvatar over.",i);
                     });
                 }
             }
@@ -355,15 +353,34 @@ int refreshtime = 1;
 #pragma mark - 微博API返回的数据不是标准的json格式数据。我们需要返回的String类型JSON数据进行一定的处理
 
 - (NSString *)getNormalJSONString:(NSString *)jsonStrings{
+    NSDictionary *dict = [jsonStrings objectFromJSONString];
+    _since_id = [dict[@"since_id"] longLongValue];
+    _max_id = [dict[@"max_id"] longLongValue];
+    _previous_cursor = [dict[@"previous_cursor"] longLongValue];
+    _next_cursor = [dict[@"next_cursor"] longLongValue];
     NSString *str1;
     NSRange rangeLeft = [jsonStrings rangeOfString:@"\"statuses\":"];
     str1 = [jsonStrings substringFromIndex:rangeLeft.location+rangeLeft.length];
-    NSLog(@"%@",str1);
-    //
+
     NSRange rangeRight = [str1 rangeOfString:@"\"total_n"];
     if (rangeRight.length > 0) {
         jsonStrings = [str1 substringToIndex:rangeRight.location - 4];
-        NSLog(@"%@",jsonStrings);
+    }
+    
+    return jsonStrings;
+}
+
+- (NSString *)getRefreshJSONString: (NSString *)jsonStrings {
+    NSDictionary *dict = [jsonStrings objectFromJSONString];
+    _since_id = [dict[@"since_id"] longLongValue];
+    _previous_cursor = [dict[@"previous_cursor"] longLongValue];
+    NSString *str1;
+    NSRange rangeLeft = [jsonStrings rangeOfString:@"\"statuses\":"];
+    str1 = [jsonStrings substringFromIndex:rangeLeft.location+rangeLeft.length];
+    
+    NSRange rangeRight = [str1 rangeOfString:@"\"total_n"];
+    if (rangeRight.length > 0) {
+        jsonStrings = [str1 substringToIndex:rangeRight.location - 4];
     }
     
     return jsonStrings;
@@ -373,13 +390,11 @@ int refreshtime = 1;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return _weiboMsgArray.count;
 }
@@ -387,7 +402,7 @@ int refreshtime = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //去除重用机制
-    NSString *cellIdentifier = [NSString stringWithFormat:@"cell%d%d",indexPath.row,refreshtime];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.row,refreshtime];
 
     FollowingWBViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
@@ -400,6 +415,7 @@ int refreshtime = 1;
     // Configure the cell...
     WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
     cell.weiboMsg = weiboMsg;
+    
     return cell;
 }
 
@@ -412,11 +428,30 @@ int refreshtime = 1;
 //
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
-    NSInteger yHeight = weiboMsg.height;
+    CGFloat yHeight = weiboMsg.height;
     return yHeight;
 }
 
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    if (velocity.y > 0.2) {
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }else{
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+}
+
 /*
+- (void)swipeDown: (UISwipeGestureRecognizer *)swipeDown{
+    NSLog(@"swipeDown");
+    [self.navigationController setNavigationBarHidden:FALSE animated:TRUE];
+    [self.navigationController setToolbarHidden:FALSE animated:TRUE];
+}
+- (void)swipeUp: (UISwipeGestureRecognizer *)swipeUp{
+    NSLog(@"swipeUp");
+    [self.navigationController setNavigationBarHidden:TRUE animated:TRUE];
+    [self.navigationController setToolbarHidden:TRUE animated:TRUE];
+
+}
 #pragma mark - egoRefreshFooterViewDelegate
 - (void)egoRefreshTableFooterDidTriggerRefresh:(EGORefreshTableFooterView *)view{
     [self getWeiboMsgWithPage:2];
@@ -428,25 +463,6 @@ int refreshtime = 1;
     return [NSDate date];
 }
 
-#pragma mark - 实现egoRefresh附加的实现UIScrollViewDelegate
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
-}
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
-}
- */
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
 /*
 // Override to support rearranging the table view.
@@ -471,6 +487,5 @@ int refreshtime = 1;
     // Pass the selected object to the new view controller.
 }
 */
-
 
 @end

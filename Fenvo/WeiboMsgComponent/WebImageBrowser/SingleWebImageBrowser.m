@@ -182,6 +182,7 @@ static CGRect oldImageViewFrame;
         [saveBtn removeFromSuperview];
     }];
 }
+
 //双指扩张放大图片
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)aScrollView{
     if (aScrollView == scrollView) {

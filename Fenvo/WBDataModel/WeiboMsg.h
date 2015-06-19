@@ -19,7 +19,7 @@
 //created_at	string	微博创建时间
 @property (nonatomic, copy)NSString *created_at;
 //id	int64	微博ID
-@property (nonatomic, assign)long long id;
+@property (nonatomic, assign)long long ids;
 //mid	int64	微博MID
 @property (nonatomic, assign)long long mid;
 //idstr	string	字符串型的微博ID
@@ -68,7 +68,7 @@
 @property (nonatomic, strong)NSMutableArray *bmiddle_pic_urls;
 //ad	object array	微博流内的推广微博ID
 /////***********************************************************
-@property (nonatomic, assign)NSInteger height;
+@property (nonatomic, assign)CGFloat height;
 @property (nonatomic, strong)UIImage *user_avatar;
 @property (nonatomic, strong)NSMutableArray *weibo_pics;
 
@@ -79,5 +79,5 @@
 + (WeiboMsg *)statusWithDictionary:(NSDictionary *)dic;
 
 - (void) addWeibo_pics:(UIImage *)image;
-- (void) setCellHeight:(NSInteger)height;
+- (void) setCellHeight:(CGFloat)height;
 @end

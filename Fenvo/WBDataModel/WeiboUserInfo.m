@@ -36,6 +36,7 @@
     self.name = dict[@"name"];
     self.province = [dict[@"province"]integerValue];
     self.city = [dict[@"city"]integerValue];
+    self.location = dict[@"location"];
     self.descriptions = dict[@"description"];
     self.blogUrl = dict[@"url"];
     self.profile_image_url = dict[@"profile_image_url"];
@@ -50,10 +51,10 @@
     }else{
         self.gender = @"未知";
     }
-    self.followers_count = [dict[@"followers_count" ] integerValue];
-    self.friends_count = [dict[@"friends_count"]integerValue];
-    self.statuses_count = [dict[@"statuses_count"]integerValue];
-    self.favourites_count = [dict[@"favourites_count"]integerValue];
+    self.followers_count = [dict[@"followers_count" ] longLongValue];
+    self.friends_count = [dict[@"friends_count"]longLongValue];
+    self.statuses_count = [dict[@"statuses_count"] longLongValue];
+    self.favourites_count = [dict[@"favourites_count"]longLongValue];
     NSString *creatAtStr = dict[@"creat_at"];
     self.created_at = [self getTimeString:creatAtStr];
     self.allow_all_act_msg = [dict[@"allow_all_act_msg"]boolValue];
@@ -65,6 +66,7 @@
     self.avatar_hd = dict[@"avatar_hd"];
     self.verified_reason = dict[@"verified_reason"];
     self.follow_me = [dict[@"follow_me"]boolValue];
+    self.following = [dict[@"following"]boolValue];
     self.bi_followers_count = [dict[@"bi_followers_count"]integerValue];
     self.lang = dict[@"lang"];
     
@@ -84,6 +86,11 @@
     [outputFormatter setDateFormat:@"EEE-MMM-dd"];
     NSString *str = [outputFormatter stringFromDate:inputDate];
     return str;
+}
+
+
+- (void) setUserAvatar:(UIImage *)image{
+    self.user_avatar = image;
 }
 
 /*

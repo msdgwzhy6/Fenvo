@@ -10,5 +10,5 @@
 #import "UIImageView+WebCache.h"
 
 @interface WeiboAvatarView : UIImageView
--(WeiboAvatarView *)initWithStyle;
+-(instancetype)init;
 @end

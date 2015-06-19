@@ -82,10 +82,11 @@
             dict = responseObject;
             self.access_token = dict[@"access_token"];
             NSString *expires_in = dict[@"expires_in"];
+            NSString *uid = dict[@"uid"];
             
             NSLog(@"%@\nexpires_in :%@",self.access_token,expires_in);
             NSDictionary *token = [[NSDictionary alloc]init];
-            token = @{@"token":self.access_token,@"expires_in":expires_in};
+            token = @{@"token":self.access_token,@"expires_in":expires_in,@"uid":uid};
             NSLog(@"%@",token);
             //[NSDictionary dictionaryWithObject:self.access_token forKey:@"token"];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"loginStateChange" object:@YES userInfo:token];

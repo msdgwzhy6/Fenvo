@@ -2,17 +2,12 @@
 //  FollowingWBViewCell.h
 //  Fenvo
 //
-//  Created by Caesar on 15/3/19.
+//  Created by Caesar on 15/6/5.
 //  Copyright (c) 2015年 Caesar. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "WeiboMsg.h"
+#import "OriginalTableViewCell.h"
 
+@interface FollowingWBViewCell : OriginalTableViewCell
 
-@interface FollowingWBViewCell : UITableViewCell
-//数据模型对象
-@property (nonatomic, strong)WeiboMsg *weiboMsg;
-//背景框
-@property(nonatomic, strong)UIView *containView;
 @end

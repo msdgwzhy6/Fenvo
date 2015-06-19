@@ -17,7 +17,7 @@
     // Drawing code
 }
 */
-- (WeiboAvatarView *)initWithStyle{
+- (instancetype)init{
     self = [super init];
     if (self) {
         self.layer.cornerRadius = 20;

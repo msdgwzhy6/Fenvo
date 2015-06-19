@@ -23,6 +23,11 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
+//微博 access_token 与微博 uid 以及微博 Oauth2.0 认证时长 expires_in
+
+@property (strong, nonatomic) NSString *access_token;
+@property (strong, nonatomic) NSString *uid;
+@property (strong, nonatomic) NSString *expires_in;
 
 @end
 
