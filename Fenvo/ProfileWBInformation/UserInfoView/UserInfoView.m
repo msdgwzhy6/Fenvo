@@ -25,6 +25,7 @@
     _habits.text = @"无";
     _remark.text = userInfo.remark;
     _register_time.text = userInfo.created_at;
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

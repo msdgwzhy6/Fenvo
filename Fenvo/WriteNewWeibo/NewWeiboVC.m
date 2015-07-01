@@ -100,12 +100,80 @@
 #pragma mark - WBImagePickerViewControllerDelegate
 
 - (void)imagePickerController:(WBImagePickerVC *)imagePickerController didFinishPickingMediaWithInfo:(id)info {
-    if (imagePickerController.allowsMultipleSelection) {
-        NSArray *mediaInfoArray = (NSArray *)info;
-    }
-    else {
-        NSDictionary *mediaInfoArray = (NSDictionary *)info;
-        NSLog(@"selected: %@", mediaInfoArray);
+    NSArray *mediaInfoArray = (NSArray *)info;
+
+    
+    for (int i = 0; i < mediaInfoArray.count; i++) {
+        
+        NSDictionary *mediaInfo = mediaInfoArray[i];
+        UIImage *image = mediaInfo[@"UIImagePickerControllerOriginalImage"];
+        
+        if (i <= 1 || (i > 2 && i < 5) || (i > 6 && i < 8)) {
+            
+            float width = 88.0f;
+            
+            NSTimeInterval animationDuration = 0.30f;
+            
+            CGRect frame = self.addImg.frame;
+            
+            //replace the addImage Button with imageView;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImageView *img = [[UIImageView alloc]initWithFrame:frame];
+                img.image = image;
+                [self.view addSubview:img];
+            });
+            
+            frame.origin.x += width;
+            self.addImg.frame = frame;
+            
+            //self.view移回原位置
+            [UIView beginAnimations:@"ResizeView"context:nil];
+            [UIView setAnimationDuration:animationDuration];
+            
+            self.addImg.frame = frame;
+            
+            [UIView commitAnimations];
+            
+        }else if (i == 2 || i == 5) {
+            float height = 88.0f;
+            
+            NSTimeInterval animationDuration = 0.30f;
+            
+            CGRect frame = self.addImg.frame;
+            
+            //replace the addImage Button with imageView;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImageView *img = [[UIImageView alloc]initWithFrame:frame];
+                img.image = image;
+                [self.view addSubview:img];
+            });
+            
+            frame.origin.y += height;
+            frame.origin.x = 8.0f;
+            self.addImg.frame = frame;
+            
+            //self.view移回原位置
+            
+            [UIView beginAnimations:@"ResizeView"context:nil];
+            [UIView setAnimationDuration:animationDuration];
+            
+            self.addImg.frame = frame;
+            
+            [UIView commitAnimations];
+            
+        }else if(i == 8){
+            
+            CGRect frame = self.addImg.frame;
+            
+            //replace the addImage Button with imageView;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIImageView *img = [[UIImageView alloc]initWithFrame:frame];
+                img.image = image;
+                [self.view addSubview:img];
+            });
+            
+            [self.addImg setHidden:YES];
+        }
     }
 }
 

@@ -16,6 +16,7 @@
     [super awakeFromNib];
     _relationBtn.layer.cornerRadius = 5.0;
     _relationBtn.layer.masksToBounds = YES;
+    [_avatar setStyle];
 }
 
 - (id)init {
@@ -33,6 +34,7 @@
 
 - (void)setUserInfo:(WeiboUserInfo *)userInfo {
     _avatar.image = userInfo.user_avatar;
+    [_avatar setUid:userInfo.ids];
     
     _userName.text = userInfo.screen_name;
     

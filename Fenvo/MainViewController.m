@@ -9,11 +9,14 @@
 #import "MainViewController.h"
 #import "FollowingWBViewController.h"
 #import "ProfileViewController.h"
+#import "WeiboRemindVC.h"
+#import "NewWeiboVC.h"
 
 @interface MainViewController ()<UITabBarDelegate,UITabBarControllerDelegate>
 {
     FollowingWBViewController *_followingWeiboVC;
     ProfileViewController *_profileVC;
+    WeiboRemindVC *_remindVC;
     
     UIBarButtonItem *_writeNewWeibo;
     UIBarButtonItem *_settingBtn;
@@ -55,16 +58,22 @@ NSString *access_token;
     [self unselectedTapTabBarItems:_followingWeiboVC.tabBarItem];
     
     
+    _remindVC = [[WeiboRemindVC alloc]initWithStyle:UITableViewStyleGrouped];
+    _remindVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemRecents tag:1];
+    _remindVC.tabBarItem.title = @"Remind";
+    [self selectedTapTabBarItems:_remindVC.tabBarItem];
+    [self unselectedTapTabBarItems:_remindVC.tabBarItem];
+    
     _profileVC = [[ProfileViewController alloc]init];
-    [_profileVC setAccess_token:_followingWeiboVC.access_token];
-    [_profileVC initWithComponent];
     //_followingWeiboVC1.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:nil tag:1];
-    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemHistory tag:1];
+    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemHistory tag:3];
     _profileVC.tabBarItem.title = @"Message";
     [self selectedTapTabBarItems:_profileVC.tabBarItem];
     [self unselectedTapTabBarItems:_profileVC.tabBarItem];
     
-    self.viewControllers = @[_followingWeiboVC,_profileVC];
+    
+    
+    self.viewControllers = @[_followingWeiboVC,_remindVC,_profileVC];
     for (UIViewController *controller in self.viewControllers) {
         UIViewController *view= controller.view;
     }
@@ -74,23 +83,23 @@ NSString *access_token;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)writeWeibo {
+    NewWeiboVC *newWeiboVC = [[NewWeiboVC alloc]initWithNibName:@"NewWeiboVC" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:newWeiboVC animated:YES];
+}
 #pragma mark - UITabBarDelegate
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
     switch (item.tag) {
         case 0:
             self.title = @"Home";
             self.navigationItem.rightBarButtonItem = _writeNewWeibo;
-            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_b.png"] forBarMetrics:UIBarMetricsDefault];
             self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-    
-         
             break;
         case 1:
-            self.title = @"Profile";
+            self.title = @"Remind";
             self.navigationItem.rightBarButtonItem = nil;
-            [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_bg.png"] forBarMetrics:UIBarMetricsDefault];
-            self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-            self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+            self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
             break;
         case 2:
             self.title = @"Hot";
@@ -98,6 +107,10 @@ NSString *access_token;
             break;
         case 3:
             self.title = @"Profile";
+            self.navigationItem.rightBarButtonItem = nil;
+            //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_bg.png"] forBarMetrics:UIBarMetricsDefault];
+            //self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+            //self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
             self.navigationItem.rightBarButtonItem = _settingBtn;
             break;
         default:

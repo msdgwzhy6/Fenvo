@@ -70,16 +70,17 @@
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:NO];
         
         CGFloat top = 0;
-        if(![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
-        if(!self.navigationController.navigationBarHidden) top = top + 44;
+        //Let the tableView would not be cover by UINavigationBar and UIStatusBar
+        //if(![[UIApplication sharedApplication] isStatusBarHidden]) top = top + 20;
+        //if(!self.navigationController.navigationBarHidden) top = top + 44;
         self.tableView.contentInset = UIEdgeInsetsMake(top, 0, 0, 0);
         self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(top, 0, 0, 0);
         
         [self setWantsFullScreenLayout:YES];
     }
     
-    // Scroll to bottom
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height) animated:NO];
+    // Let tableView scroll to bottom when it will appear.
+    //[self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height) animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -30,7 +30,7 @@
 
 @implementation WeiboUserInfo
 - (WeiboUserInfo *)initWithDictionary:(NSDictionary *)dict{
-    self.id = [dict[@"id"]longLongValue];
+    self.ids = [dict[@"id"]longLongValue];
     self.idStr = dict[@"idstr"];
     self.screen_name = dict[@"screen_name"];
     self.name = dict[@"name"];
@@ -55,8 +55,9 @@
     self.friends_count = [dict[@"friends_count"]longLongValue];
     self.statuses_count = [dict[@"statuses_count"] longLongValue];
     self.favourites_count = [dict[@"favourites_count"]longLongValue];
-    NSString *creatAtStr = dict[@"creat_at"];
+    NSString *creatAtStr = dict[@"created_at"];
     self.created_at = [self getTimeString:creatAtStr];
+    NSLog(@"self is %@",_created_at);
     self.allow_all_act_msg = [dict[@"allow_all_act_msg"]boolValue];
     self.geo_enabled = [dict[@"geo_enabled"]boolValue];
     self.verified = [dict[@"verified"]boolValue];
@@ -83,8 +84,9 @@
     
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
     [outputFormatter setLocale:[NSLocale currentLocale]];
-    [outputFormatter setDateFormat:@"EEE-MMM-dd"];
+    [outputFormatter setDateFormat:@"yyyy MMM dd"];
     NSString *str = [outputFormatter stringFromDate:inputDate];
+    
     return str;
 }
 

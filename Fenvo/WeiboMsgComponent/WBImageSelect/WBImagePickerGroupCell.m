@@ -63,13 +63,13 @@
     CGRect countLabelFrame;
     
     if((titleTextSize.width + countTextSize.width + 10) > width) {
-        titleLabelFrame = CGRectMake(imageViewSize + 10, 0, width - countTextSize.width - 10, imageViewSize);
+        titleLabelFrame = CGRectMake(imageViewSize , 0, width - countTextSize.width - 10, imageViewSize);
         countLabelFrame = CGRectMake(titleLabelFrame.origin.x + titleLabelFrame.size.width + 10, 0, countTextSize.width, imageViewSize);
     } else {
-        titleLabelFrame = CGRectMake(imageViewSize + 10, 0, titleTextSize.width, imageViewSize);
+        titleLabelFrame = CGRectMake(imageViewSize , 0, titleTextSize.width, imageViewSize);
         countLabelFrame = CGRectMake(titleLabelFrame.origin.x + titleLabelFrame.size.width + 10, 0, countTextSize.width, imageViewSize);
     }
-    
+    self.imageView.frame = CGRectMake(8, 8, 60, 60);
     self.titleLabel.frame = titleLabelFrame;
     self.countLabel.frame = countLabelFrame;
 }

@@ -35,6 +35,11 @@
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     self.navigationController.navigationBar.tintColor = RGBACOLOR(30, 40, 50, 1);
     [self setTitle:@"Following"];
+    
+    //取消tableview向下延伸。避免被tabBar遮盖
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
+    
     [super viewDidLoad];
     _next_cursor = 0;
     _previous_cursor = 0;
@@ -74,7 +79,7 @@
     configuration.circleSize = 110.0f;
     configuration.lineWidth = 1.0f;
     configuration.fullScreen = YES;
-    configuration.allowUserInteraction = NO;
+    configuration.allowUserInteraction = YES;
     
     [KVNProgress setConfiguration:configuration];
     [KVNProgress showWithStatus:@"Loading..."];

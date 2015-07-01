@@ -45,8 +45,10 @@
 }
 @end
 @implementation FollowingWBViewController
-
-
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationController.navigationBar.tintColor = RGBACOLOR(30, 40, 50, 1);
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,8 +58,8 @@
     //设置TableView样式
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
-    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
-    
+    //self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
+    self.tableView.backgroundColor = RGBACOLOR(30, 40, 50, 1);
     //取消tableview向下延伸。避免被tabBar遮盖
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);

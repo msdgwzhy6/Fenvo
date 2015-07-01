@@ -19,6 +19,7 @@
 #import "FollowingListTableViewController.h"
 #import "FollowerListTableViewController.h"
 #import "UserInfoView.h"
+#import "AppDelegate.h"
 
 
 
@@ -53,21 +54,31 @@
 @end
 
 @implementation ProfileViewController
-- (void)viewWillAppear:(BOOL)animated {
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_bg.png"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-}
+
 
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+    
+    //取消tableview向下延伸。避免被tabBar遮盖
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    
+    //let the view will not move down when it pushed into navigation
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    //let the view which in front of the root view become opaque
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
+    
+    //取消tableview向下延伸。避免被tabBar遮盖
+    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.view.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
+    
     [self initWithComponent];
     
     NSNotificationCenter  *center = [NSNotificationCenter defaultCenter];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WBNOTIFICATION_DOWNLOADDATA object:nil];
     [center addObserver:self selector:@selector(downloadUserProfile:) name:WBNOTIFICATION_DOWNLOADDATA object:nil];
+    
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -112,17 +123,69 @@
         
         
     });
-
     [_albumView setAccessToken];
 }
 
+//download others user profile
+//Forbidden Now. Because of the weibo API restriction
+- (void)downloadUserProfileWithUid:(long long)uid{
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    _access_token = delegate.access_token;
+    NSLog(@"。。。。。access is%@",_access_token);
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [[AFJSONResponseSerializer alloc]init];
+        //http请求头应该添加text/plain。接受类型内容无text/plain
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
+        NSString *getUserProfile = WBAPIURL_USERPROFILE;
+        NSLog(@"%@",getUserProfile);
+        NSDictionary *dict0 = [[NSDictionary alloc]init];
+        _uid = [NSString stringWithFormat:@"%lld",uid];
+        dict0 = @{@"access_token":_access_token,@"uid":_uid};
+        [manager GET:getUserProfile
+          parameters:dict0
+             success:^(AFHTTPRequestOperation *operation, id responserObject){
+                 NSError *error;
+                 NSData *jsonData = [responserObject
+                                     JSONDataWithOptions:NSJSONWritingPrettyPrinted
+                                     error:&error];
+                 NSString *jsonString = [[NSString alloc]
+                                         initWithData:jsonData
+                                         encoding:NSUTF8StringEncoding];
+                 NSLog(@"%@",jsonString);
+                 
+                 NSDictionary *userProfileDictionary = [jsonString objectFromJSONString];
+                 userProfile = [[WeiboUserInfo alloc]initWithDictionary:userProfileDictionary];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self refreshUserProfile];
+                     _userInfoView.userInfo = userProfile;
+                 });
+                 
+                 
+             }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+                 NSLog(@"userProfile get failure");
+             }];
+        
+        
+    });
+    [_albumView setAccessToken];
+}
+
+
 - (void)initWithComponent {
-    self.view.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT);
+    //self.view.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
+    UIView *vi = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 0, 0)];
+    [self.view addSubview:vi];
     _refreshView = [[UIScrollView alloc]init];
-    _refreshView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT);
+    _refreshView.autoresizesSubviews = NO;
+    _refreshView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
     _refreshView.backgroundColor = RGBACOLOR(30, 40, 50, 1);
     _refreshView.showsHorizontalScrollIndicator = NO;
     _refreshView.showsVerticalScrollIndicator = NO;
+    _refreshView.contentSize =CGSizeMake(IPHONE_SCREEN_WIDTH,IPHONE_SCREEN_HEIGHT);
+    //_refreshView.contentInset =UIEdgeInsetsMake(-64,0, -49, 0);
     [_refreshView addLegendHeaderWithRefreshingTarget:self
                                      refreshingAction:@selector(downloadUserProfile)];
     [self.view addSubview:_refreshView];
@@ -134,6 +197,7 @@
     [_refreshView addSubview:_basicInfoView];
     */
     CGFloat navigationY = IPHONE_NAVIGATIONHEIGHT + 30;
+    NSLog(@"%f",navigationY);
     CGFloat centerX = self.view.center.x;
     _gender = [[UILabel alloc]initWithFrame:CGRectMake(centerX-40, navigationY, 20, 15)];
     _gender.textAlignment = NSTextAlignmentCenter;
@@ -228,8 +292,12 @@
     [_followerNumber addTarget:self action:@selector(openFollowerList) forControlEvents:UIControlEventTouchUpInside];
     [_weiboNumber addTarget:self action:@selector(openMyWeiboList) forControlEvents:UIControlEventTouchUpInside];
     
+    
 }
 - (void)downloadUserProfile {
+    if (!_uid) {
+        return;
+    }
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -337,25 +405,75 @@
             //_basicInfoView.image = [[WeiboGetBlurImage shareWeiboGetBlurImage]getBlurImage:image];
         }
     }];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_gender];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_address];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboNumber.titleLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerNumber.titleLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingNumber.titleLabel];
     */
 
     _gender.text = userProfile.gender;
     _address.text = userProfile.location;
     _descriptions.text = userProfile.descriptions;
-    [_weiboNumber setTitle:[NSString stringWithFormat:@"%ld",userProfile.statuses_count] forState:UIControlStateNormal];
-    [_followingNumber setTitle:[NSString stringWithFormat:@"%ld",userProfile.followers_count] forState:UIControlStateNormal];
-    [_followerNumber setTitle:[NSString stringWithFormat:@"%ld",userProfile.friends_count] forState:UIControlStateNormal];
-    /*
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboLabel];
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingLabel];
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerLabel];
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_gender];
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_address];
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboNumber.titleLabel];
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerNumber.titleLabel];
-    [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingNumber.titleLabel];
-*/
+    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count] forState:UIControlStateNormal];
+    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count] forState:UIControlStateNormal];
+    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count] forState:UIControlStateNormal];
     }
+
+- (void)refreshUserProfileWithUser:(WeiboUserInfo *)userInfo {
+    if (!userProfile) {
+        userProfile = [[WeiboUserInfo alloc]init];
+        userProfile = userInfo;
+    }else {
+        userProfile = userInfo;
+    }
+    self.title = userInfo.screen_name;
+    [_profileAvatar sd_setImageWithURL:
+     [NSURL URLWithString:userProfile.profile_image_url]
+                      placeholderImage:nil
+                               options:SDWebImageProgressiveDownload
+                             completed:^(UIImage *image,
+                                         NSError *error,
+                                         SDImageCacheType cacheType,
+                                         NSURL *imageURL){
+                                 if (image) {
+                                     _profileAvatar.image = image;
+                                 }
+                             }];
+    /*[_basicInfoView sd_setImageWithURL:
+     [NSURL URLWithString:userProfile.avatar_hd]
+     placeholderImage:nil
+     options:SDWebImageProgressiveDownload
+     completed:^(UIImage *image,
+     NSError *error,
+     SDImageCacheType cacheType,
+     NSURL *imageURL){
+     if (image) {
+     //_basicInfoView.image = [[WeiboGetBlurImage shareWeiboGetBlurImage]getBlurImage:image];
+     }
+     }];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_gender];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_address];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboNumber.titleLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerNumber.titleLabel];
+     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingNumber.titleLabel];
+     */
+    
+    _gender.text = userProfile.gender;
+    _address.text = userProfile.location;
+    _descriptions.text = userProfile.descriptions;
+    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count] forState:UIControlStateNormal];
+    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count] forState:UIControlStateNormal];
+    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count] forState:UIControlStateNormal];
+    _userInfoView.userInfo = userInfo;
+}
+
 
 - (void)openFollowingList {
     NSLog(@"you touch following");
@@ -378,6 +496,9 @@
 }
 
 
+- (void)dealloc {
+ 
+}
 
 #pragma mark UITextColor Setting Methods
 - (void)setTextColorWithBackgroundImage:(UIImage *)background andComponent:(UILabel *) uiLabel {

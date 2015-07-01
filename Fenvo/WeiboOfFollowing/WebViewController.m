@@ -7,6 +7,7 @@
 //
 
 #import "WebViewController.h"
+#import "KVNProgress.h"
 
 @interface WebViewController ()
 {
@@ -43,6 +44,20 @@
     
     NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:linkAdr]];
     [_webView loadRequest:request];
+    
+    //Set KVNProgress
+    KVNProgressConfiguration *configuration = [[KVNProgressConfiguration alloc] init];
+    configuration.statusFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:30.0f];
+    configuration.circleStrokeBackgroundColor = [UIColor colorWithWhite:1.0f alpha:0.2f];
+    configuration.circleSize = 110.0f;
+    configuration.lineWidth = 1.0f;
+    configuration.fullScreen = YES;
+    configuration.allowUserInteraction = YES;
+    
+    [KVNProgress setConfiguration:configuration];
+    
+    //show progress
+    [KVNProgress showWithStatus:@"Loading..."];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,6 +67,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     [_activityIndicatorView stopAnimating];
+    [KVNProgress dismiss];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView{

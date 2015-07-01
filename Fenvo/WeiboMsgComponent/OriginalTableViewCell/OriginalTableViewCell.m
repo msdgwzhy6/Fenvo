@@ -37,6 +37,7 @@
     [self addSubview:self.containView];
     //头像
     _avatar = [[WeiboAvatarView alloc]init];
+    [_avatar setStyle];
     [self.containView addSubview:_avatar];
     //用户名
     _userName = [[UILabel alloc]init];
@@ -159,7 +160,8 @@
     //初始化 － 头像
     CGRect avatarRect = CGRectMake(10, 5, WBStatusCellAvatarWidth, WBStatusCellAvatarHeight);
     _avatar.image = weiboMsg.user_avatar;
-    
+    _avatar.userInfo = weiboMsg.user;
+    NSLog(@"origni :%lld",weiboMsg.user.ids);
     _avatar.frame = avatarRect;
     
     //初始化 － 用户名
@@ -227,7 +229,6 @@
                                options:NSStringDrawingUsesLineFragmentOrigin
                                attributes:@{NSFontAttributeName:WBStatusCellDetailFont}
                                context:nil].size;
-
         CGRect wbForwardTextRect = CGRectMake(wbForwardTextX, wbForwardTextY, wbForwardTextSize.width, wbForwardTextSize.height);
         _wbForwardText.frame = wbForwardTextRect;
         [_wbForwardText setEmojiText:retweeted_text];

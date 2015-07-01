@@ -8,6 +8,7 @@
 
 #import "SingleWebImageBrowser.h"
 #import "UIImageView+WebCache.h"
+#import "KVNProgress.h"
 
 #define IPHONE_SCREEN_WIDTH [[UIScreen mainScreen]bounds].size.width
 #define IPHONE_SCREEN_HEIGHT [[UIScreen mainScreen]bounds].size.height
@@ -164,8 +165,7 @@ static CGRect oldImageViewFrame;
 //保存图片到相册
 - (void)saveImage{
     UIImageWriteToSavedPhotosAlbum([imageView image], nil, nil, nil);
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Reminder" message:@"图片已保存" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
+    [KVNProgress showSuccess];
 }
 
 -(void)closeBmiddlePic:(UITapGestureRecognizer *)tap{

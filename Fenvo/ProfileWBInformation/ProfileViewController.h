@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeiboUserInfo.h"
 
 @interface ProfileViewController : UIViewController<UITabBarDelegate,UITableViewDataSource,UITableViewDelegate>
 @property(copy, nonatomic)NSString *access_token;
 @property(copy, nonatomic)NSString *uid;
 - (void)initWithComponent;
+
+//get others user profile
+//using the uid. Forbidden Now.
+- (void)downloadUserProfileWithUid:(long long)uid;
+//using the userInfo that got from the weiboMsg
+- (void)refreshUserProfileWithUser:(WeiboUserInfo *)userInfo;
 @end

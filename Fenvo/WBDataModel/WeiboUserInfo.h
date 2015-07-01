@@ -10,7 +10,7 @@
 
 @interface WeiboUserInfo : NSObject
 //int64	用户UID
-@property (nonatomic, assign)long long id;
+@property (nonatomic, assign)long long ids;
 //idstr	string	字符串型的用户UID
 @property (nonatomic, copy)NSString *idStr;
 //screen_name	string	用户昵称
