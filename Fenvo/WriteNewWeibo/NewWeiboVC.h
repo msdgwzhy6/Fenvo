@@ -10,7 +10,7 @@
 
 @interface NewWeiboVC : UIViewController
 @property (strong, nonatomic) IBOutlet UITextView *wbDetail;
-@property (strong, nonatomic) IBOutlet UIButton *addImg;
+@property (strong, nonatomic) UIButton *addImg;
 
 @property (strong, nonatomic)NSMutableArray *imgPaths;
 @end

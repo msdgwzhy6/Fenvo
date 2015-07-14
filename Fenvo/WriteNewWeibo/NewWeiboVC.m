@@ -9,10 +9,20 @@
 #import "NewWeiboVC.h"
 #import "KVNProgress.h"
 #import "WBImagePickerVC.h"
+#import "MutiImageView.h"
 
 @interface NewWeiboVC ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,WBImagePickerControllerDelegate>
 {
     UIActionSheet *_selection;
+    
+    //image arr
+    NSMutableArray *arr;
+    
+    //MutiImageView arr
+    NSMutableArray *_imageArray;
+    
+    //select image in gallery
+    WBImagePickerVC *imagePickVC;
 }
 @end
 
@@ -21,7 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT);
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     
     self.title = @"New Weibo";
     
@@ -33,8 +44,22 @@
     
     //xib component setting
     _wbDetail.delegate = self;
+
+    _addImg = [UIButton buttonWithType:UIButtonTypeCustom];
+    _addImg.frame = CGRectMake(8, CGRectGetMaxY(_wbDetail.frame) + 8, 80, 80);
+    [_addImg setImage:[UIImage imageNamed:@"btn_add_photo"] forState:UIControlStateNormal];
     [_addImg setImage:[UIImage imageNamed:@"btn_add_photo_hl"] forState:UIControlStateHighlighted];
     [_addImg addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_addImg];
+    
+    //add delete imgae observer
+    NSNotificationCenter *defult = [NSNotificationCenter defaultCenter];
+    [defult removeObserver:self name:@"deleteImage" object:nil];
+    [defult addObserver:self selector:@selector(deleteImage:) name:@"deleteImage" object:nil];
+    
+    //init image array and image view array
+    _imageArray = [[NSMutableArray alloc]init];
+    arr = [[NSMutableArray alloc]init];
     
 }
 
@@ -82,18 +107,14 @@
 }
 
 - (void)openGallery {
-    /*
-    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    [self.navigationController pushViewController:picker animated:YES];
-     */
-    WBImagePickerVC *imagePickVC = [[WBImagePickerVC alloc]init];
-    imagePickVC.delegate = self;
-    imagePickVC.allowsMultipleSelection = NO;
-    imagePickVC.limitsMaximumNumberOfSelection = YES;
-    imagePickVC.maximumNumberOfSelection = 9;
+    if (imagePickVC == nil) {
+        
+        imagePickVC = [[WBImagePickerVC alloc]init];
+        imagePickVC.delegate = self;
+        imagePickVC.allowsMultipleSelection = YES;
+        imagePickVC.limitsMaximumNumberOfSelection = YES;
+        imagePickVC.maximumNumberOfSelection = 9;
+    }
     [self.navigationController pushViewController:imagePickVC animated:YES];
 }
 
@@ -102,79 +123,108 @@
 - (void)imagePickerController:(WBImagePickerVC *)imagePickerController didFinishPickingMediaWithInfo:(id)info {
     NSArray *mediaInfoArray = (NSArray *)info;
 
-    
-    for (int i = 0; i < mediaInfoArray.count; i++) {
-        
+    //get the selected image array
+    for (int i = 0 ; i < mediaInfoArray.count; i++) {
         NSDictionary *mediaInfo = mediaInfoArray[i];
         UIImage *image = mediaInfo[@"UIImagePickerControllerOriginalImage"];
+        [arr addObject:image];
+    }
+    
+    for (int i = 0; i < arr.count; i++) {
         
-        if (i <= 1 || (i > 2 && i < 5) || (i > 6 && i < 8)) {
+        if (i < _imageArray.count) {
+            continue;
+        }
+        //adjust the frame of the image view
+        if (i < 2 || (i > 2 && i < 5) || (i > 5 && i < 8)) {
             
             float width = 88.0f;
             
             NSTimeInterval animationDuration = 0.30f;
             
-            CGRect frame = self.addImg.frame;
+            CGRect frame = _addImg.frame;
             
             //replace the addImage Button with imageView;
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIImageView *img = [[UIImageView alloc]initWithFrame:frame];
-                img.image = image;
+                MutiImageView *img;
+                img = [[MutiImageView alloc]initWithImageArray:_imageArray AndTag:i];
                 [self.view addSubview:img];
+                img.frame = frame;
+                img.image = arr[i];
+                [_imageArray addObject:img];
             });
             
             frame.origin.x += width;
-            self.addImg.frame = frame;
+            _addImg.frame = frame;
             
             //self.view移回原位置
             [UIView beginAnimations:@"ResizeView"context:nil];
             [UIView setAnimationDuration:animationDuration];
             
-            self.addImg.frame = frame;
+            _addImg.frame = frame;
             
             [UIView commitAnimations];
             
         }else if (i == 2 || i == 5) {
             float height = 88.0f;
-            
             NSTimeInterval animationDuration = 0.30f;
             
-            CGRect frame = self.addImg.frame;
+            CGRect frame = _addImg.frame;
             
             //replace the addImage Button with imageView;
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIImageView *img = [[UIImageView alloc]initWithFrame:frame];
-                img.image = image;
+                MutiImageView *img;
+                img = [[MutiImageView alloc]initWithImageArray:_imageArray AndTag:i];
                 [self.view addSubview:img];
+                img.frame = frame;
+                img.image = arr[i];
+                [_imageArray addObject:img];
             });
             
             frame.origin.y += height;
             frame.origin.x = 8.0f;
-            self.addImg.frame = frame;
+            
+            //frame.size.height += height;
+            
+            _addImg.frame = frame;
             
             //self.view移回原位置
             
             [UIView beginAnimations:@"ResizeView"context:nil];
             [UIView setAnimationDuration:animationDuration];
             
-            self.addImg.frame = frame;
+            _addImg.frame = frame;
             
             [UIView commitAnimations];
             
         }else if(i == 8){
             
-            CGRect frame = self.addImg.frame;
+            CGRect frame = _addImg.frame;
             
             //replace the addImage Button with imageView;
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIImageView *img = [[UIImageView alloc]initWithFrame:frame];
-                img.image = image;
+                MutiImageView *img;
+                img = [[MutiImageView alloc]initWithImageArray:_imageArray AndTag:i];
                 [self.view addSubview:img];
+                img.frame = frame;
+                img.image = arr[i];
+                [_imageArray addObject:img];
             });
             
-            [self.addImg setHidden:YES];
+            [_addImg setHidden:YES];
         }
+        
+        //control the number of arr is 9
+        imagePickVC.maximumNumberOfSelection = 9 - arr.count;
     }
+    
+    //reset the imageArray and the tag of every MutiImageView
+    for (long i = 0; i < _imageArray.count; i ++) {
+        MutiImageView *img = _imageArray[i];
+        [img setImageArray:_imageArray andTag:i];
+    }
+    
+    [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(WBImagePickerVC *)imagePickerController
@@ -203,6 +253,60 @@
 - (NSString *)imagePickerController:(WBImagePickerVC *)imagePickerController descriptionForNumberOfPhotos:(NSUInteger)numberOfPhotos {
      return [NSString stringWithFormat:@" %ld Photos",numberOfPhotos];
 }
+
+#pragma mark - delete image methods
+
+- (void)deleteImage:(NSNotification *)notice {
+    long image_tag = [notice.object longValue];
+    MutiImageView *delete_img_view = _imageArray[image_tag];
+    CGRect frame = delete_img_view.frame;
+    
+    //if the deleted image is the last one
+    if(image_tag == _imageArray.count - 1){
+        
+        //let the button replace it
+        _addImg.frame = frame;
+        
+        //remove the imageView
+        [delete_img_view removeFromSuperview];
+        [_imageArray removeObjectAtIndex:image_tag];
+        
+        //if the original _imageArray.count == 9
+        //that's say the button is hidden now, let it become visible.
+        if ([_addImg isHidden]==YES) {
+            [_addImg setHidden:NO];
+        }
+        return;
+    }
+    
+    //if the deleted image is not the last one
+    //replace the image one by one
+    for (long i = image_tag + 1; i < _imageArray.count; i ++) {
+        MutiImageView *img = _imageArray[i];
+        CGRect frame_tmp = img.frame;
+        img.frame = frame;
+        frame = frame_tmp;
+    }
+    
+    //if the original _imageArray.count == 9
+    //that's say the button is hidden now, let it become visible.
+    if ([_addImg isHidden]==YES) {
+        [_addImg setHidden:NO];
+    }
+    _addImg.frame = frame;
+    
+    //remove the deleted image view
+    [delete_img_view removeFromSuperview];
+    [_imageArray removeObjectAtIndex:image_tag];
+    
+    
+    //reset the imageArray and the tag of every MutiImageView
+    for (long i = 0; i < _imageArray.count; i ++) {
+        MutiImageView *img = _imageArray[i];
+        [img setImageArray:_imageArray andTag:i];
+    }
+}
+
 
 #pragma mark - UIImagePickerControllerDelegate
 
