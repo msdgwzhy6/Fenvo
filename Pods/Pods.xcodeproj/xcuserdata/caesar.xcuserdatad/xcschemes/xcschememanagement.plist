@@ -19,6 +19,26 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-REFormattedNumberField.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-RETableViewManager-RETableViewManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-RETableViewManager.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-REValidation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4EFAB36499467721B3FF6598</key>
+		<key>391E59646B5E11AD65AF375B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>72F4695AA393FE0429082024</key>
+		<key>3F7F7B478A53E8D8CB3C9385</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A369C5F199A5E5BC4C25AD9F</key>
+		<key>4BD48E35F4FAE6EE195EBAE9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B063E8C33E64BCC2129994B8</key>
+		<key>61331FABC638A3597E58BAB1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D8384D236657583CA9645B54</key>
+		<key>64E5398213AEFBABD2D6FDAA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>81F7E0830BDD120E245E7034</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>89CE29E9C8FEA05C7429787A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DFEA3591BF75D16E399EBFF4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E2B0E3EDEBE9C4A261E166F2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
