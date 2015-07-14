@@ -76,8 +76,7 @@
 - (void)initComponentWithTag:(NSInteger)tag{
     window = [UIApplication sharedApplication].keyWindow;
     mainScrollView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    mainScrollView.backgroundColor = RGBACOLOR(220, 220, 220, 0.5);
-    mainScrollView.alpha = 0.5;
+    mainScrollView.backgroundColor = RGBACOLOR(20, 20, 20, 0.55);
     mainScrollView.scrollEnabled = YES;
     mainScrollView.contentSize = CGSizeMake(_imageArray.count * IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT);
     mainScrollView.pagingEnabled = YES;
@@ -153,7 +152,8 @@
     [mainScrollView scrollRectToVisible:rect animated:YES];
      ;
     
-    MutiImageView *img = (MutiImageView *)_imageArray[pageControl.currentPage];
+    MutiImageView *img;
+    img = (MutiImageView *)_imageArray[pageControl.currentPage];
     imageView.image = img.image;
     
     CGSize imageSize = imageView.image.size;
@@ -232,11 +232,9 @@
         scrollView.frame = rect;
         [mainScrollView scrollRectToVisible:rect animated:YES];
 
-        MutiImageView *img = [[MutiImageView alloc]init];
+        MutiImageView *img;
         img = (MutiImageView *)_imageArray[pageControl.currentPage];
-        if(img.image){
         imageView.image = img.image;
-        }
         CGSize imageSize = imageView.image.size;
         float b = imageSize.width/(IPHONE_SCREEN_WIDTH);
         

@@ -60,9 +60,6 @@
 
     [super viewDidLoad];
     
-    //取消tableview向下延伸。避免被tabBar遮盖
-    self.edgesForExtendedLayout = UIRectEdgeAll;
-    
     //let the view will not move down when it pushed into navigation
     self.automaticallyAdjustsScrollViewInsets = NO;
     

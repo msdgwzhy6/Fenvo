@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BC200814-9A07-48CC-928A-D642C41B5762</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Fenvo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>98F2B48C785A5000FFAA0C125B03CD6B4C1E40A6</key>
+		<string>github.com:ChenNan-FRAM/Fenvo.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Fenvo.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>98F2B48C785A5000FFAA0C125B03CD6B4C1E40A6</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:ChenNan-FRAM/Fenvo.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>98F2B48C785A5000FFAA0C125B03CD6B4C1E40A6</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>98F2B48C785A5000FFAA0C125B03CD6B4C1E40A6</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Fenvo</string>
+		</dict>
+	</array>
+</dict>
+</plist>

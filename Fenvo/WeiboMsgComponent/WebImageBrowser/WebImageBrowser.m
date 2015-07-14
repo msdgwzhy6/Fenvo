@@ -97,8 +97,7 @@ static CGRect oldImageViewFrame;
 - (void)initComponent:(WebImageView *)webImageView andTag:(NSInteger)tag{
     window = [UIApplication sharedApplication].keyWindow;
     mainScrollView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    mainScrollView.backgroundColor = RGBACOLOR(220, 220, 220, 0.5);
-    mainScrollView.alpha = 0.5;
+    mainScrollView.backgroundColor = RGBACOLOR(20, 20, 20, 0.55);
     mainScrollView.scrollEnabled = YES;
     mainScrollView.contentSize = CGSizeMake(webImageView.bmiddle_pic_urls.count * IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT);
     mainScrollView.pagingEnabled = YES;
@@ -141,7 +140,18 @@ static CGRect oldImageViewFrame;
     [mainScrollView scrollRectToVisible:rect animated:YES];
     
     oldImageViewFrame = [webImageView convertRect:webImageView.bounds toView:window];
-    scrollView.backgroundColor = RGBACOLOR(220, 220, 220, 0.6);
+    
+    CAGradientLayer* _gradientLayer = [CAGradientLayer layer];  // 设置渐变效果
+    _gradientLayer.bounds = scrollView.bounds;
+    _gradientLayer.borderWidth = 0;
+    
+    _gradientLayer.frame = scrollView.bounds;
+    _gradientLayer.colors = [NSArray arrayWithObjects:
+                             (id)[[UIColor clearColor] CGColor],
+                             (id)[[UIColor blackColor] CGColor],
+                             (id)[[UIColor clearColor] CGColor],nil];
+    _gradientLayer.startPoint = CGPointMake(0.5, 0);
+    [scrollView.layer insertSublayer:_gradientLayer atIndex:0];
     scrollView.scrollEnabled = YES;
     scrollView.showsVerticalScrollIndicator = YES;
     scrollView.delegate = self;
