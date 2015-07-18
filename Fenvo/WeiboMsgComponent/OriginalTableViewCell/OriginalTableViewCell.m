@@ -12,7 +12,10 @@
 #import "WeiboCommentView.h"
 #import "WeiboForwardView.h"
 #import "UIImageView+WebCache.h"
+#import "UIImage+FontAwesome.h"
 
+
+#define BUTTON_FONT [UIFont systemFontOfSize:13.0]
 @interface OriginalTableViewCell()<WeiboLabelDelegate>{
 
 }
@@ -23,6 +26,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         [self initSubView];
+        
         self.accessoryType = UITableViewCellAccessoryNone;
         self.backgroundColor = RGBACOLOR(0, 0, 0, 0);
         self.selectionStyle = UITableViewCellSelectionStyleBlue;
@@ -108,46 +112,22 @@
     //
     _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _praiseBtn.tag = 100;
-    _praiseBtn.titleLabel.font = WBStatusButtonFont;
-    [_praiseBtn setTitle:@"Praise" forState:UIControlStateNormal];
-    [_praiseBtn setTitleColor:RGBACOLOR(30, 40, 50, 1) forState:UIControlStateNormal];
-    _praiseBtn.tintColor = RGBACOLOR(30, 40, 50, 1);
+    _praiseBtn.titleLabel.font = BUTTON_FONT;
+    [_praiseBtn setImage:[UIImage imageWithIcon:@"fa-heart" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_praiseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_praiseBtn];
     _forwardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _forwardBtn.tag = 101;
-    [_forwardBtn setTitle:@"Forward" forState:UIControlStateNormal];
-    [_forwardBtn setTitleColor:RGBACOLOR(30, 40, 50, 1) forState:UIControlStateNormal];
-    _forwardBtn.tintColor = RGBACOLOR(30, 40, 50, 1);
-    _forwardBtn.titleLabel.font = WBStatusButtonFont;
+    [_forwardBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_forwardBtn setImage:[UIImage imageWithIcon:@"fa-share" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    _forwardBtn.titleLabel.font = BUTTON_FONT;
     [self.containView addSubview:_forwardBtn];
     _commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commentBtn.tag = 102;
-    [_commentBtn setTitle:@"Comment" forState:UIControlStateNormal];
-    _commentBtn.titleLabel.font = WBStatusButtonFont;
-    [_commentBtn setTitleColor:RGBACOLOR(30, 40, 50, 1) forState:UIControlStateNormal];
+    _commentBtn.titleLabel.font = BUTTON_FONT;
+    [_commentBtn setImage:[UIImage imageWithIcon:@"fa-comment" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_commentBtn];
-    
-    
-    //
-    //赞的数量
-    _praiseNum = [[UILabel alloc]init];
-    _praiseNum.textAlignment = UITextAlignmentCenter;
-    _praiseNum.textColor = WBStatusLightGrayColor;
-    _praiseNum.font = WBStatusCellCountFont;
-    [self.containView addSubview:_praiseNum];
-    //
-    _forwardNum = [[UILabel alloc]init];
-    _forwardNum.textColor = WBStatusLightGrayColor;
-    _forwardNum.textAlignment = UITextAlignmentCenter;
-    _forwardNum.font = WBStatusCellCountFont;
-    [self.containView addSubview:_forwardNum];
-    //
-    //用户名
-    _commentNum = [[UILabel alloc]init];
-    _commentNum.textAlignment = UITextAlignmentCenter;
-    _commentNum.textColor = WBStatusLightGrayColor;
-    _commentNum.font = WBStatusCellCountFont;
-    [self.containView addSubview:_commentNum];
     
 }
 
@@ -159,7 +139,7 @@
     
     
     //初始化 － 头像
-    CGRect avatarRect = CGRectMake(10, 5, WBStatusCellAvatarWidth, WBStatusCellAvatarHeight);
+    CGRect avatarRect = CGRectMake(10, 10, WBStatusCellAvatarWidth, WBStatusCellAvatarHeight);
     
     [_avatar sd_setImageWithURL:[NSURL URLWithString:weiboMsg.user.profile_image_url] placeholderImage:[UIImage imageNamed:@"WifiMan_Sign_4"]];
     _avatar.userInfo = weiboMsg.user;
@@ -167,7 +147,7 @@
     
     //初始化 － 用户名
     CGFloat userNameX = CGRectGetMaxX(_avatar.frame) + WBStatusCellControlSpacing;
-    CGFloat userNameY = 5;
+    CGFloat userNameY = 10;
     CGSize userNameSize = [weiboMsg.user.name sizeWithAttributes:@{NSFontAttributeName: WBStatusCellUserNameFont}];
     CGFloat userNameSizeX = userNameSize.width;
     CGFloat userNameSizeY = userNameSize.height;
@@ -531,21 +511,16 @@
     
     CGRect commentRect = CGRectMake(5, imageHeight + 5, btnWidth, 30);
     _commentBtn.frame = commentRect;
+    [_commentBtn setTitle:[self countToString:weiboMsg.comments_count] forState:UIControlStateNormal];
     CGRect forwardRect = CGRectMake(CGRectGetMaxX(_commentBtn.frame), imageHeight +5, btnWidth, 30);
     _forwardBtn.frame = forwardRect;
+    [_forwardBtn setTitle:[self countToString:weiboMsg.reposts_count] forState:UIControlStateNormal];
     CGRect praiseRect = CGRectMake(CGRectGetMaxX(_forwardBtn.frame), imageHeight +5, btnWidth, 30);
     _praiseBtn.frame = praiseRect;
+    [_praiseBtn setTitle:[self countToString:weiboMsg.attitudes_count] forState:UIControlStateNormal];
     
     
-    CGFloat labelHeight = CGRectGetMaxY(commentRect);
-    _commentNum.frame = CGRectMake(5, labelHeight, btnWidth, 20);
-    _commentNum.text = [self countToString:weiboMsg.comments_count];
-    _forwardNum.frame = CGRectMake(CGRectGetMaxX(_commentNum.frame), labelHeight, btnWidth, 20);
-    _forwardNum.text = [self countToString:weiboMsg.reposts_count];
-    _praiseNum.frame = CGRectMake(CGRectGetMaxX(_forwardNum.frame), labelHeight, btnWidth, 20);
-    _praiseNum.text = [self countToString:weiboMsg.attitudes_count];
-    
-    containViewRect = CGRectMake(5, 5, IPHONE_SCREEN_WIDTH - 10, CGRectGetMaxY(_commentNum.frame) + 5);
+    containViewRect = CGRectMake(5, 5, IPHONE_SCREEN_WIDTH - 10, CGRectGetMaxY(_commentBtn.frame) + 5);
     self.containView.frame = containViewRect;
     
     CGFloat height = CGRectGetHeight(self.containView.frame)+ 10;
@@ -578,10 +553,10 @@
 //
 - (NSString *)countToString:(NSUInteger)count {
     if (count > 1000) {
-        return [NSString stringWithFormat:@"%dk",(int)count/1000];
+        return [NSString stringWithFormat:@"  %dk",(int)count/1000];
     }
     else {
-        return [NSString stringWithFormat:@"%d", (int)count];
+        return [NSString stringWithFormat:@"  %d", (int)count];
     }
 }
 - (void)awakeFromNib {

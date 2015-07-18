@@ -13,14 +13,19 @@
 #import "KVNProgress.h"
 #import "ChatCell.h"
 
+#import "NSString+FontAwesome.h"
+#import "UIImage+FontAwesome.h"
+
 @interface WeiboRemindVC () {
  
     //chat list
     NSMutableArray *_chatList;
     
+    
     //function list @、comment、like
     NSArray *_func_list;
     
+    NSArray *_func_img;
     
 }
 @end
@@ -33,7 +38,6 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     //let the view which in front of the tableview be opaque
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
-    self.tableView.backgroundColor = RGBACOLOR(30, 40, 50, 1);
     
     //cancel tableview extend edge
     //because navigationBar or tabBar maybe covers the tableView
@@ -46,11 +50,19 @@
     
     //功能列表
     _func_list = [NSArray arrayWithObjects:
-                  @"Comment",
-                  @"@  Event",
-                  @"Like",
-                  @"Chat",
+                  @"COMMENT",
+                  @"@YOU",
+                  @"LIKE",
+                  @"CHAT",
                   nil];
+    
+    //image
+    _func_img = [NSArray arrayWithObjects:
+                 [UIImage imageWithIcon:@"fa-comment" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
+                 [UIImage imageWithIcon:@"fa-at" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
+                 [UIImage imageWithIcon:@"fa-heart" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
+                 [UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
+                 nil];
 }
 
 - (void)addRefreshViewController{
@@ -96,9 +108,10 @@
     //if the indexPath.row <= 2
     if (indexPath.row <= 3) {
         UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normal_cellID];
-        cell.backgroundColor = RGBACOLOR(255, 255, 255, 0.6);
-        cell.text = _func_list[indexPath.row];
-        cell.font = [UIFont systemFontOfSize:18];
+        cell.textLabel.text = _func_list[indexPath.row];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
+        
+        cell.imageView.image = _func_img[indexPath.row];
         return cell;
     }
     //else if other indexPath.row
@@ -117,7 +130,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 56;
+    return 46;
 }
 
 /*

@@ -42,7 +42,4 @@
 @property(nonatomic, strong)UIButton *forwardBtn;
 @property(nonatomic, strong)UIButton *commentBtn;
 
-@property(nonatomic, strong)UILabel *praiseNum;
-@property(nonatomic, strong)UILabel *forwardNum;
-@property(nonatomic, strong)UILabel *commentNum;
 @end

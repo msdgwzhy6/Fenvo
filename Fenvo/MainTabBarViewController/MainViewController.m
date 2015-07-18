@@ -13,6 +13,7 @@
 #import "NewWeiboVC.h"
 #import "NSString+FontAwesome.h"
 #import "UIImage+FontAwesome.h"
+#import "MainTabBar.h"
 
 @interface MainViewController ()<UITabBarDelegate,UITabBarControllerDelegate>
 {
@@ -39,21 +40,14 @@ NSString *access_token;
 }
 - (void)initSubView{
     //自定义tabbar实现透明效果，替换时要使用[self setValue:  forKey:];因为其自带tabbar是只读，不能使用赋值形式。
-    UITabBar * rootTabBar = [[UITabBar alloc] init];
-    [rootTabBar setUserInteractionEnabled:YES];
-    [rootTabBar setDelegate:self];
-    [rootTabBar setBackgroundColor:[UIColor clearColor]];
-    CGRect frame = self.tabBar.frame;
-    frame.size.height -= 10;
-    [rootTabBar setFrame:frame];
-    [rootTabBar setAlpha:1];
+    UITabBar * rootTabBar = [[MainTabBar alloc] init];
     
     [self.view addSubview:rootTabBar];
     [self setValue:rootTabBar forKey:@"tabBar"];
 
     _followingWeiboVC = [[FollowingWBViewController alloc]initWithStyle:UITableViewStylePlain];
     //_followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Home" image:nil tag:0];
-    _followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(220, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
     _followingWeiboVC.tabBarItem.tag = 0;
 
     [self selectedTapTabBarItems:_followingWeiboVC.tabBarItem];
@@ -61,14 +55,14 @@ NSString *access_token;
     
     
     _remindVC = [[WeiboRemindVC alloc]initWithStyle:UITableViewStyleGrouped];
-    _remindVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:[UIImage imageWithIcon:@"envelope" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(220, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _remindVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
     _remindVC.tabBarItem.tag = 1;
     [self selectedTapTabBarItems:_remindVC.tabBarItem];
     [self unselectedTapTabBarItems:_remindVC.tabBarItem];
     
     _profileVC = [[ProfileViewController alloc]init];
     //_followingWeiboVC1.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:nil tag:1];
-    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(220, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
     _profileVC.tabBarItem.tag = 3;
     [self selectedTapTabBarItems:_profileVC.tabBarItem];
     [self unselectedTapTabBarItems:_profileVC.tabBarItem];
