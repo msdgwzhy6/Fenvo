@@ -14,7 +14,7 @@
 //created_at	string	评论创建时间
 @property (nonatomic, copy)NSString *created_at;
 //id	int64	评论的ID
-@property (nonatomic, assign)NSUInteger id;
+@property (nonatomic, assign)NSUInteger ids;
 //text	string	评论的内容
 @property (nonatomic, copy)NSString *text;
 //source	string	评论的来源
