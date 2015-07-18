@@ -89,12 +89,6 @@
     
     return str;
 }
-
-
-- (void) setUserAvatar:(UIImage *)image{
-    self.user_avatar = image;
-}
-
 /*
  following	boolean	暂未支持
  allow_all_act_msg	boolean	是否允许所有人给我发私信，true：是，false：否

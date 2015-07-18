@@ -11,6 +11,7 @@
 #import "FollowingWBViewController.h"
 #import "WeiboCommentView.h"
 #import "WeiboForwardView.h"
+#import "UIImageView+WebCache.h"
 
 @interface OriginalTableViewCell()<WeiboLabelDelegate>{
 
@@ -31,9 +32,9 @@
 
 - (void) initSubView{
     self.containView = [[UIView alloc]init];
-    self.containView.backgroundColor = RGBACOLOR(250, 250, 250, 0.65);
-    self.containView.layer.cornerRadius = 10.0;
-    self.containView.layer.masksToBounds = YES;
+    self.containView.backgroundColor = RGBACOLOR(245, 245, 245, 0.65);
+    //self.containView.layer.cornerRadius = 10.0;
+    //self.containView.layer.masksToBounds = YES;
     [self addSubview:self.containView];
     //头像
     _avatar = [[WeiboAvatarView alloc]init];
@@ -159,9 +160,9 @@
     
     //初始化 － 头像
     CGRect avatarRect = CGRectMake(10, 5, WBStatusCellAvatarWidth, WBStatusCellAvatarHeight);
-    _avatar.image = weiboMsg.user_avatar;
+    
+    [_avatar sd_setImageWithURL:[NSURL URLWithString:weiboMsg.user.profile_image_url] placeholderImage:[UIImage imageNamed:@"WifiMan_Sign_4"]];
     _avatar.userInfo = weiboMsg.user;
-    NSLog(@"origni :%lld",weiboMsg.user.ids);
     _avatar.frame = avatarRect;
     
     //初始化 － 用户名

@@ -145,10 +145,6 @@
     [self.weibo_pics addObject:image];
 }
 
-- (void) setUserAvatar:(UIImage *)image{
-    self.user_avatar = image;
-}
-
 - (void) setCellHeight:(CGFloat)height{
     self.height = height;
 }

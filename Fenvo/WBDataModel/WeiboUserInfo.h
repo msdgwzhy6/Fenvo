@@ -81,9 +81,6 @@
 @property (nonatomic, assign)NSInteger mbtype;
 
 
-/////////
-@property (nonatomic, strong)UIImage *user_avatar;
-
 //////////////////
 #pragma mark - 根据download的字典信息初始化微博用户对象
 - (WeiboUserInfo *)initWithDictionary:(NSDictionary *)dic;

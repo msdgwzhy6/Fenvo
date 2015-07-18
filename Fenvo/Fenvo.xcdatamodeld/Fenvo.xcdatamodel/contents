@@ -1,4 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="Test1.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14C109" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="WeiboMsg" syncable="YES">
+        <attribute name="attitudes_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="bmiddle_pic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comments_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="created_at" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="favorited" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="ids" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="idstr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="reposts_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnail_pic" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="truncated" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="wbDetail" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="retweeted_status" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeiboMsg" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeiboUserInfo" syncable="YES"/>
+    </entity>
+    <entity name="WeiboUserInfo" syncable="YES">
+        <attribute name="allow_all_act_msg" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="allow_all_comment" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="avatar_hd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="avatar_large" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bi_followers_count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="blogUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="created_at" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="descriptions" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="domain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="follow_me" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="followers_count" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="following" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="friends_count" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="geo_enabled" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="ids" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="idStr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lang" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mbtype" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="online_status" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="profile_image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="profile_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="province" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="remark" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="screen_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="verified" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="verified_reason" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weihao" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="WeiboMsg" positionX="-63" positionY="-18" width="128" height="283"/>
+        <element name="WeiboUserInfo" positionX="-54" positionY="99" width="128" height="510"/>
+    </elements>
 </model>

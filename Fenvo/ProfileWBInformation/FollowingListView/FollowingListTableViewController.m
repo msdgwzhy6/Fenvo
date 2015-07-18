@@ -122,7 +122,6 @@
                          [self.tableView.header endRefreshing];
                          [self.tableView.footer endRefreshing];
                          [KVNProgress dismiss];
-                         [self downloadUserAvatar];
                      });
                  }
                  //若失败
@@ -175,7 +174,6 @@
                      [self.tableView reloadData];
                      [KVNProgress showSuccess];
                      [self.tableView.footer endRefreshing];
-                     [self downloadUserAvatar];
                  });
                  
              }
@@ -202,24 +200,6 @@
 }
 
 
-
-#pragma mark - 下载关注列表头像
-- (void)downloadUserAvatar{
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        for (int i = 0; i < _followingArray.count; i++) {
-            WeiboUserInfo *userInfo = _followingArray[i];
-            NSString *url = userInfo.profile_image_url;
-            [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-            } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                [_followingArray[i] setUser_avatar:aImage];
-            }];
-        }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"Compelete!");
-                [self.tableView reloadData];
-            });
-    });
-}
 - (void)viewDidDisappear:(BOOL)animated {
     
 }

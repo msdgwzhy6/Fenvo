@@ -59,7 +59,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
     //self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
-    self.tableView.backgroundColor = RGBACOLOR(30, 40, 50, 1);
+    self.tableView.backgroundColor = [UIColor whiteColor];
     //取消tableview向下延伸。避免被tabBar遮盖
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
@@ -278,14 +278,6 @@
 
     for (int i = 0; i < _weiboMsgArray.count; i++) {
         WeiboMsg *weiboMsg = _weiboMsgArray[i];
-        NSString *url = weiboMsg.user.profile_image_url;
-        [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-        } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-            [_weiboMsgArray[i] setUser_avatar:aImage];
-        }];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
         //有转发
         if (weiboMsg.retweeted_status != nil) {
             //有配图

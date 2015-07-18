@@ -69,7 +69,6 @@
 //ad	object array	微博流内的推广微博ID
 /////***********************************************************
 @property (nonatomic, assign)CGFloat height;
-@property (nonatomic, strong)UIImage *user_avatar;
 @property (nonatomic, strong)NSMutableArray *weibo_pics;
 
 #pragma mark - 根据download的字典信息初始化微博对象

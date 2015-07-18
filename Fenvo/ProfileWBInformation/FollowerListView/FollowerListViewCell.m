@@ -7,6 +7,7 @@
 //
 
 #import "FollowerListViewCell.h"
+#import "UIImageView+WebCache.h"
 
 @implementation FollowerListViewCell
 
@@ -28,7 +29,7 @@
 
 
 - (void)setUserInfo:(WeiboUserInfo *)userInfo {
-    _avatar.image = userInfo.user_avatar;
+    [_avatar sd_setImageWithURL:[NSURL URLWithString:userInfo.profile_image_url] placeholderImage:[UIImage imageNamed:@"WifiMan_Sign_4"]];
     [_avatar setUid:userInfo.ids];
     
     _userName.text = userInfo.screen_name;
