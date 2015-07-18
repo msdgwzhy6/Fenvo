@@ -12,7 +12,7 @@
 
 - (CGSize)sizeThatFits:(CGSize)size {
     CGSize osize = [super sizeThatFits:size];
-    if(osize.height < 80) osize.height = 80;
+    osize.height = 40;
     
     return osize;
 }

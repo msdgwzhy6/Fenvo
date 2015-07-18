@@ -426,14 +426,27 @@
     return yHeight;
 }
 
+/*
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     if (velocity.y > 0.2) {
         [self.navigationController setNavigationBarHidden:YES animated:YES];
+        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+            // iOS 7 设置隐藏状态栏
+            [self prefersStatusBarHidden];
+            [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+        }
+        //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     }else{
         [self.navigationController setNavigationBarHidden:NO animated:YES];
+        //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     }
 }
 
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;//隐藏为YES，显示为NO
+}
 /*
 - (void)swipeDown: (UISwipeGestureRecognizer *)swipeDown{
     NSLog(@"swipeDown");

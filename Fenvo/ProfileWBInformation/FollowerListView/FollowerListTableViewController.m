@@ -250,6 +250,8 @@
     return 60;
 }
 
+/*
+ //设置上滑隐藏导航栏，但体验不好
 #pragma mark - UIScorllViewDelegate
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     if (velocity.y > 0.2) {
