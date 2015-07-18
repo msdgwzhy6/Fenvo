@@ -64,7 +64,7 @@
     
     if (self) {
         self.delegate = self;
-        self.backgroundColor = RGBACOLOR(30, 40, 50, 1);
+        self.backgroundColor = [UIColor whiteColor];
         self.pagingEnabled = NO;
         self.showsHorizontalScrollIndicator = NO;
         self.showsVerticalScrollIndicator = NO;

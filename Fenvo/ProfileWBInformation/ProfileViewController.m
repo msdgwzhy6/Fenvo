@@ -178,7 +178,7 @@
     _refreshView = [[UIScrollView alloc]init];
     _refreshView.autoresizesSubviews = NO;
     _refreshView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
-    _refreshView.backgroundColor = RGBACOLOR(30, 40, 50, 1);
+    [_refreshView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"1"]]];
     _refreshView.showsHorizontalScrollIndicator = NO;
     _refreshView.showsVerticalScrollIndicator = NO;
     _refreshView.contentSize =CGSizeMake(IPHONE_SCREEN_WIDTH,IPHONE_SCREEN_HEIGHT);
@@ -263,7 +263,7 @@
     _segmentControl = [[UISegmentedControl alloc]initWithItems:segmentArray];
     _segmentControl.segmentedControlStyle = UISegmentedControlStyleBezeled;
     _segmentControl.frame = CGRectMake(0, CGRectGetMaxY(_followingLabel.frame) + 10, IPHONE_SCREEN_WIDTH, 25);
-    _segmentControl.backgroundColor = RGBACOLOR(30, 40, 50, 1);
+    _segmentControl.backgroundColor = [UIColor clearColor];
     _segmentControl.tintColor = [UIColor whiteColor];
     [_refreshView addSubview:_segmentControl];
     [_segmentControl addTarget:self action:@selector(changeTableView) forControlEvents:UIControlEventValueChanged];

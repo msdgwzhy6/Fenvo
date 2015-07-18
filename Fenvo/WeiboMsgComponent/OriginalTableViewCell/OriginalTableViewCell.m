@@ -32,7 +32,7 @@
 
 - (void) initSubView{
     self.containView = [[UIView alloc]init];
-    self.containView.backgroundColor = RGBACOLOR(245, 245, 245, 0.65);
+    self.containView.backgroundColor = RGBACOLOR(245, 245, 245, 0.4);
     //self.containView.layer.cornerRadius = 10.0;
     //self.containView.layer.masksToBounds = YES;
     [self addSubview:self.containView];

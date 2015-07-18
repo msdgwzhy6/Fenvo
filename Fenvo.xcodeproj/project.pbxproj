@@ -213,6 +213,12 @@
 		39E009EA1AC69A8A002B2CDC /* WeiboUrl_short.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E009E91AC69A8A002B2CDC /* WeiboUrl_short.m */; };
 		39E009ED1AC69AFB002B2CDC /* WeiboGeoInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E009EC1AC69AFB002B2CDC /* WeiboGeoInfo.m */; };
 		39E009F01AC6A358002B2CDC /* WeiboVisibleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E009EF1AC6A358002B2CDC /* WeiboVisibleInfo.m */; };
+		39E02BEA1B5A836B0064A8A3 /* FAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E02BDF1B5A836B0064A8A3 /* FAImageView.m */; };
+		39E02BEB1B5A836B0064A8A3 /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E02BE11B5A836B0064A8A3 /* NSString+FontAwesome.m */; };
+		39E02BEC1B5A836B0064A8A3 /* fontawesome-github.png in Resources */ = {isa = PBXBuildFile; fileRef = 39E02BE31B5A836B0064A8A3 /* fontawesome-github.png */; };
+		39E02BED1B5A836B0064A8A3 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39E02BE41B5A836B0064A8A3 /* FontAwesome.ttf */; };
+		39E02BEF1B5A836B0064A8A3 /* UIFont+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E02BE71B5A836B0064A8A3 /* UIFont+FontAwesome.m */; };
+		39E02BF01B5A836B0064A8A3 /* UIImage+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E02BE91B5A836B0064A8A3 /* UIImage+FontAwesome.m */; };
 		39E24FB61B31608300D32A83 /* UserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39E24FB41B31608300D32A83 /* UserInfoView.m */; };
 		39E24FB71B31608300D32A83 /* UserInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39E24FB51B31608300D32A83 /* UserInfoView.xib */; };
 		39ECD7B71B30212E00AD37B6 /* UIBarButtonItem+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 39ECD7B61B30212E00AD37B6 /* UIBarButtonItem+Extension.m */; };
@@ -515,6 +521,16 @@
 		39E009EC1AC69AFB002B2CDC /* WeiboGeoInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboGeoInfo.m; sourceTree = "<group>"; };
 		39E009EE1AC6A358002B2CDC /* WeiboVisibleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboVisibleInfo.h; sourceTree = "<group>"; };
 		39E009EF1AC6A358002B2CDC /* WeiboVisibleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboVisibleInfo.m; sourceTree = "<group>"; };
+		39E02BDE1B5A836B0064A8A3 /* FAImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FAImageView.h; path = "iOS-FontAwesome/FAImageView.h"; sourceTree = "<group>"; };
+		39E02BDF1B5A836B0064A8A3 /* FAImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FAImageView.m; path = "iOS-FontAwesome/FAImageView.m"; sourceTree = "<group>"; };
+		39E02BE01B5A836B0064A8A3 /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+FontAwesome.h"; path = "iOS-FontAwesome/NSString+FontAwesome.h"; sourceTree = "<group>"; };
+		39E02BE11B5A836B0064A8A3 /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+FontAwesome.m"; path = "iOS-FontAwesome/NSString+FontAwesome.m"; sourceTree = "<group>"; };
+		39E02BE31B5A836B0064A8A3 /* fontawesome-github.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fontawesome-github.png"; sourceTree = "<group>"; };
+		39E02BE41B5A836B0064A8A3 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		39E02BE61B5A836B0064A8A3 /* UIFont+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIFont+FontAwesome.h"; path = "iOS-FontAwesome/UIFont+FontAwesome.h"; sourceTree = "<group>"; };
+		39E02BE71B5A836B0064A8A3 /* UIFont+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIFont+FontAwesome.m"; path = "iOS-FontAwesome/UIFont+FontAwesome.m"; sourceTree = "<group>"; };
+		39E02BE81B5A836B0064A8A3 /* UIImage+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+FontAwesome.h"; path = "iOS-FontAwesome/UIImage+FontAwesome.h"; sourceTree = "<group>"; };
+		39E02BE91B5A836B0064A8A3 /* UIImage+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+FontAwesome.m"; path = "iOS-FontAwesome/UIImage+FontAwesome.m"; sourceTree = "<group>"; };
 		39E24FB31B31608300D32A83 /* UserInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoView.h; path = ProfileWBInformation/UserInfoView/UserInfoView.h; sourceTree = "<group>"; };
 		39E24FB41B31608300D32A83 /* UserInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoView.m; path = ProfileWBInformation/UserInfoView/UserInfoView.m; sourceTree = "<group>"; };
 		39E24FB51B31608300D32A83 /* UserInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UserInfoView.xib; path = ProfileWBInformation/UserInfoView/UserInfoView.xib; sourceTree = "<group>"; };
@@ -782,6 +798,7 @@
 		397642E01ADE3EB9000B7B61 /* WeiboMsgComponent */ = {
 			isa = PBXGroup;
 			children = (
+				39E02BDD1B5A83500064A8A3 /* iOS-FontAwesome */,
 				395C57C11B43EF5E00374047 /* WBImageBrowser */,
 				39CC3FFA1B398FAF00D94A09 /* WBImageSelect */,
 				399AE4EE1B30166300D4E81F /* FVNavigationController */,
@@ -1132,6 +1149,32 @@
 			name = WeiboCommentView;
 			sourceTree = "<group>";
 		};
+		39E02BDD1B5A83500064A8A3 /* iOS-FontAwesome */ = {
+			isa = PBXGroup;
+			children = (
+				39E02BDE1B5A836B0064A8A3 /* FAImageView.h */,
+				39E02BDF1B5A836B0064A8A3 /* FAImageView.m */,
+				39E02BE01B5A836B0064A8A3 /* NSString+FontAwesome.h */,
+				39E02BE11B5A836B0064A8A3 /* NSString+FontAwesome.m */,
+				39E02BE21B5A836B0064A8A3 /* Resources */,
+				39E02BE61B5A836B0064A8A3 /* UIFont+FontAwesome.h */,
+				39E02BE71B5A836B0064A8A3 /* UIFont+FontAwesome.m */,
+				39E02BE81B5A836B0064A8A3 /* UIImage+FontAwesome.h */,
+				39E02BE91B5A836B0064A8A3 /* UIImage+FontAwesome.m */,
+			);
+			name = "iOS-FontAwesome";
+			sourceTree = "<group>";
+		};
+		39E02BE21B5A836B0064A8A3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				39E02BE31B5A836B0064A8A3 /* fontawesome-github.png */,
+				39E02BE41B5A836B0064A8A3 /* FontAwesome.ttf */,
+			);
+			name = Resources;
+			path = "iOS-FontAwesome/Resources";
+			sourceTree = "<group>";
+		};
 		39E120C41B0B41D000604E4E /* ProfileWBInformation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1345,6 +1388,7 @@
 				393B441E1B396221005F8998 /* face2@2x.png in Resources */,
 				393B44241B396221005F8998 /* face35@2x.png in Resources */,
 				393B44511B396221005F8998 /* face76@2x.png in Resources */,
+				39E02BED1B5A836B0064A8A3 /* FontAwesome.ttf in Resources */,
 				393B44381B396221005F8998 /* face53@2x.png in Resources */,
 				393B44521B396221005F8998 /* face77@2x.png in Resources */,
 				39CC40611B39947500D94A09 /* btn_add_photo_hl.png in Resources */,
@@ -1362,6 +1406,7 @@
 				393B442B1B396221005F8998 /* face41@2x.png in Resources */,
 				395C57CF1B43EF5E00374047 /* 1.png in Resources */,
 				393B442A1B396221005F8998 /* face40@2x.png in Resources */,
+				39E02BEC1B5A836B0064A8A3 /* fontawesome-github.png in Resources */,
 				395C57D01B43EF5E00374047 /* 2.png in Resources */,
 				393B442E1B396221005F8998 /* face44@2x.png in Resources */,
 				393B44551B396221005F8998 /* face7@2x.png in Resources */,
@@ -1469,6 +1514,8 @@
 				39D239141AE140D100D714A5 /* WebImageView.m in Sources */,
 				39E009ED1AC69AFB002B2CDC /* WeiboGeoInfo.m in Sources */,
 				397530811B1EE793009E3E98 /* FeLoadingIcon.m in Sources */,
+				39E02BEA1B5A836B0064A8A3 /* FAImageView.m in Sources */,
+				39E02BEF1B5A836B0064A8A3 /* UIFont+FontAwesome.m in Sources */,
 				397530461B1EDBD5009E3E98 /* CHANGELOG.md in Sources */,
 				397530861B1EE793009E3E98 /* FeThreeDotGlow.m in Sources */,
 				39CC40211B398FB000D94A09 /* WBAssetCollectionVC.m in Sources */,
@@ -1479,6 +1526,7 @@
 				397530871B1EE793009E3E98 /* FeVietNamBar.m in Sources */,
 				3975307F1B1EE793009E3E98 /* FeHandwriting.m in Sources */,
 				39CF5A931B171A4F00A7A5F0 /* ImageScrollView.m in Sources */,
+				39E02BEB1B5A836B0064A8A3 /* NSString+FontAwesome.m in Sources */,
 				397530481B1EDBD5009E3E98 /* README.md in Sources */,
 				395C57D71B43EF5E00374047 /* SingleImageView.m in Sources */,
 				39D239131AE140D100D714A5 /* WebImageBrowser.m in Sources */,
@@ -1497,6 +1545,7 @@
 				397530821B1EE793009E3E98 /* FeLoadingIconBox.m in Sources */,
 				39CF25E01AB8088C006AA556 /* main.m in Sources */,
 				39D239111AE140D100D714A5 /* SingleWebImageBrowser.m in Sources */,
+				39E02BF01B5A836B0064A8A3 /* UIImage+FontAwesome.m in Sources */,
 				3975307C1B1EE793009E3E98 /* FXBlurView.m in Sources */,
 				39E009E71AC6998F002B2CDC /* WeiboRemind.m in Sources */,
 				39CF5A901B1711C400A7A5F0 /* ImageScaleDown.m in Sources */,

@@ -32,7 +32,7 @@
     if ([UIDevice currentDevice].systemVersion.floatValue >= 7.0) {
         
         [[UINavigationBar appearance] setTitleTextAttributes:
-         [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil]];
+         [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName,RGBACOLOR(250, 143, 5, 1),UITextAttributeTextColor, nil]];
     }
     
     [self loginStateChange:nil];

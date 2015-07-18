@@ -11,6 +11,8 @@
 #import "ProfileViewController.h"
 #import "WeiboRemindVC.h"
 #import "NewWeiboVC.h"
+#import "NSString+FontAwesome.h"
+#import "UIImage+FontAwesome.h"
 
 @interface MainViewController ()<UITabBarDelegate,UITabBarControllerDelegate>
 {
@@ -30,9 +32,7 @@ NSString *access_token;
     
     [self initSubView];
     self.selectedIndex = 0;
-    _writeNewWeibo = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(writeWeibo)];
-    _writeNewWeibo.tintColor = RGBACOLOR(30, 40, 50, 1);
-    [self.tabBar setTintColor:RGBACOLOR(30, 40, 50, 1)];
+    _writeNewWeibo = [[UIBarButtonItem alloc]initWithImage:[UIImage imageWithIcon:@"fa-pencil-square-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] style:UIBarButtonItemStyleDone target:self action:@selector(writeWeibo)];
     [self tabBar:self.tabBar didSelectItem:_followingWeiboVC.tabBarItem];
     // Do any additional setup after loading the view.
     
@@ -43,7 +43,9 @@ NSString *access_token;
     [rootTabBar setUserInteractionEnabled:YES];
     [rootTabBar setDelegate:self];
     [rootTabBar setBackgroundColor:[UIColor clearColor]];
-    [rootTabBar setFrame:self.tabBar.frame];
+    CGRect frame = self.tabBar.frame;
+    frame.size.height -= 10;
+    [rootTabBar setFrame:frame];
     [rootTabBar setAlpha:1];
     
     [self.view addSubview:rootTabBar];
@@ -51,23 +53,23 @@ NSString *access_token;
 
     _followingWeiboVC = [[FollowingWBViewController alloc]initWithStyle:UITableViewStylePlain];
     //_followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Home" image:nil tag:0];
-    _followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemFavorites tag:0];
-    _followingWeiboVC.tabBarItem.title = @"Home";
+    _followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(220, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _followingWeiboVC.tabBarItem.tag = 0;
 
     [self selectedTapTabBarItems:_followingWeiboVC.tabBarItem];
     [self unselectedTapTabBarItems:_followingWeiboVC.tabBarItem];
     
     
     _remindVC = [[WeiboRemindVC alloc]initWithStyle:UITableViewStyleGrouped];
-    _remindVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemRecents tag:1];
-    _remindVC.tabBarItem.title = @"Remind";
+    _remindVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:[UIImage imageWithIcon:@"envelope" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(220, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _remindVC.tabBarItem.tag = 1;
     [self selectedTapTabBarItems:_remindVC.tabBarItem];
     [self unselectedTapTabBarItems:_remindVC.tabBarItem];
     
     _profileVC = [[ProfileViewController alloc]init];
     //_followingWeiboVC1.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:nil tag:1];
-    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTabBarSystemItem:UITabBarSystemItemHistory tag:3];
-    _profileVC.tabBarItem.title = @"Message";
+    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(220, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _profileVC.tabBarItem.tag = 3;
     [self selectedTapTabBarItems:_profileVC.tabBarItem];
     [self unselectedTapTabBarItems:_profileVC.tabBarItem];
     
@@ -120,11 +122,11 @@ NSString *access_token;
 
 - (void)selectedTapTabBarItems: (UITabBarItem *)tabBarItem{
     [tabBarItem setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:14.0],UITextAttributeFont,RGBACOLOR(30, 40, 50, 1.0),UITextAttributeTextColor,nil] forState:UIControlStateSelected];
+     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0],UITextAttributeFont,RGBACOLOR(250, 143, 5, 1),UITextAttributeTextColor,nil] forState:UIControlStateSelected];
 }
 - (void)unselectedTapTabBarItems: (UITabBarItem *)tabBarItem{
     [tabBarItem setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:14.0],UITextAttributeFont,RGBACOLOR(150, 150, 150, 1.0),UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+     [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14.0],UITextAttributeFont,[UIColor lightGrayColor],UITextAttributeTextColor,nil] forState:UIControlStateNormal];
 }
 /*
 #pragma mark - Navigation

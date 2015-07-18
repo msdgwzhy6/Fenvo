@@ -10,6 +10,7 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "AppDelegate.h"
 #import "KVNProgress.h"
+#import "UIImage+FontAwesome.h"
 
 #define WBAPIURL_DELETE @"https://api.weibo.com/2/statuses/destroy.json"
 
@@ -26,8 +27,8 @@
         _deleteWeiboBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _deleteWeiboBtn.tag = 999;
         _deleteWeiboBtn.titleLabel.font = WBStatusButtonFont;
-        [_deleteWeiboBtn setTitleColor:RGBACOLOR(30, 40, 50, 1) forState:UIControlStateNormal];
-        [_deleteWeiboBtn setTitle:@"delete" forState:UIControlStateNormal];
+        [_deleteWeiboBtn setImage:[UIImage imageWithIcon:@"fa-trash-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0, 20.0)] forState:UIControlStateNormal];
+        [_deleteWeiboBtn setImage:[UIImage imageWithIcon:@"fa-trash-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 100, 20, 1) andSize:CGSizeMake(20.0, 20.0)] forState:UIControlStateHighlighted];
         [self.containView addSubview:_deleteWeiboBtn];
         [_deleteWeiboBtn addTarget:self action:@selector(deleteWeibo) forControlEvents:UIControlEventTouchUpInside];
     }

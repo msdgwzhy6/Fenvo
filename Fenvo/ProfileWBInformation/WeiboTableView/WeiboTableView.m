@@ -47,7 +47,7 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_b.png"] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-    self.navigationController.navigationBar.tintColor = RGBACOLOR(30, 40, 50, 1);
+    self.navigationController.navigationBar.tintColor =  RGBACOLOR(250, 143, 5, 1);
     self.title = @"MyWeibo";
 }
 
