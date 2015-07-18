@@ -60,7 +60,7 @@
     _func_img = [NSArray arrayWithObjects:
                  [UIImage imageWithIcon:@"fa-comment" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
                  [UIImage imageWithIcon:@"fa-at" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
-                 [UIImage imageWithIcon:@"fa-heart" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
+                 [UIImage imageWithIcon:@"fa-thumbs-o-up" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
                  [UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)],
                  nil];
 }

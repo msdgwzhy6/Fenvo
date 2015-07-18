@@ -13,6 +13,7 @@
 #import "JSONKit.h"
 #import "KVNProgress.h"
 #import "CheckBox.h"
+#import "UIImage+FontAwesome.h"
 
 #define WEIBO_REPOSTURL @"https://api.weibo.com/2/statuses/repost.json"
 
@@ -112,19 +113,16 @@
     _sentBtn= [UIButton buttonWithType:UIButtonTypeCustom];
     _sentBtn.frame = CGRectMake(IPHONE_SCREEN_WIDTH - 60, CGRectGetMaxY(_remainText.frame) + 10, 50, 30);
     _sentBtn.backgroundColor = RGBACOLOR(30, 40, 50, 1);
+    _sentBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [_sentBtn setTitle:@"Sent" forState:UIControlStateNormal];
     
     _atBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _atBtn.frame = CGRectMake(CGRectGetMinX(_sentBtn.frame) - 35, CGRectGetMaxY(_remainText.frame) + 10, 40, 30);
-    _atBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-    [_atBtn setTitleColor:RGBACOLOR(30, 40, 50, 1) forState:UIControlStateNormal];
-    [_atBtn setTitle:@"@" forState:UIControlStateNormal];
+    [_atBtn setImage:[UIImage imageWithIcon:@"fa-at" backgroundColor:[UIColor clearColor] iconColor:[UIColor orangeColor] andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     
     _emoijBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _emoijBtn.frame = CGRectMake(CGRectGetMinX(_atBtn.frame) - 35, CGRectGetMaxY(_remainText.frame) + 10, 40, 30);
-    _emoijBtn.titleLabel.font = [UIFont systemFontOfSize:12.0];
-    [_emoijBtn setTitleColor:RGBACOLOR(30, 40, 50, 1) forState:UIControlStateNormal];
-    [_emoijBtn setTitle:@"Emoij" forState:UIControlStateNormal];
+    [_emoijBtn setImage:[UIImage imageWithIcon:@"fa-smile-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor orangeColor] andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     
     [_containView addSubview:_emoijBtn];
     [_containView addSubview:_atBtn];

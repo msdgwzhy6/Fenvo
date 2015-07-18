@@ -113,7 +113,7 @@
     _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _praiseBtn.tag = 100;
     _praiseBtn.titleLabel.font = BUTTON_FONT;
-    [_praiseBtn setImage:[UIImage imageWithIcon:@"fa-heart" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_praiseBtn setImage:[UIImage imageWithIcon:@"fa-thumbs-o-up" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
     [_praiseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_praiseBtn];
     _forwardBtn = [UIButton buttonWithType:UIButtonTypeCustom];

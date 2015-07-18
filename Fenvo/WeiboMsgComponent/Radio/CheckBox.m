@@ -7,6 +7,7 @@
 //
 
 #import "CheckBox.h"
+#import "UIImage+FontAwesome.h"
 
 @implementation CheckBox
 
@@ -26,7 +27,7 @@
 }
 
 - (void) initWithStyle {
-    [self setImage:[UIImage imageNamed:@"Expression_1"] forState:UIControlStateNormal];
+    [self setImage:[UIImage imageWithIcon:@"fa-check-square-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor orangeColor] andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     
     self.isSelected = TRUE;
     [self addTarget:self action:@selector(checkBoxClick) forControlEvents:UIControlEventTouchUpInside];
@@ -36,9 +37,9 @@
 - (void)checkBoxClick {
     self.isSelected = !self.isSelected;
     if (self.isSelected == TRUE) {
-        [self setImage:[UIImage imageNamed:@"Expression_1"] forState:UIControlStateNormal];
+        [self setImage:[UIImage imageWithIcon:@"fa-check-square-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor orangeColor] andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     }else{
-        [self setImage:[UIImage imageNamed:@"Expression_16"] forState:UIControlStateNormal];
+        [self setImage:[UIImage imageWithIcon:@"fa-square-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor grayColor] andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     }
     NSLog(@"post btn %d",self.isSelected);
 }
