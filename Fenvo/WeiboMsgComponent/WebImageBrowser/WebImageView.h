@@ -12,8 +12,8 @@
 @interface WebImageView : UIImageView
 @property(nonatomic, copy)NSString *original_pic_url;
 @property(nonatomic, copy)NSString *bmiddle_pic_url;
-@property(nonatomic, copy)NSMutableArray *bmiddle_pic_urls;
-@property(nonatomic, copy)NSMutableArray *original_pic_urls;
+@property(nonatomic, copy)NSArray *bmiddle_pic_urls;
+@property(nonatomic, copy)NSArray *original_pic_urls;
 
 -(WebImageView *)initWithStyleAndTag:(NSInteger)tag;
 @end

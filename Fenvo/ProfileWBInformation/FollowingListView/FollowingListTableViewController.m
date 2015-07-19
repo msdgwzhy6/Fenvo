@@ -110,7 +110,7 @@
                      if (followingArray.count > 0) {
                          for (int i = 0; i < followingArray.count; i ++) {
                              NSDictionary *dict = followingArray[i];
-                             WeiboUserInfo *userInfo = [[WeiboUserInfo alloc]initWithDictionary:dict];
+                             WeiboUserInfo *userInfo = [WeiboUserInfo createdByDictionary:dict];
                              [_followingArray addObject:userInfo];
                          }
                      }
@@ -164,7 +164,7 @@
                  if (followingArray.count > 0) {
                      for (long i = 0; i < followingArray.count; i ++) {
                          NSDictionary *dict = followingArray[i];
-                         WeiboUserInfo *userInfo = [[WeiboUserInfo alloc]initWithDictionary:dict];
+                         WeiboUserInfo *userInfo = [WeiboUserInfo createdByDictionary:dict];
                          [_followingArray addObject:userInfo];
                      }
                  }

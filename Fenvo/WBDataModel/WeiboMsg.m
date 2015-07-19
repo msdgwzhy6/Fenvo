@@ -91,8 +91,6 @@
             self.source = @"";
         }
         
-        
-        self.weibo_pics = [[NSMutableArray alloc]init];
     }
     return self;
 }
@@ -129,7 +127,6 @@
         [original_pic_urls addObject:url];
         
     }
-    NSLog(@"%d",original_pic_urls.count);
     return original_pic_urls;
 }
 - (NSMutableArray *) getBmiddlePicUrl:(NSMutableArray *)thumbnail_pic_urls{
@@ -140,9 +137,6 @@
         [bmiddle_pic_urls addObject:url];
     }
     return bmiddle_pic_urls;
-}
-- (void) addWeibo_pics:(UIImage *)image{
-    [self.weibo_pics addObject:image];
 }
 
 - (void) setCellHeight:(CGFloat)height{

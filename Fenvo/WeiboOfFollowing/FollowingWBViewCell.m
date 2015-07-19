@@ -29,13 +29,13 @@
 
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg{
     [super setWeiboMsg:weiboMsg];
-    _isFavourite = weiboMsg.favorited;
+    _isFavourite = weiboMsg.favorited.boolValue;
     if (_isFavourite == true) {
         [_favouriteBtn setImage:[UIImage imageWithIcon:@"fa-star" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     }else {
         [_favouriteBtn setImage:[UIImage imageWithIcon:@"fa-star-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     }
-    _favouriteBtn.frame = CGRectMake(self.containView.frame.size.width - 55, 10, 50, 20);
+    _favouriteBtn.frame = CGRectMake(self.containView.frame.size.width - 35, 10, 30, 20);
 }
 
 - (void)isFavourite {

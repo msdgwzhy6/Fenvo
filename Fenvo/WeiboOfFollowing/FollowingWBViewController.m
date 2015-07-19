@@ -7,6 +7,7 @@
 //
 #import "FollowingWBViewController.h"
 #import "WeiboMsg.h"
+#import "WeiboMsgManager.h"
 #import "FollowingWBViewCell.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "ViewController.h"
@@ -93,6 +94,12 @@
 
 
 - (void)getWeiboMsg:(NSNotification *)notification {
+    
+    _weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboMsgManager getWeiboMsgInCoreData]];
+    if (_weiboMsgArray.count > 0) {
+        return;
+    }
+    
     _access_token = [notification.userInfo objectForKey:@"token"];
 
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -137,8 +144,7 @@
 
                        for (int i = 0; i < weiboMsgDictionary.count; i ++) {
                             NSDictionary *dict = weiboMsgDictionary[i];
-                            WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                            weiboMsg = [weiboMsg initWithDictionary:dict];
+                            WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                             [_weiboMsgArray addObject:weiboMsg];
                         
                         }
@@ -148,7 +154,6 @@
                             [self.tableView reloadData];
                             [_spinnerHud removeFromSuperview];
                             [_spinnerView removeFromSuperview];
-                            [self downloadUserAvatar];
                         });
                     
                     
@@ -194,8 +199,7 @@
                      
                      for (long i = (weiboMsgDictionary.count - 1); i >= 0; i --) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                         weiboMsg = [weiboMsg initWithDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                          [_weiboMsgArray insertObject:weiboMsg atIndex:0];
                          
                      }
@@ -206,7 +210,6 @@
                      NSLog(@"%lld",_since_id);
                      [self.tableView reloadData];
                      [self.tableView.header endRefreshing];
-                     [self downloadUserAvatar];
                  });
                  
                  
@@ -251,8 +254,7 @@
                      
                      for (int i = 0; i < weiboMsgDictionary.count; i ++) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                         weiboMsg = [weiboMsg initWithDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                          [_weiboMsgArray addObject:weiboMsg];
                          
                      }
@@ -261,7 +263,6 @@
                      NSLog(@"%lld",_max_id);
                      [self.tableView reloadData];
                      [self.tableView.footer endRefreshing];
-                     [self downloadUserAvatar];
                  });
                  
                  
@@ -272,77 +273,6 @@
     });
 }
 
-#pragma mark - 下载微博头像
-- (void)downloadUserAvatar{
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-
-    for (int i = 0; i < _weiboMsgArray.count; i++) {
-        WeiboMsg *weiboMsg = _weiboMsgArray[i];
-        //有转发
-        if (weiboMsg.retweeted_status != nil) {
-            //有配图
-            if (weiboMsg.retweeted_status.thumbnail_pic != nil) {
-                for (int j = 0; j < weiboMsg.retweeted_status.pic_urls.count; j++) {
-                    NSString *pic_url = weiboMsg.retweeted_status.pic_urls[j];
-                    /*
-                    NSData *dataOfPic = [NSData dataWithContentsOfURL:[NSURL URLWithString:pic_url]];
-                    UIImage *image = [[UIImage alloc]initWithData:dataOfPic];
-                    if (image != nil) {
-                        NSLog(@"%d in image is fucking download finish.",i);
-                        [_weiboMsgArray[i] addWeibo_pics:image];
-                    }else{
-                        NSLog(@"%d image is nil", i);
-                    }*/
-                    [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:pic_url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-                    } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                        if (aImage) {
-                            [_weiboMsgArray[i] addWeibo_pics:aImage];
-                           
-                        }else{
-                             NSLog(@"吃屎了:%ld",UIImageJPEGRepresentation(aImage, 1).length);
-                        }
-                    }];
-                    
-                }
-                if (weiboMsg.retweeted_status.pic_urls.count == weiboMsg.retweeted_status.weibo_pics.count) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadData];
-                    });
-                }
-            }
-        }
-        //无转发
-        else{
-            //有配图
-            if (weiboMsg.thumbnail_pic != nil) {
-                for (int j = 0; j < weiboMsg.pic_urls.count; j++) {
-                    NSString *pic_url = weiboMsg.pic_urls[j];
-                    [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:pic_url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-                    } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                        if (aImage) {
-                            [_weiboMsgArray[i] addWeibo_pics:aImage];
-                            
-                        }else{
-                            NSLog(@"吃屎了:%ld",UIImageJPEGRepresentation(aImage, 1).length);
-                        }
-                        
-                    }];
-                }
-                if (weiboMsg.pic_urls.count == weiboMsg.weibo_pics.count) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadData];
-                    });
-                }
-            }
-        }
-        
-
-    }
-        
-       
-    });
-    
-}
 
 #pragma mark - 微博API返回的数据不是标准的json格式数据。我们需要返回的String类型JSON数据进行一定的处理
 
@@ -422,7 +352,7 @@
 //
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
-    CGFloat yHeight = weiboMsg.height;
+    CGFloat yHeight = weiboMsg.height.floatValue;
     return yHeight;
 }
 

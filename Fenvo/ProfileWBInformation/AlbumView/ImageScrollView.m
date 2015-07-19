@@ -154,10 +154,12 @@
     _loadedImageUrlsArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < _weiboMsgArray.count; i++) {
         WeiboMsg *weiboMsg = _weiboMsgArray[i];
-        NSArray *imageUrls = weiboMsg.pic_urls;
+        if(weiboMsg.thumbnail_pic && ![weiboMsg.thumbnail_pic isEqualToString:@""]){
+        NSArray *imageUrls = [self getPicUrls:weiboMsg.pic_urls];
         for (int j = 0; j < imageUrls.count; j++) {
-            NSDictionary *dict = @{@"imageUrl":imageUrls[j],@"ID":[NSString stringWithFormat:@"%lld",weiboMsg.ids]};
+            NSDictionary *dict = @{@"imageUrl":imageUrls[j],@"ID":[NSString stringWithFormat:@"%lld",weiboMsg.ids.longLongValue]};
             [_loadedImageUrlsArray addObject:dict];
+        }
         }
     }
     [self getImagesArray];
@@ -354,8 +356,7 @@
                      
                      for (int i = 0; i < weiboMsgDictionary.count; i ++) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                         weiboMsg = [weiboMsg initWithDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                          [_weiboMsgArray addObject:weiboMsg];
                          
                      }
@@ -401,8 +402,7 @@
                      
                      for (int i = 1; i < weiboMsgDictionary.count; i ++) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                         weiboMsg = [weiboMsg initWithDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                          [_weiboMsgArray addObject:weiboMsg];
                          
                      }
@@ -476,10 +476,15 @@
 }
 - (void)getFlagMsg:(NSArray *)weiboArray {
     WeiboMsg *weibo = weiboArray[0];
-    _since_id = weibo.ids;
+    _since_id = weibo.ids.longLongValue;
     weibo = weiboArray.lastObject;
-    _max_id = weibo.ids ;
+    _max_id = weibo.ids.longLongValue;
     NSLog(@"%lld  %lld",_since_id, _max_id);
 }
 
+
+//获得图片URL数组
+- (NSArray *)getPicUrls:(NSString *)url {
+    return [url componentsSeparatedByString:@","];
+}
 @end

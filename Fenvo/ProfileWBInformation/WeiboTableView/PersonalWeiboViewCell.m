@@ -50,7 +50,7 @@
     frame = self.source.frame;
     frame.origin.x -= 45;
     self.source.frame = frame;
-    _deleteWeiboBtn.frame = CGRectMake(self.containView.frame.size.width - 55, 5, 50, 20);
+    _deleteWeiboBtn.frame = CGRectMake(self.containView.frame.size.width - 35, 10, 30, 20);
 }
 
 - (void)deleteWeibo {

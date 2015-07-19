@@ -69,7 +69,6 @@
 //ad	object array	微博流内的推广微博ID
 /////***********************************************************
 @property (nonatomic, assign)CGFloat height;
-@property (nonatomic, strong)NSMutableArray *weibo_pics;
 
 #pragma mark - 根据download的字典信息初始化微博对象
 - (WeiboMsg *)initWithDictionary:(NSDictionary *)dic;
@@ -77,6 +76,5 @@
 #pragma mark - 静态方法初始化微博对象
 + (WeiboMsg *)statusWithDictionary:(NSDictionary *)dic;
 
-- (void) addWeibo_pics:(UIImage *)image;
 - (void) setCellHeight:(CGFloat)height;
 @end

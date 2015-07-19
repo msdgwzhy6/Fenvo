@@ -21,8 +21,8 @@
     UIScrollView *scrollView;
     UIScrollView *mainScrollView;
     UIPageControl *pageControl;
-    NSMutableArray *bmiddle_pic_urls;
-    NSMutableArray *original_pic_urls;
+    NSArray *bmiddle_pic_urls;
+    NSArray *original_pic_urls;
     //
     UIButton *downloadBtn;
     UIButton *saveBtn;

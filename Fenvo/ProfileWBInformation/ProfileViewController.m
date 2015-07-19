@@ -106,7 +106,7 @@
                  NSLog(@"%@",jsonString);
                  
                  NSDictionary *userProfileDictionary = [jsonString objectFromJSONString];
-                 userProfile = [[WeiboUserInfo alloc]initWithDictionary:userProfileDictionary];
+                 userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self refreshUserProfile];
@@ -153,7 +153,7 @@
                  NSLog(@"%@",jsonString);
                  
                  NSDictionary *userProfileDictionary = [jsonString objectFromJSONString];
-                 userProfile = [[WeiboUserInfo alloc]initWithDictionary:userProfileDictionary];
+                 userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self refreshUserProfile];
@@ -318,7 +318,7 @@
                  NSLog(@"%@",jsonString);
                  
                  NSDictionary *userProfileDictionary = [jsonString objectFromJSONString];
-                 userProfile = [[WeiboUserInfo alloc]initWithDictionary:userProfileDictionary];
+                 userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self refreshUserProfile];
@@ -415,9 +415,9 @@
     _gender.text = userProfile.gender;
     _address.text = userProfile.location;
     _descriptions.text = userProfile.descriptions;
-    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count] forState:UIControlStateNormal];
-    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count] forState:UIControlStateNormal];
-    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count] forState:UIControlStateNormal];
+    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count.longLongValue] forState:UIControlStateNormal];
+    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count.longLongValue] forState:UIControlStateNormal];
+    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
     }
 
 - (void)refreshUserProfileWithUser:(WeiboUserInfo *)userInfo {
@@ -465,9 +465,9 @@
     _gender.text = userProfile.gender;
     _address.text = userProfile.location;
     _descriptions.text = userProfile.descriptions;
-    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count] forState:UIControlStateNormal];
-    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count] forState:UIControlStateNormal];
-    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count] forState:UIControlStateNormal];
+    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count.longLongValue] forState:UIControlStateNormal];
+    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count.longLongValue] forState:UIControlStateNormal];
+    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
     _userInfoView.userInfo = userInfo;
 }
 

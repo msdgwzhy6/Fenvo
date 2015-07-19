@@ -134,8 +134,7 @@
                      
                      for (int i = 0; i < weiboMsgDictionary.count; i ++) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                         weiboMsg = [weiboMsg initWithDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                          [_weiboMsgArray addObject:weiboMsg];
                          
                      }
@@ -145,7 +144,6 @@
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self.tableView reloadData];
-                     [self downloadUserAvatar];
                  });
                  
                  
@@ -190,8 +188,7 @@
                      //将数据加入数组
                      for (long i = (weiboMsgDictionary.count - 1); i >= 0; i --) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                         weiboMsg = [weiboMsg initWithDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                          [_weiboMsgArray insertObject:weiboMsg atIndex:0];
                          
                      }
@@ -205,7 +202,6 @@
                      NSLog(@"%lld",_since_id);
                      [self.tableView reloadData];
                      [self.tableView.header endRefreshing];
-                     [self downloadUserAvatar];
                  });
                  
                  
@@ -249,8 +245,7 @@
                      
                      for (int i = 1; i < weiboMsgDictionary.count; i ++) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [[WeiboMsg alloc]init];
-                         weiboMsg = [weiboMsg initWithDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
                          [_weiboMsgArray addObject:weiboMsg];
                          
                      }
@@ -261,7 +256,6 @@
                      NSLog(@"%lld",_max_id);
                      [self.tableView reloadData];
                      [self.tableView.footer endRefreshing];
-                     [self downloadUserAvatar];
                  });
                  
                  
@@ -273,73 +267,6 @@
     });
 }
 
-#pragma mark - 下载微博头像
-- (void)downloadUserAvatar{
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
-        for (int i = 0; i < _weiboMsgArray.count; i++) {
-            WeiboMsg *weiboMsg = _weiboMsgArray[i];
-            //有转发
-            if (weiboMsg.retweeted_status != nil) {
-                //有配图
-                if (weiboMsg.retweeted_status.thumbnail_pic != nil) {
-                    for (int j = 0; j < weiboMsg.retweeted_status.pic_urls.count; j++) {
-                        NSString *pic_url = weiboMsg.retweeted_status.pic_urls[j];
-
-                        [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:pic_url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-                            NSLog(@"%ld %ld",receivedSize,expectedSize);
-                        } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                            if (aImage) {
-                                [_weiboMsgArray[i] addWeibo_pics:aImage];
-                                
-                            }else{
-                                NSLog(@"吃屎了:%ld",UIImageJPEGRepresentation(aImage, 1).length);
-                            }
-                        }];
-                        
-                    }
-                    if (weiboMsg.retweeted_status.pic_urls.count == weiboMsg.retweeted_status.weibo_pics.count) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.tableView reloadData];
-                        });
-                    }
-                }
-            }
-            //无转发
-            else{
-                //有配图
-                if (weiboMsg.thumbnail_pic != nil) {
-                    for (int j = 0; j < weiboMsg.pic_urls.count; j++) {
-                        NSString *pic_url = weiboMsg.pic_urls[j];
-                        NSLog(@"第%d个微博:%@",i,pic_url);
-                        [[SDWebImageManager sharedManager]   downloadWithURL:[NSURL URLWithString:pic_url] options:SDWebImageRetryFailed progress:^(NSInteger receivedSize,NSInteger expectedSize) {
-                            NSLog(@"%ld %ld",receivedSize,expectedSize);
-                        } completed:^(UIImage *aImage, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                            if (aImage) {
-                                [_weiboMsgArray[i] addWeibo_pics:aImage];
-                                
-                            }else{
-                                NSLog(@"吃屎了:%ld",UIImageJPEGRepresentation(aImage, 1).length);
-                            }
-                            
-                        }];
-                    }
-                    if (weiboMsg.pic_urls.count == weiboMsg.weibo_pics.count) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.tableView reloadData];
-                            NSLog(@"%d in ====idownloadAvatar over.",i);
-                        });
-                    }
-                }
-            }
-            
-            
-        }
-        
-        
-    });
-    
-}
 
 #pragma mark - 微博API返回的数据不是标准的json格式数据。我们需要返回的String类型JSON数据进行一定的处理
 

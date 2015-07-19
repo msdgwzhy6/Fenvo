@@ -17,7 +17,7 @@
     self = [super init];
     if (self) {
         //ImageView样式自行定制
-        self.layer.cornerRadius = 5.0;
+        //self.layer.cornerRadius = 5.0;
         self.layer.masksToBounds = YES;
         self.contentMode = UIViewContentModeScaleAspectFill;
         self.backgroundColor = RGBACOLOR(220, 220, 220, 0.5);

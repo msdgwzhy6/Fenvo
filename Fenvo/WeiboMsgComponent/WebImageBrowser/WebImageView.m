@@ -17,7 +17,7 @@
     self = [super init];
     if (self) {
         self.tag = tag;
-        self.layer.cornerRadius = 5.0;
+        //self.layer.cornerRadius = 5.0;
         self.layer.masksToBounds = YES;
         self.hidden = YES;
         self.contentMode = UIViewContentModeScaleAspectFill;
@@ -35,11 +35,11 @@
 - (void)setBmiddle_pic_url{
     _bmiddle_pic_url = _bmiddle_pic_urls[self.tag];
 }
-- (void)setBmiddle_pic_urls:(NSMutableArray *)bmiddle_pic_urls{
+- (void)setBmiddle_pic_urls:(NSArray *)bmiddle_pic_urls{
     _bmiddle_pic_urls = bmiddle_pic_urls;
     [self setBmiddle_pic_url];
 }
-- (void)setOriginal_pic_urls:(NSMutableArray *)original_pic_urls{
+- (void)setOriginal_pic_urls:(NSArray *)original_pic_urls{
     _original_pic_urls = original_pic_urls;
     [self setOriginal_pic_url];
 }
