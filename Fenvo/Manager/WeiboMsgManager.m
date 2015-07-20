@@ -39,12 +39,23 @@
     }
     
     NSArray *sections = [fetchedResultsController sections];
-    NSLog(@"getWeiboMsgInCoreData sections : %@",sections);
+    NSLog(@"getWeiboMsgInCoreData sections : %@",[fetchedResultsController fetchedObjects]);
     
     
     NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
     
     return weiboMsgArr;
+}
+
++ (void)saveInCoreData {
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];
+    
+    NSError *error;
+    if (![managedObjectContext save:&error]) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
 }
 
 @end

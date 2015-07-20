@@ -11,4 +11,5 @@
 
 @interface WeiboMsgManager : NSObject<NSFetchedResultsControllerDelegate>
 + (NSArray *)getWeiboMsgInCoreData;
++ (void)saveInCoreData;
 @end

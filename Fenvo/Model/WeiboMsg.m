@@ -40,7 +40,10 @@
 @dynamic visible;
 
 + (WeiboMsg *)createByDictionary:(NSDictionary *)dic {
-    WeiboMsg *weiboMsg = [WeiboMsg createdInCoreData];
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];
+    WeiboMsg *weiboMsg = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([WeiboMsg class]) inManagedObjectContext:managedObjectContext];
     
     if ([dic allKeys].count > 0) {
         weiboMsg.ids = [NSNumber numberWithLongLong:[dic[@"id"] longLongValue]];
@@ -91,6 +94,11 @@
         }else{
             weiboMsg.source = @"";
         }
+    }
+    
+    NSError *error;
+    if (![managedObjectContext save:&error]) {
+        NSLog(@"%@",[error description]);
     }
     
     return weiboMsg;

@@ -382,56 +382,56 @@
                    case 1:
                        _imageView1.hidden = NO;
                        _imageView1.frame = imageRect;
-                       [_imageView1 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView1 sd_setImageWithURL:[NSURL URLWithString:pic_urls[1]]];
                        _imageView1.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView1.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;
                    case 2:
                        _imageView2.hidden = NO;
                        _imageView2.frame = imageRect;
-                       [_imageView2 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView2 sd_setImageWithURL:[NSURL URLWithString:pic_urls[2]]];
                        _imageView2.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView2.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;
                    case 3:
                        _imageView3.hidden = NO;
                        _imageView3.frame = imageRect;
-                       [_imageView3 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView3 sd_setImageWithURL:[NSURL URLWithString:pic_urls[3]]];
                        _imageView3.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView3.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;
                    case 4:
                        _imageView4.hidden = NO;
                        _imageView4.frame = imageRect;
-                       [_imageView4 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView4 sd_setImageWithURL:[NSURL URLWithString:pic_urls[4]]];
                        _imageView4.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView4.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;
                    case 5:
                        _imageView5.hidden = NO;
                        _imageView5.frame = imageRect;
-                       [_imageView5 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView5 sd_setImageWithURL:[NSURL URLWithString:pic_urls[5]]];
                        _imageView5.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView5.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;
                    case 6:
                        _imageView6.hidden = NO;
                        _imageView6.frame = imageRect;
-                       [_imageView6 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView6 sd_setImageWithURL:[NSURL URLWithString:pic_urls[6]]];
                        _imageView6.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView6.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;
                    case 7:
                        _imageView7.hidden = NO;
                        _imageView7.frame = imageRect;
-                       [_imageView7 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView7 sd_setImageWithURL:[NSURL URLWithString:pic_urls[7]]];
                        _imageView7.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView7.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;
                    case 8:
                        _imageView8.hidden = NO;
                        _imageView8.frame = imageRect;
-                       [_imageView8 sd_setImageWithURL:[NSURL URLWithString:pic_urls[0]]];
+                       [_imageView8 sd_setImageWithURL:[NSURL URLWithString:pic_urls[8]]];
                        _imageView8.original_pic_urls = [self getPicUrls:weiboMsg.original_pic_urls];
                        _imageView8.bmiddle_pic_urls = [self getPicUrls:weiboMsg.bmiddle_pic_urls ];
                        break;

@@ -421,12 +421,9 @@
     }
 
 - (void)refreshUserProfileWithUser:(WeiboUserInfo *)userInfo {
-    if (!userProfile) {
-        userProfile = [[WeiboUserInfo alloc]init];
+
         userProfile = userInfo;
-    }else {
-        userProfile = userInfo;
-    }
+    
     self.title = userInfo.screen_name;
     [_profileAvatar sd_setImageWithURL:
      [NSURL URLWithString:userProfile.profile_image_url]
