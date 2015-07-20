@@ -8,6 +8,7 @@
 
 #import "FollowerListViewCell.h"
 #import "UIImageView+WebCache.h"
+#import "UIImage+FontAwesome.h"
 
 @implementation FollowerListViewCell
 
@@ -29,8 +30,8 @@
 
 
 - (void)setUserInfo:(WeiboUserInfo *)userInfo {
-    [_avatar sd_setImageWithURL:[NSURL URLWithString:userInfo.profile_image_url] placeholderImage:[UIImage imageNamed:@"WifiMan_Sign_4"]];
-    [_avatar setUid:userInfo.ids];
+    [_avatar sd_setImageWithURL:[NSURL URLWithString:userInfo.profile_image_url] placeholderImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(_avatar.frame.size.width, _avatar.frame.size.height)]];
+    [_avatar setUid:userInfo.ids.integerValue];
     
     _userName.text = userInfo.screen_name;
     
@@ -38,7 +39,7 @@
     
     
     
-    if (userInfo.following == true) {
+    if (userInfo.following.boolValue == true) {
         [self.relationBtn setTitle:@"Friend" forState:UIControlStateNormal];
         [self.relationBtn setBackgroundColor:RGBACOLOR(35, 206, 80, 1)];
     }else {
