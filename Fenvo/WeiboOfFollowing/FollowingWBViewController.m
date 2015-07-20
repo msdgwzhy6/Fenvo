@@ -95,7 +95,7 @@
 
 - (void)getWeiboMsg:(NSNotification *)notification {
     
-    _weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboMsgManager getWeiboMsgInCoreData]];
+    //_weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboMsgManager getWeiboMsgInCoreData]];
     if (_weiboMsgArray.count > 0) {
         NSLog(@"-------core data has data: %ld------",_weiboMsgArray.count);
         return;
