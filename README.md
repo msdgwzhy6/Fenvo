@@ -18,6 +18,7 @@
 ---------------------------------------
 
 ### 主要数据模型（Model）
+基于Core Data存储（7.18更改）
 - WeiboMsg.h   //主要微博信
 - WeiboGeoInfo.h  //地理信息
 - WeiboRemind.h  //提示信息
