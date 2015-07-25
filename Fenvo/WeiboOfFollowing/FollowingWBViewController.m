@@ -60,7 +60,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
     //self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
-    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"1"]];
+    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
     //取消tableview向下延伸。避免被tabBar遮盖
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
