@@ -14,14 +14,20 @@
 #import "NSString+FontAwesome.h"
 #import "UIImage+FontAwesome.h"
 #import "MainTabBar.h"
+#import "HomeNavigationController.h"
 
 @interface MainViewController ()<UITabBarDelegate,UITabBarControllerDelegate>
 {
     FollowingWBViewController *_followingWeiboVC;
-    ProfileViewController *_profileVC;
-    WeiboRemindVC *_remindVC;
+    HomeNavigationController *_followingWeiboNC;
     
-    UIBarButtonItem *_writeNewWeibo;
+    ProfileViewController *_profileVC;
+    UINavigationController *_profileNC;
+    
+    WeiboRemindVC *_remindVC;
+    UINavigationController *_remindNC;
+    
+
     UIBarButtonItem *_settingBtn;
 }
 @end
@@ -33,7 +39,7 @@ NSString *access_token;
     
     [self initSubView];
     self.selectedIndex = 0;
-    _writeNewWeibo = [[UIBarButtonItem alloc]initWithImage:[UIImage imageWithIcon:@"fa-pencil-square-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] style:UIBarButtonItemStyleDone target:self action:@selector(writeWeibo)];
+
     [self tabBar:self.tabBar didSelectItem:_followingWeiboVC.tabBarItem];
     // Do any additional setup after loading the view.
     
@@ -46,12 +52,13 @@ NSString *access_token;
     [self setValue:rootTabBar forKey:@"tabBar"];
 
     _followingWeiboVC = [[FollowingWBViewController alloc]initWithStyle:UITableViewStylePlain];
-    //_followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Home" image:nil tag:0];
     _followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
     _followingWeiboVC.tabBarItem.tag = 0;
+    
+    _followingWeiboNC = [[HomeNavigationController alloc]initWithRootViewController:_followingWeiboVC];
 
-    [self selectedTapTabBarItems:_followingWeiboVC.tabBarItem];
-    [self unselectedTapTabBarItems:_followingWeiboVC.tabBarItem];
+    [self selectedTapTabBarItems:_followingWeiboNC.tabBarItem];
+    [self unselectedTapTabBarItems:_followingWeiboNC.tabBarItem];
     
     
     _remindVC = [[WeiboRemindVC alloc]initWithStyle:UITableViewStyleGrouped];
@@ -61,7 +68,6 @@ NSString *access_token;
     [self unselectedTapTabBarItems:_remindVC.tabBarItem];
     
     _profileVC = [[ProfileViewController alloc]init];
-    //_followingWeiboVC1.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:nil tag:1];
     _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
     _profileVC.tabBarItem.tag = 3;
     [self selectedTapTabBarItems:_profileVC.tabBarItem];
@@ -69,7 +75,7 @@ NSString *access_token;
     
     
     
-    self.viewControllers = @[_followingWeiboVC,_remindVC,_profileVC];
+    self.viewControllers = @[_followingWeiboNC,_remindVC,_profileVC];
     for (UIViewController *controller in self.viewControllers) {
         UIViewController *view= controller.view;
     }
@@ -80,17 +86,12 @@ NSString *access_token;
     // Dispose of any resources that can be recreated.
 }
 
-- (void)writeWeibo {
-    NewWeiboVC *newWeiboVC = [[NewWeiboVC alloc]initWithNibName:@"NewWeiboVC" bundle:[NSBundle mainBundle]];
-    [self.navigationController pushViewController:newWeiboVC animated:YES];
-}
+
 #pragma mark - UITabBarDelegate
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
     switch (item.tag) {
         case 0:
             self.title = @"Home";
-            self.navigationItem.rightBarButtonItem = _writeNewWeibo;
-            self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
             break;
         case 1:
             self.title = @"Remind";

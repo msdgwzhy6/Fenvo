@@ -105,6 +105,8 @@
 		395C57D51B43EF5E00374047 /* MutiImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 395C57CA1B43EF5E00374047 /* MutiImageView.m */; };
 		395C57D61B43EF5E00374047 /* SingleImageBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 395C57CC1B43EF5E00374047 /* SingleImageBrowser.m */; };
 		395C57D71B43EF5E00374047 /* SingleImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 395C57CE1B43EF5E00374047 /* SingleImageView.m */; };
+		3960B13A1B648E960051C8A3 /* HomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3960B1391B648E960051C8A3 /* HomeNavigationController.m */; };
+		3960B13D1B64903C0051C8A3 /* MessageNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */; };
 		39643CFE1AD5537A00ADE889 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 39643CFD1AD5537A00ADE889 /* background.png */; };
 		39643D001AD554CD00ADE889 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39643CFF1AD554CD00ADE889 /* background@2x.png */; };
 		396E6D0D1ABA89BA00AE86CC /* FollowingWBViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 396E6D0C1ABA89BA00AE86CC /* FollowingWBViewController.m */; };
@@ -341,6 +343,10 @@
 		395C57CC1B43EF5E00374047 /* SingleImageBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleImageBrowser.m; sourceTree = "<group>"; };
 		395C57CD1B43EF5E00374047 /* SingleImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleImageView.h; sourceTree = "<group>"; };
 		395C57CE1B43EF5E00374047 /* SingleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleImageView.m; sourceTree = "<group>"; };
+		3960B1381B648E950051C8A3 /* HomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNavigationController.h; path = MainTabBarViewController/HomeNavigationController.h; sourceTree = "<group>"; };
+		3960B1391B648E960051C8A3 /* HomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNavigationController.m; path = MainTabBarViewController/HomeNavigationController.m; sourceTree = "<group>"; };
+		3960B13B1B64903C0051C8A3 /* MessageNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNavigationController.h; path = MainTabBarViewController/MessageNavigationController.h; sourceTree = "<group>"; };
+		3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNavigationController.m; path = MainTabBarViewController/MessageNavigationController.m; sourceTree = "<group>"; };
 		39643CFD1AD5537A00ADE889 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		39643CFF1AD554CD00ADE889 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		396E6D0B1ABA89BA00AE86CC /* FollowingWBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowingWBViewController.h; path = WeiboOfFollowing/FollowingWBViewController.h; sourceTree = "<group>"; };
@@ -1175,6 +1181,10 @@
 				39E5B4241B5AB21800C2A734 /* MainTabBar.m */,
 				39E5B4251B5AB21800C2A734 /* MainViewController.h */,
 				39E5B4261B5AB21800C2A734 /* MainViewController.m */,
+				3960B1381B648E950051C8A3 /* HomeNavigationController.h */,
+				3960B1391B648E960051C8A3 /* HomeNavigationController.m */,
+				3960B13B1B64903C0051C8A3 /* MessageNavigationController.h */,
+				3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */,
 			);
 			name = MainTabBarViewController;
 			sourceTree = "<group>";
@@ -1510,6 +1520,7 @@
 				39DECE0A1B5BC87A0044FD39 /* WeiboMsg.m in Sources */,
 				39DECDF21B5B5AEC0044FD39 /* WeiboComment.m in Sources */,
 				39CE3C8E1B218059004E4D92 /* OriginalTableViewCell.m in Sources */,
+				3960B13D1B64903C0051C8A3 /* MessageNavigationController.m in Sources */,
 				39CD1EF71B204EA800F2DBCA /* CheckBox.m in Sources */,
 				397530881B1EE793009E3E98 /* FeVietNamLoader.m in Sources */,
 				3975307E1B1EE793009E3E98 /* FeEqualize.m in Sources */,
@@ -1558,6 +1569,7 @@
 				39ED9F2E1B555CCE00E2B545 /* NewWeiboVC.m in Sources */,
 				39CC40231B398FB000D94A09 /* WBImagePickerAssetView.m in Sources */,
 				397530821B1EE793009E3E98 /* FeLoadingIconBox.m in Sources */,
+				3960B13A1B648E960051C8A3 /* HomeNavigationController.m in Sources */,
 				39CF25E01AB8088C006AA556 /* main.m in Sources */,
 				39D239111AE140D100D714A5 /* SingleWebImageBrowser.m in Sources */,
 				39E02BF01B5A836B0064A8A3 /* UIImage+FontAwesome.m in Sources */,
