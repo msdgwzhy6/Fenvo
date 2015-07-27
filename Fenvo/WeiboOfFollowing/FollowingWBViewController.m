@@ -18,7 +18,7 @@
 #import "WebViewController.h"
 #import "UIColor+flat.h"
 #import "KVNProgress.h"
-
+#import "TimeLineRPC.h"
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 
 
@@ -95,6 +95,7 @@
 
 - (void)getWeiboMsg:(NSNotification *)notification {
     
+    
     //_weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboMsgManager getWeiboMsgInCoreData]];
     if (_weiboMsgArray.count > 0) {
         NSLog(@"-------core data has data: %ld------",_weiboMsgArray.count);
@@ -102,76 +103,44 @@
     }
     
     _access_token = [notification.userInfo objectForKey:@"token"];
-
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                
-                
-                _spinnerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT)];
-                _spinnerView.backgroundColor = [UIColor colorWithHexCode:@"#32ce55"];
-                _spinnerHud = [[FeSpinnerTenDot alloc]initWithView:_spinnerView withBlur:NO andColor:RGBACOLOR(30, 40, 50, 1)];
-                _spinnerHud.titleLabelText = @"Loading...";
-                _spinnerHud.fontTitleLabel = [UIFont fontWithName:@"Neou-Thin" size:36];
-                _spinnerHud.delegate = self;
-                [_spinnerView addSubview:_spinnerHud];
-                [_spinnerHud show];
-                [[UIApplication sharedApplication].keyWindow addSubview:_spinnerView];
-                
-                
-                
-                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                manager.responseSerializer = [[AFJSONResponseSerializer alloc]init];
-                //http请求头应该添加text/plain。接受类型内容无text/plain
-                manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
-                NSString *getPublicWeiboTmp = WBAPIURL_FRIENDS;
-                NSDictionary *dict0 = [NSDictionary
-                                       dictionaryWithObject:_access_token
-                                       forKey:@"access_token"];
-                [manager GET:getPublicWeiboTmp
-                  parameters:dict0
-                     success:^(AFHTTPRequestOperation *operation, id responserObject){
-                    NSError *error;
-                    NSData *jsonDatas = [responserObject
-                                         JSONDataWithOptions:NSJSONWritingPrettyPrinted
-                                         error:&error];
-                    NSString *jsonStrings = [[NSString alloc]
-                                            initWithData:jsonDatas
-                                            encoding:NSUTF8StringEncoding];
-                         NSLog(@"%@",jsonStrings);
-                    jsonStrings = [self getNormalJSONString:jsonStrings];
-                    
-                    
-                    NSArray *weiboMsgDictionary = [jsonStrings objectFromJSONString];
-                    if (weiboMsgDictionary.count > 0) {
-
-                       for (int i = 0; i < weiboMsgDictionary.count; i ++) {
-                            NSDictionary *dict = weiboMsgDictionary[i];
-                            WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
-                            [_weiboMsgArray addObject:weiboMsg];
-                        
-                        }
-                        }
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            NSLog(@"%lld",_max_id);
-                            [self.tableView reloadData];
-                            [_spinnerHud removeFromSuperview];
-                            [_spinnerView removeFromSuperview];
-                        });
-                    
-                    
-                }failure:^(AFHTTPRequestOperation *operation, NSError *error){
-                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                    [userDefaults removeObjectForKey:@"access_token"];
-                    [userDefaults synchronize];
-                    NSLog(@"public weibo get failure");
-                }];
-                
-                
-            });
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        
+        
+        _spinnerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT)];
+        _spinnerView.backgroundColor = [UIColor colorWithHexCode:@"#32ce55"];
+        _spinnerHud = [[FeSpinnerTenDot alloc]initWithView:_spinnerView withBlur:NO andColor:RGBACOLOR(30, 40, 50, 1)];
+        _spinnerHud.titleLabelText = @"Loading...";
+        _spinnerHud.fontTitleLabel = [UIFont fontWithName:@"Neou-Thin" size:36];
+        _spinnerHud.delegate = self;
+        [_spinnerView addSubview:_spinnerHud];
+        [_spinnerHud show];
+        [[UIApplication sharedApplication].keyWindow addSubview:_spinnerView];
+        
+        [TimeLineRPC getHomeTimeLineSuccess:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
+            [_weiboMsgArray addObjectsFromArray:timeLineArr];
+            _since_id = since_id;
+            _max_id = max_id;
+            _previous_cursor = previous_cursor;
+            _next_cursor = next_cursor;
+        } failure:^(NSString *desc, NSError *error) {
+            NSLog(@"%@", desc);
+        }];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [_spinnerHud removeFromSuperview];
+            [_spinnerView removeFromSuperview];
+        });
+        
+        
+    });
     
     [WeiboMsgManager saveInCoreData];
-   
+    
 }
 - (void)refreshWeiboMsg{
+    
     refreshtime ++;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         

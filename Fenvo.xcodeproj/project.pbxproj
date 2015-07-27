@@ -139,6 +139,7 @@
 		3975308B1B1EE793009E3E98 /* FeZeroLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 397530731B1EE793009E3E98 /* FeZeroLoader.m */; };
 		397642E71ADE3EB9000B7B61 /* WeiboAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 397642E21ADE3EB9000B7B61 /* WeiboAvatarView.m */; };
 		399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 399AE4F01B30166300D4E81F /* FVNavigationController.m */; };
+		39C0551F1B64C36100F0A267 /* TimeLineRPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C0551E1B64C36100F0A267 /* TimeLineRPC.m */; };
 		39CC40171B398FB000D94A09 /* add_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFC1B398FB000D94A09 /* add_image@2x.png */; };
 		39CC40181B398FB000D94A09 /* delete_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFD1B398FB000D94A09 /* delete_image@2x.png */; };
 		39CC40191B398FB000D94A09 /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFE1B398FB000D94A09 /* minus.png */; };
@@ -398,6 +399,8 @@
 		397642E21ADE3EB9000B7B61 /* WeiboAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboAvatarView.m; sourceTree = "<group>"; };
 		399AE4EF1B30166300D4E81F /* FVNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVNavigationController.h; sourceTree = "<group>"; };
 		399AE4F01B30166300D4E81F /* FVNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FVNavigationController.m; sourceTree = "<group>"; };
+		39C0551D1B64C36100F0A267 /* TimeLineRPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeLineRPC.h; path = Manager/TimeLineRPC.h; sourceTree = "<group>"; };
+		39C0551E1B64C36100F0A267 /* TimeLineRPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeLineRPC.m; path = Manager/TimeLineRPC.m; sourceTree = "<group>"; };
 		39CC3FFC1B398FB000D94A09 /* add_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_image@2x.png"; sourceTree = "<group>"; };
 		39CC3FFD1B398FB000D94A09 /* delete_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_image@2x.png"; sourceTree = "<group>"; };
 		39CC3FFE1B398FB000D94A09 /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
@@ -1215,6 +1218,8 @@
 			children = (
 				39DECE051B5BA6260044FD39 /* WeiboMsgManager.h */,
 				39DECE061B5BA6270044FD39 /* WeiboMsgManager.m */,
+				39C0551D1B64C36100F0A267 /* TimeLineRPC.h */,
+				39C0551E1B64C36100F0A267 /* TimeLineRPC.m */,
 			);
 			name = RPC;
 			sourceTree = "<group>";
@@ -1550,6 +1555,7 @@
 				3975307F1B1EE793009E3E98 /* FeHandwriting.m in Sources */,
 				39CF5A931B171A4F00A7A5F0 /* ImageScrollView.m in Sources */,
 				39E02BEB1B5A836B0064A8A3 /* NSString+FontAwesome.m in Sources */,
+				39C0551F1B64C36100F0A267 /* TimeLineRPC.m in Sources */,
 				397530481B1EDBD5009E3E98 /* README.md in Sources */,
 				395C57D71B43EF5E00374047 /* SingleImageView.m in Sources */,
 				39D239131AE140D100D714A5 /* WebImageBrowser.m in Sources */,

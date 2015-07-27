@@ -176,6 +176,7 @@ static CGRect oldImageViewFrame;
     waiting = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     waiting.center = CGPointMake(window.center.x, window.center.y);
     [imageView addSubview:waiting];
+    
 }
 
 //下载大图
