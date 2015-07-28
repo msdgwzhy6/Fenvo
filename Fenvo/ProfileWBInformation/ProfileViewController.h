@@ -19,4 +19,6 @@
 - (void)downloadUserProfileWithUid:(long long)uid;
 //using the userInfo that got from the weiboMsg
 - (void)refreshUserProfileWithUser:(WeiboUserInfo *)userInfo;
+
+- (id)init;
 @end

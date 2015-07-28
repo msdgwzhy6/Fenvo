@@ -53,7 +53,7 @@
 
 #define SystemFont [UIFont systemFontOfSize:14.0]
 
-
+#define WBAPIURL_FRIENDS   @"https://api.weibo.com/2/statuses/home_timeline.json"
 #define WBAPIURL_USERPROFILE @"https://api.weibo.com/2/users/show.json"
 #define WBAPIURL_MYWEIBOS @"https://api.weibo.com/2/statuses/user_timeline.json"
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]

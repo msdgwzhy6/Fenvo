@@ -15,8 +15,7 @@
 @implementation TimeLineRPC
 
 
-+ (void)getPublicTimeLineSuccess:(publicTimeLineBlock)success
-                         failure:(failureBlock)failure{
++ (void)getPublicTimeLineWithSinceId:(NSNumber *)since_id success:(publicTimeLineBlock)success failure:(failureBlock)failure{
     NSMutableArray *weiboMsgArray = [[NSMutableArray alloc]init];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -27,12 +26,16 @@
     
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     
-    NSDictionary *dict0 = [NSDictionary
-                           dictionaryWithObject:appDelegate.access_token
-                           forKey:@"access_token"];
+    
+    NSDictionary *dict;
+    if (since_id == nil) {
+        dict = [NSDictionary
+                 dictionaryWithObject:appDelegate.access_token
+                 forKey:@"access_token"];
+    }
     
     [manager GET:getPublicTimeLine
-      parameters:dict0
+      parameters:dict
          success:^(AFHTTPRequestOperation *operation, id responserObject){
              NSError *error;
              NSData *jsonDatas = [responserObject
@@ -73,22 +76,30 @@
 }
 
 
-+ (void)getHomeTimeLineSuccess:(homeTimeLineBlock)success failure:(failureBlock)failure {
++ (void)getHomeTimeLineWithSinceId:(NSNumber *)since_id orMaxId:(NSNumber *)max_id success:(homeTimeLineBlock)success failure:(failureBlock)failure{
+    
     NSMutableArray *weiboMsgArray = [[NSMutableArray alloc]init];
     
+    //http请求头应该添加text/plain。接受类型内容无text/plain
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [[AFJSONResponseSerializer alloc]init];
-    //http请求头应该添加text/plain。接受类型内容无text/plain
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
     
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    NSDictionary *dict0 = [NSDictionary
-                           dictionaryWithObject:appDelegate.access_token
-                           forKey:@"access_token"];
     
-    NSString *getHomeTimeLineUrl = Home_TimeLine;
-    [manager GET:getHomeTimeLineUrl
-      parameters:dict0
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSDictionary *dict;
+    if (since_id == nil && max_id == nil) {
+        dict = @{@"access_token":appDelegate.access_token};
+    }else if(since_id != nil && max_id == nil){
+        dict = @{@"access_token":appDelegate.access_token, @"since_id":since_id};
+    }else if(since_id == nil && max_id != nil){
+        dict = @{@"access_token":appDelegate.access_token, @"max_id":max_id};
+    }
+    
+    
+    
+    [manager GET:Home_TimeLine
+      parameters:dict
          success:^(AFHTTPRequestOperation *operation, id responserObject){
              NSError *error;
              NSData *jsonDatas = [responserObject

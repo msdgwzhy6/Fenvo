@@ -56,9 +56,7 @@
 - (void)openUserProfile{
     if (_userInfo) {
         _profileVC = [[ProfileViewController alloc]init];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_profileVC refreshUserProfileWithUser:_userInfo];
-        });
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshUserInfo" object:_userInfo];
         [[self viewController].navigationController pushViewController:_profileVC animated:YES];
     }else {
         NSLog(@"set uidss :%lld",_uid);

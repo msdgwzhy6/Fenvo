@@ -20,10 +20,12 @@ typedef void(^failureBlock)(NSString *desc, NSError *error);
 
 @interface TimeLineRPC : NSObject
 
-+ (void)getPublicTimeLineSuccess:(publicTimeLineBlock)success
-                         failure:(failureBlock)failure;
++ (void)getPublicTimeLineWithSinceId:(NSNumber *)since_id orMaxId:(NSNumber *)max_id
+                             success:(publicTimeLineBlock)success
+                             failure:(failureBlock)failure;
 
-+ (void)getHomeTimeLineSuccess:(homeTimeLineBlock)success
-                       failure:(failureBlock)failure;
++ (void)getHomeTimeLineWithSinceId:(NSNumber *)since_id orMaxId:(NSNumber *)max_id
+                           success:(homeTimeLineBlock)success
+                           failure:(failureBlock)failure;
 
 @end

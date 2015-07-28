@@ -117,26 +117,29 @@
         [_spinnerHud show];
         [[UIApplication sharedApplication].keyWindow addSubview:_spinnerView];
         
-        [TimeLineRPC getHomeTimeLineSuccess:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
-            [_weiboMsgArray addObjectsFromArray:timeLineArr];
-            _since_id = since_id;
-            _max_id = max_id;
-            _previous_cursor = previous_cursor;
-            _next_cursor = next_cursor;
-        } failure:^(NSString *desc, NSError *error) {
-            NSLog(@"%@", desc);
-        }];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            [_spinnerHud removeFromSuperview];
-            [_spinnerView removeFromSuperview];
-        });
         
+        [TimeLineRPC getHomeTimeLineWithSinceId:nil
+                                        orMaxId:nil
+                                        success:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
+                                            [_weiboMsgArray addObjectsFromArray:timeLineArr];
+                                            _since_id = since_id;
+                                            _max_id = max_id;
+                                            _previous_cursor = previous_cursor;
+                                            _next_cursor = next_cursor;
+                                            
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.tableView reloadData];
+                                                [_spinnerHud removeFromSuperview];
+                                                [_spinnerView removeFromSuperview];
+                                            });
+
+                                        } failure:^(NSString *desc, NSError *error) {
+                                             NSLog(@"%@", desc);
+                                        }];
         
     });
     
-    [WeiboMsgManager saveInCoreData];
     
 }
 - (void)refreshWeiboMsg{
@@ -144,52 +147,29 @@
     refreshtime ++;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [[AFJSONResponseSerializer alloc]init];
-        //http请求头应该添加text/plain。接受类型内容无text/plain
-        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
-        NSString *getPublicWeiboTmp = WBAPIURL_FRIENDS;
-        NSDictionary *dict0 = [[NSDictionary alloc]init];
         NSNumber *since_id = [NSNumber numberWithLongLong:_since_id];
-        dict0= @{@"access_token":_access_token, @"since_id":since_id};
-        [manager GET:getPublicWeiboTmp
-          parameters:dict0
-             success:^(AFHTTPRequestOperation *operation, id responserObject){
-                 NSError *error;
-                 NSData *jsonDatas = [responserObject
-                                      JSONDataWithOptions:NSJSONWritingPrettyPrinted
-                                      error:&error];
-                 NSString *jsonStrings = [[NSString alloc]
-                                          initWithData:jsonDatas
-                                          encoding:NSUTF8StringEncoding];
-                 
-                 jsonStrings = [self getNormalJSONString:jsonStrings];
-                 
-                 
-                 NSArray *weiboMsgDictionary = [jsonStrings objectFromJSONString];
-                 if (weiboMsgDictionary.count > 0) {
-                     
-                     for (long i = (weiboMsgDictionary.count - 1); i >= 0; i --) {
-                         NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
-                         [_weiboMsgArray insertObject:weiboMsg atIndex:0];
-                         
-                     }
-                 }else {
-                     [KVNProgress showSuccessWithStatus:@"No More Weibo"];
-                 }
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     NSLog(@"%lld",_since_id);
-                     [self.tableView reloadData];
-                     [self.tableView.header endRefreshing];
-                 });
-                 
-                 
-             }failure:^(AFHTTPRequestOperation *operation, NSError *error){
-                 [self.tableView.header endRefreshing];
-                 NSLog(@"public weibo get failure");
-             }];
         
+        [TimeLineRPC getHomeTimeLineWithSinceId:since_id
+                                        orMaxId:nil
+                                        success:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
+                                            
+                                            if (timeLineArr.count > 0) {
+                                                for (long i = (timeLineArr.count - 1); i >= 0; i --) {
+                                                    WeiboMsg *weiboMsg = (WeiboMsg *)timeLineArr[i];
+                                                    [_weiboMsgArray insertObject:weiboMsg atIndex:0];
+                                                }
+                                            }else {
+                                                [KVNProgress showSuccessWithStatus:@"No More Weibo"];
+                                            }
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.tableView reloadData];
+                                                [self.tableView.header endRefreshing];
+                                            });
+                                            
+                                        } failure:^(NSString *desc, NSError *error) {
+                                            [self.tableView.header endRefreshing];
+                                            NSLog(@"public weibo get failure");
+                                        }];
         
     });
     
@@ -198,88 +178,31 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [[AFJSONResponseSerializer alloc]init];
-        //http请求头应该添加text/plain。接受类型内容无text/plain
-        manager.responseSerializer.acceptableContentTypes =
-        [manager.responseSerializer.acceptableContentTypes
-         setByAddingObject:@"text/plain"];
-        NSString *getPublicWeiboTmp = WBAPIURL_FRIENDS;
-        NSDictionary *dict0 = [[NSDictionary alloc]init];
         NSNumber *max_id = [NSNumber numberWithLongLong:_max_id];
-        dict0= @{@"access_token":_access_token, @"max_id":max_id};
-        //
-        [manager GET:getPublicWeiboTmp
-          parameters:dict0
-             success:^(AFHTTPRequestOperation *operation, id responserObject){
-                 NSError *error;
-                 NSData *jsonDatas = [responserObject
-                                      JSONDataWithOptions:NSJSONWritingPrettyPrinted
-                                      error:&error];
-                 NSString *jsonString = [[NSString alloc] initWithData:jsonDatas encoding:NSUTF8StringEncoding];
-                 
-                 jsonString = [self getNormalJSONString:jsonString];
-                 
-                 
-                 NSArray *weiboMsgDictionary = [jsonString objectFromJSONString];
-                 if (weiboMsgDictionary.count > 0) {
-                     
-                     for (int i = 0; i < weiboMsgDictionary.count; i ++) {
-                         NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
-                         [_weiboMsgArray addObject:weiboMsg];
-                         
-                     }
-                 }
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     NSLog(@"%lld",_max_id);
-                     [self.tableView reloadData];
-                     [self.tableView.footer endRefreshing];
-                 });
-                 
-                 
-             }failure:^(AFHTTPRequestOperation *operation, NSError *error){
-                 [self.tableView.footer endRefreshing];
-                 NSLog(@"public weibo get failure");
-             }];
+        
+        [TimeLineRPC getHomeTimeLineWithSinceId:nil
+                                        orMaxId:max_id
+                                        success:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
+                                            
+                                            if (timeLineArr.count > 0) {
+                                                for (int i = 0; i < timeLineArr.count; i ++) {
+                                                    WeiboMsg *weiboMsg = (WeiboMsg *)timeLineArr[i];
+                                                    [_weiboMsgArray addObject:weiboMsg];
+                                                    
+                                                }
+                                            }
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                NSLog(@"%lld",_max_id);
+                                                [self.tableView reloadData];
+                                                [self.tableView.footer endRefreshing];
+                                            });
+
+        } failure:^(NSString *desc, NSError *error) {
+            [self.tableView.footer endRefreshing];
+            NSLog(@"public weibo get failure");
+        }];
+
     });
-}
-
-
-#pragma mark - 微博API返回的数据不是标准的json格式数据。我们需要返回的String类型JSON数据进行一定的处理
-
-- (NSString *)getNormalJSONString:(NSString *)jsonStrings{
-    NSDictionary *dict = [jsonStrings objectFromJSONString];
-    _since_id = [dict[@"since_id"] longLongValue];
-    _max_id = [dict[@"max_id"] longLongValue];
-    _previous_cursor = [dict[@"previous_cursor"] longLongValue];
-    _next_cursor = [dict[@"next_cursor"] longLongValue];
-    NSString *str1;
-    NSRange rangeLeft = [jsonStrings rangeOfString:@"\"statuses\":"];
-    str1 = [jsonStrings substringFromIndex:rangeLeft.location+rangeLeft.length];
-
-    NSRange rangeRight = [str1 rangeOfString:@"\"total_n"];
-    if (rangeRight.length > 0) {
-        jsonStrings = [str1 substringToIndex:rangeRight.location - 4];
-    }
-    
-    return jsonStrings;
-}
-
-- (NSString *)getRefreshJSONString: (NSString *)jsonStrings {
-    NSDictionary *dict = [jsonStrings objectFromJSONString];
-    _since_id = [dict[@"since_id"] longLongValue];
-    _previous_cursor = [dict[@"previous_cursor"] longLongValue];
-    NSString *str1;
-    NSRange rangeLeft = [jsonStrings rangeOfString:@"\"statuses\":"];
-    str1 = [jsonStrings substringFromIndex:rangeLeft.location+rangeLeft.length];
-    
-    NSRange rangeRight = [str1 rangeOfString:@"\"total_n"];
-    if (rangeRight.length > 0) {
-        jsonStrings = [str1 substringToIndex:rangeRight.location - 4];
-    }
-    
-    return jsonStrings;
 }
 
 

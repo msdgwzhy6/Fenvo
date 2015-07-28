@@ -55,6 +55,13 @@
 
 @implementation ProfileViewController
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self initWithComponent];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
 
@@ -70,13 +77,14 @@
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.view.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
     
-    [self initWithComponent];
+    //[self initWithComponent];
     
     NSNotificationCenter  *center = [NSNotificationCenter defaultCenter];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WBNOTIFICATION_DOWNLOADDATA object:nil];
     [center addObserver:self selector:@selector(downloadUserProfile:) name:WBNOTIFICATION_DOWNLOADDATA object:nil];
     
-    
+    [center removeObserver:self name:@"refreshUserInfo" object:nil];
+    [center addObserver:self selector:@selector(refreshUserProfileWithUser:) name:@"refreshUserInfo" object:nil];
     // Do any additional setup after loading the view from its nib.
 }
 - (void)downloadUserProfile:(NSNotification *)notification{
@@ -420,52 +428,42 @@
     [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
     }
 
-- (void)refreshUserProfileWithUser:(WeiboUserInfo *)userInfo {
-
-        userProfile = userInfo;
+- (void)refreshUserProfileWithUser:(NSNotification *)notice {
+    userProfile = (WeiboUserInfo *)notice.object;
     
-    self.title = userInfo.screen_name;
-    [_profileAvatar sd_setImageWithURL:
-     [NSURL URLWithString:userProfile.profile_image_url]
-                      placeholderImage:nil
-                               options:SDWebImageProgressiveDownload
-                             completed:^(UIImage *image,
-                                         NSError *error,
-                                         SDImageCacheType cacheType,
-                                         NSURL *imageURL){
-                                 if (image) {
-                                     _profileAvatar.image = image;
-                                 }
-                             }];
-    /*[_basicInfoView sd_setImageWithURL:
-     [NSURL URLWithString:userProfile.avatar_hd]
-     placeholderImage:nil
-     options:SDWebImageProgressiveDownload
-     completed:^(UIImage *image,
-     NSError *error,
-     SDImageCacheType cacheType,
-     NSURL *imageURL){
-     if (image) {
-     //_basicInfoView.image = [[WeiboGetBlurImage shareWeiboGetBlurImage]getBlurImage:image];
-     }
-     }];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboLabel];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingLabel];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerLabel];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_gender];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_address];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboNumber.titleLabel];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerNumber.titleLabel];
-     [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingNumber.titleLabel];
-     */
-    
-    _gender.text = userProfile.gender;
-    _address.text = userProfile.location;
-    _descriptions.text = userProfile.descriptions;
-    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count.longLongValue] forState:UIControlStateNormal];
-    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count.longLongValue] forState:UIControlStateNormal];
-    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
-    _userInfoView.userInfo = userInfo;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.title = userProfile.screen_name;
+        [_profileAvatar sd_setImageWithURL:[NSURL URLWithString:userProfile.profile_image_url]];
+        /*[_basicInfoView sd_setImageWithURL:
+         [NSURL URLWithString:userProfile.avatar_hd]
+         placeholderImage:nil
+         options:SDWebImageProgressiveDownload
+         completed:^(UIImage *image,
+         NSError *error,
+         SDImageCacheType cacheType,
+         NSURL *imageURL){
+         if (image) {
+         //_basicInfoView.image = [[WeiboGetBlurImage shareWeiboGetBlurImage]getBlurImage:image];
+         }
+         }];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboLabel];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingLabel];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerLabel];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_gender];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_address];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboNumber.titleLabel];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerNumber.titleLabel];
+         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingNumber.titleLabel];
+         */
+        
+        _gender.text = userProfile.gender;
+        _address.text = userProfile.location;
+        _descriptions.text = userProfile.descriptions;
+        [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count.longLongValue] forState:UIControlStateNormal];
+        [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count.longLongValue] forState:UIControlStateNormal];
+        [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
+    });
+    _userInfoView.userInfo = userProfile;
 }
 
 
