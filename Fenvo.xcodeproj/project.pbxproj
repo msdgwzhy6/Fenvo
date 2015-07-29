@@ -96,6 +96,8 @@
 		393B445C1B396221005F8998 /* face9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 393B44071B396221005F8998 /* face9@2x.png */; };
 		393B445D1B396221005F8998 /* forcase_style@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 393B44081B396221005F8998 /* forcase_style@2x.png */; };
 		393F32831B2427E500DFEC58 /* FollowingListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 393F32821B2427E500DFEC58 /* FollowingListViewCell.xib */; };
+		394668681B690E0000573B12 /* WeiboStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 394668671B690E0000573B12 /* WeiboStore.m */; };
+		3946686B1B6921F600573B12 /* WeiboStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3946686A1B6921F600573B12 /* WeiboStoreManager.m */; };
 		395C57CF1B43EF5E00374047 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 395C57C21B43EF5E00374047 /* 1.png */; };
 		395C57D01B43EF5E00374047 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 395C57C31B43EF5E00374047 /* 2.png */; };
 		395C57D11B43EF5E00374047 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 395C57C41B43EF5E00374047 /* 3.png */; };
@@ -331,6 +333,10 @@
 		393B44071B396221005F8998 /* face9@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face9@2x.png"; sourceTree = "<group>"; };
 		393B44081B396221005F8998 /* forcase_style@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "forcase_style@2x.png"; sourceTree = "<group>"; };
 		393F32821B2427E500DFEC58 /* FollowingListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = FollowingListViewCell.xib; path = ProfileWBInformation/FollowingListView/FollowingListViewCell.xib; sourceTree = "<group>"; };
+		394668661B690E0000573B12 /* WeiboStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboStore.h; path = WBDataModel/WeiboStore.h; sourceTree = "<group>"; };
+		394668671B690E0000573B12 /* WeiboStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboStore.m; path = WBDataModel/WeiboStore.m; sourceTree = "<group>"; };
+		394668691B6921F600573B12 /* WeiboStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboStoreManager.h; path = Manager/WeiboStoreManager.h; sourceTree = "<group>"; };
+		3946686A1B6921F600573B12 /* WeiboStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboStoreManager.m; path = Manager/WeiboStoreManager.m; sourceTree = "<group>"; };
 		395C57C21B43EF5E00374047 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 		395C57C31B43EF5E00374047 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 		395C57C41B43EF5E00374047 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
@@ -1209,6 +1215,8 @@
 				39DECE031B5B6CD50044FD39 /* WeiboUserInfo.m */,
 				39DECE081B5BC87A0044FD39 /* WeiboMsg.h */,
 				39DECE091B5BC87A0044FD39 /* WeiboMsg.m */,
+				394668661B690E0000573B12 /* WeiboStore.h */,
+				394668671B690E0000573B12 /* WeiboStore.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1220,6 +1228,8 @@
 				39DECE061B5BA6270044FD39 /* WeiboMsgManager.m */,
 				39C0551D1B64C36100F0A267 /* TimeLineRPC.h */,
 				39C0551E1B64C36100F0A267 /* TimeLineRPC.m */,
+				394668691B6921F600573B12 /* WeiboStoreManager.h */,
+				3946686A1B6921F600573B12 /* WeiboStoreManager.m */,
 			);
 			name = RPC;
 			sourceTree = "<group>";
@@ -1571,6 +1581,7 @@
 				39CC40221B398FB000D94A09 /* WBImagePickerAssetCell.m in Sources */,
 				3921C69C1B3443E9006339F9 /* ChatCell.m in Sources */,
 				39DECDF51B5B5AEC0044FD39 /* WeiboPrivacySetting.m in Sources */,
+				3946686B1B6921F600573B12 /* WeiboStoreManager.m in Sources */,
 				397530841B1EE793009E3E98 /* FeSpinnerTenDot.m in Sources */,
 				39ED9F2E1B555CCE00E2B545 /* NewWeiboVC.m in Sources */,
 				39CC40231B398FB000D94A09 /* WBImagePickerAssetView.m in Sources */,
@@ -1586,6 +1597,7 @@
 				39D239DF1B0CB8DA00A5592B /* WeiboLabel.m in Sources */,
 				397642E71ADE3EB9000B7B61 /* WeiboAvatarView.m in Sources */,
 				39DECE041B5B6CD50044FD39 /* WeiboUserInfo.m in Sources */,
+				394668681B690E0000573B12 /* WeiboStore.m in Sources */,
 				39CE3C7D1B215E64004E4D92 /* PersonalWeiboViewCell.m in Sources */,
 				39ECD7B71B30212E00AD37B6 /* UIBarButtonItem+Extension.m in Sources */,
 				39CC40241B398FB000D94A09 /* WBImagePickerFooterView.m in Sources */,

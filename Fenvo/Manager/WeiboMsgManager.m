@@ -38,13 +38,92 @@
         NSLog(@"%@", [error localizedDescription]);
     }
     
-    NSArray *sections = [fetchedResultsController sections];
-    NSLog(@"getWeiboMsgInCoreData sections : %@",[fetchedResultsController fetchedObjects]);
-    
     
     NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
     
     return weiboMsgArr;
+}
+
++ (NSArray *)queryAllWeiboMsg {
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboMsg class])];
+    NSArray *arr = [context executeFetchRequest:request error:nil];
+    
+    return arr;
+}
+
++ (void)removeAllWeiboMsg {
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboMsg class])];
+    
+    NSArray *arr = [context executeFetchRequest:request error:nil];
+    
+    for (WeiboMsg *weiboMsg in arr) {
+        [context deleteObject:weiboMsg];
+    }
+    
+    //save
+    if ([context save:nil]) {
+        NSLog(@"WeiboMsgManager--delete all object success");
+    }else {
+        NSLog(@"WeiboMsgManager--delete all object fail");
+    }
+    
+}
+
++ (void)removeWeiboMsg:(long long)weiboID {
+    
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboMsg class])];
+    request.predicate = [NSPredicate predicateWithFormat:@"ids = %ld",weiboID];
+    
+    NSArray *result = [context executeFetchRequest:request error:nil];
+    
+    for (WeiboMsg *weiboMsg in result) {
+        [context deleteObject:weiboMsg];
+    }
+    
+    //save
+    if ([context save:nil]) {
+        NSLog(@"WeiboMsgManager--delete object success");
+    }else {
+        NSLog(@"WeiboMsgManager--delete object fail");
+    }
+    
+}
+
++ (void)modifiedWeibo:(WeiboMsg *)weiboMsg {
+    
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboMsg class])];
+    request.predicate = [NSPredicate predicateWithFormat:@"ids = %ld",weiboMsg.ids.longLongValue];
+    
+    NSArray *result = [context executeFetchRequest:request error:nil];
+
+    for (WeiboMsg *weiboMsg_query in result) {
+        weiboMsg_query.favorited = weiboMsg.favorited;
+        weiboMsg_query.comments_count = weiboMsg.comments_count;
+        weiboMsg_query.reposts_count = weiboMsg.reposts_count;
+    }
+    
+    //save
+    if ([context save:nil]) {
+        NSLog(@"WeiboMsgManager--delete object success");
+    }else {
+        NSLog(@"WeiboMsgManager--delete object fail");
+    }
 }
 
 + (void)saveInCoreData {

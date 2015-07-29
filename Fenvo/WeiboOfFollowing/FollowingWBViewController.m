@@ -19,6 +19,8 @@
 #import "UIColor+flat.h"
 #import "KVNProgress.h"
 #import "TimeLineRPC.h"
+#import "WeiboStoreManager.h"
+#import "WeiboStore.h"
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 
 
@@ -96,7 +98,7 @@
 - (void)getWeiboMsg:(NSNotification *)notification {
     
     
-    //_weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboMsgManager getWeiboMsgInCoreData]];
+    _weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboStoreManager getWeiboMsgInCoreData]];
     if (_weiboMsgArray.count > 0) {
         NSLog(@"-------core data has data: %ld------",_weiboMsgArray.count);
         return;
@@ -128,6 +130,10 @@
                                             _previous_cursor = previous_cursor;
                                             _next_cursor = next_cursor;
                                             
+                                            for (WeiboMsg *weiboMsg in timeLineArr) {
+                                                [WeiboStore createByWeiboMsg:weiboMsg];
+                                            }
+                                            
                                             dispatch_async(dispatch_get_main_queue(), ^{
                                                 [self.tableView reloadData];
                                                 [_spinnerHud removeFromSuperview];
@@ -140,6 +146,7 @@
         
     });
     
+    [WeiboStoreManager saveInCoreData];
     
 }
 - (void)refreshWeiboMsg{
@@ -188,6 +195,7 @@
                                                 for (int i = 0; i < timeLineArr.count; i ++) {
                                                     WeiboMsg *weiboMsg = (WeiboMsg *)timeLineArr[i];
                                                     [_weiboMsgArray addObject:weiboMsg];
+                                                    
                                                     
                                                 }
                                             }

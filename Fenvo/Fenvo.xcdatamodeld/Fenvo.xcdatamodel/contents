@@ -70,6 +70,10 @@
         <attribute name="private_group" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="weiboMsg" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="WeiboStore" representedClassName="WeiboStore" syncable="YES">
+        <attribute name="weiboID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="weiboMsg" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeiboMsg" syncable="YES"/>
+    </entity>
     <entity name="WeiboUserInfo" representedClassName="WeiboUserInfo" syncable="YES">
         <attribute name="allow_all_act_msg" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="allow_all_comment" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -117,5 +121,6 @@
         <element name="WeiboRemind" positionX="117" positionY="357" width="128" height="30"/>
         <element name="WeiboUserInfo" positionX="115" positionY="459" width="128" height="30"/>
         <element name="WeiboVisibleInfo" positionX="115" positionY="513" width="128" height="30"/>
+        <element name="WeiboStore" positionX="-45" positionY="270" width="128" height="75"/>
     </elements>
 </model>
