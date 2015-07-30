@@ -25,11 +25,11 @@
 - (instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        [self initSubView];
-        
         self.accessoryType = UITableViewCellAccessoryNone;
         self.backgroundColor = RGBACOLOR(0, 0, 0, 0);
         self.selectionStyle = UITableViewCellSelectionStyleBlue;
+        
+        [self initSubView];
     }
     return self;
 }
@@ -62,14 +62,6 @@
     _source.textColor = WBStatusGrayColor;
     _source.font = WBStatusCellSourceFont;
     [self.containView addSubview:_source];
-    //微博转发信息
-    _wbForwardText = [[WeiboLabel alloc]init];
-    _wbForwardText.numberOfLines = 0;
-    _wbForwardText.textColor = WBStatusGrayColor;
-    _wbForwardText.font = WBStatusCellForwardFont;
-    _wbForwardText.weiboLabelDelegate = self;
-    _wbForwardText.isNeedAtAndPoundSign = YES;
-    [self.containView addSubview:_wbForwardText];
     //微博详情
     _wbDetail = [[WeiboLabel alloc]init];
     _wbDetail.textColor = WBStatusGrayColor;
@@ -80,6 +72,14 @@
     _wbDetail.isNeedAtAndPoundSign = YES;
     _wbDetail.weiboLabelDelegate = self;
     [self.containView addSubview:_wbDetail];
+    //微博转发信息
+    _wbForwardText = [[WeiboLabel alloc]init];
+    _wbForwardText.numberOfLines = 0;
+    _wbForwardText.textColor = WBStatusGrayColor;
+    _wbForwardText.font = WBStatusCellForwardFont;
+    _wbForwardText.weiboLabelDelegate = self;
+    _wbForwardText.isNeedAtAndPoundSign = YES;
+    [self.containView addSubview:_wbForwardText];
     //微博配图
     _imageView0 = [[WebImageView alloc]initWithStyleAndTag:0];
     _imageView0.tag = 0;
@@ -108,7 +108,6 @@
     _imageView8 = [[WebImageView alloc]initWithStyleAndTag:8];
     _imageView8.tag = 8;
     [self.containView addSubview:_imageView8];
-    
     //
     _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _praiseBtn.tag = 100;
@@ -129,14 +128,33 @@
     [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_commentBtn];
     
+    
+    [self initNeedRemoveView];
 }
 
+- (void)initNeedRemoveView {
 
+
+}
+
+- (void)removeNeedRemoveView {
+    [_imageView0 setHidden:YES];
+    [_imageView1 setHidden:YES];
+    [_imageView2 setHidden:YES];
+    [_imageView3 setHidden:YES];
+    [_imageView4 setHidden:YES];
+    [_imageView5 setHidden:YES];
+    [_imageView6 setHidden:YES];
+    [_imageView7 setHidden:YES];
+    [_imageView8 setHidden:YES];
+    [_wbForwardText setEmojiText:@""];
+    [_wbDetail setEmojiText:@""];
+}
 
 
 /////////////////////////////////////////////////////////
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg{
-    
+    [self removeNeedRemoveView];
     
     //初始化 － 头像
     CGRect avatarRect = CGRectMake(10, 10, WBStatusCellAvatarWidth, WBStatusCellAvatarHeight);

@@ -98,7 +98,7 @@
 - (void)getWeiboMsg:(NSNotification *)notification {
     
     
-    _weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboStoreManager getWeiboMsgInCoreData]];
+    _weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboStoreManager queryAllWeiboStore]];
     if (_weiboMsgArray.count > 0) {
         NSLog(@"-------core data has data: %ld------",_weiboMsgArray.count);
         return;
@@ -229,7 +229,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //去除重用机制
-    NSString *cellIdentifier = [NSString stringWithFormat:@"cell%ld%ld",indexPath.row,refreshtime];
+    NSString *cellIdentifier = @"followingCell";
+    //[NSString stringWithFormat:@"cell%ld%ld",indexPath.row,refreshtime];
 
     FollowingWBViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
@@ -258,74 +259,5 @@
     CGFloat yHeight = weiboMsg.height.floatValue;
     return yHeight;
 }
-
-/*
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    if (velocity.y > 0.2) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-            // iOS 7 设置隐藏状态栏
-            [self prefersStatusBarHidden];
-            [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
-        }
-        //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    }else{
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-    }
-}
-
-
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;//隐藏为YES，显示为NO
-}
-/*
-- (void)swipeDown: (UISwipeGestureRecognizer *)swipeDown{
-    NSLog(@"swipeDown");
-    [self.navigationController setNavigationBarHidden:FALSE animated:TRUE];
-    [self.navigationController setToolbarHidden:FALSE animated:TRUE];
-}
-- (void)swipeUp: (UISwipeGestureRecognizer *)swipeUp{
-    NSLog(@"swipeUp");
-    [self.navigationController setNavigationBarHidden:TRUE animated:TRUE];
-    [self.navigationController setToolbarHidden:TRUE animated:TRUE];
-
-}
-#pragma mark - egoRefreshFooterViewDelegate
-- (void)egoRefreshTableFooterDidTriggerRefresh:(EGORefreshTableFooterView *)view{
-    [self getWeiboMsgWithPage:2];
-}
-- (BOOL)egoRefreshTableFooterDataSourceIsLoading:(EGORefreshTableFooterView *)view{
-    return getMoreReloading;
-}
-- (NSDate *)egoRefreshTableFooterDataSourceLastUpdated:(EGORefreshTableFooterView *)view{
-    return [NSDate date];
-}
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
