@@ -24,7 +24,7 @@
 */
 - (void)setStyle{
     //set the style of avatar
-    self.layer.cornerRadius = 20.0;
+    self.layer.cornerRadius = WBStatusCellAvatarWidth / 2;
     self.layer.masksToBounds = YES;
     self.hidden = NO;
     self.contentMode = UIViewContentModeScaleAspectFill;

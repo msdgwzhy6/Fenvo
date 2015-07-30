@@ -141,6 +141,7 @@
 		3975308B1B1EE793009E3E98 /* FeZeroLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 397530731B1EE793009E3E98 /* FeZeroLoader.m */; };
 		397642E71ADE3EB9000B7B61 /* WeiboAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 397642E21ADE3EB9000B7B61 /* WeiboAvatarView.m */; };
 		399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 399AE4F01B30166300D4E81F /* FVNavigationController.m */; };
+		39BA30F31B6A6B3700DEFDB0 /* QiHei.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */; };
 		39C0551F1B64C36100F0A267 /* TimeLineRPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C0551E1B64C36100F0A267 /* TimeLineRPC.m */; };
 		39CC40171B398FB000D94A09 /* add_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFC1B398FB000D94A09 /* add_image@2x.png */; };
 		39CC40181B398FB000D94A09 /* delete_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFD1B398FB000D94A09 /* delete_image@2x.png */; };
@@ -405,6 +406,7 @@
 		397642E21ADE3EB9000B7B61 /* WeiboAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiboAvatarView.m; sourceTree = "<group>"; };
 		399AE4EF1B30166300D4E81F /* FVNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVNavigationController.h; sourceTree = "<group>"; };
 		399AE4F01B30166300D4E81F /* FVNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FVNavigationController.m; sourceTree = "<group>"; };
+		39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = QiHei.ttf; path = Resource/QiHei.ttf; sourceTree = "<group>"; };
 		39C0551D1B64C36100F0A267 /* TimeLineRPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeLineRPC.h; path = Manager/TimeLineRPC.h; sourceTree = "<group>"; };
 		39C0551E1B64C36100F0A267 /* TimeLineRPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeLineRPC.m; path = Manager/TimeLineRPC.m; sourceTree = "<group>"; };
 		39CC3FFC1B398FB000D94A09 /* add_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_image@2x.png"; sourceTree = "<group>"; };
@@ -822,6 +824,14 @@
 			path = FVNavigationController;
 			sourceTree = "<group>";
 		};
+		39BA30F11B6A6B1800DEFDB0 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
 		39CB10841ABA73E500BDE51F /* WeiboOfFollowing */ = {
 			isa = PBXGroup;
 			children = (
@@ -958,6 +968,7 @@
 		39CF25DC1AB8088C006AA556 /* Fenvo */ = {
 			isa = PBXGroup;
 			children = (
+				39BA30F11B6A6B1800DEFDB0 /* Resource */,
 				39E5B4291B5ACCC100C2A734 /* Model */,
 				39ED9F2F1B5566C500E2B545 /* RPC */,
 				39D3DF671B393A7400E19728 /* WriteNewWeibo */,
@@ -1425,6 +1436,7 @@
 				393B44281B396221005F8998 /* face39@2x.png in Resources */,
 				393B441E1B396221005F8998 /* face2@2x.png in Resources */,
 				393B44241B396221005F8998 /* face35@2x.png in Resources */,
+				39BA30F31B6A6B3700DEFDB0 /* QiHei.ttf in Resources */,
 				393B44511B396221005F8998 /* face76@2x.png in Resources */,
 				39E02BED1B5A836B0064A8A3 /* FontAwesome.ttf in Resources */,
 				393B44381B396221005F8998 /* face53@2x.png in Resources */,

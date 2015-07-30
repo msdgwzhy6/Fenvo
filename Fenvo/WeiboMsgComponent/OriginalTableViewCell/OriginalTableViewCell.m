@@ -27,7 +27,7 @@
     if (self) {
         self.accessoryType = UITableViewCellAccessoryNone;
         self.backgroundColor = RGBACOLOR(0, 0, 0, 0);
-        self.selectionStyle = UITableViewCellSelectionStyleBlue;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [self initSubView];
     }
@@ -36,7 +36,8 @@
 
 - (void) initSubView{
     self.containView = [[UIView alloc]init];
-    self.containView.backgroundColor = RGBACOLOR(245, 245, 245, 0.4);
+    self.containView.backgroundColor = [UIColor whiteColor];
+    //RGBACOLOR(245, 245, 245, 0.4);
     //self.containView.layer.cornerRadius = 10.0;
     //self.containView.layer.masksToBounds = YES;
     [self addSubview:self.containView];
@@ -112,19 +113,19 @@
     _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _praiseBtn.tag = 100;
     _praiseBtn.titleLabel.font = BUTTON_FONT;
-    [_praiseBtn setImage:[UIImage imageWithIcon:@"fa-thumbs-o-up" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_praiseBtn setImage:[UIImage imageWithIcon:@"fa-thumbs-o-up" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
     [_praiseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_praiseBtn];
     _forwardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _forwardBtn.tag = 101;
     [_forwardBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_forwardBtn setImage:[UIImage imageWithIcon:@"fa-share" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_forwardBtn setImage:[UIImage imageWithIcon:@"fa-share" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
     _forwardBtn.titleLabel.font = BUTTON_FONT;
     [self.containView addSubview:_forwardBtn];
     _commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commentBtn.tag = 102;
     _commentBtn.titleLabel.font = BUTTON_FONT;
-    [_commentBtn setImage:[UIImage imageWithIcon:@"fa-comment" backgroundColor:[UIColor clearColor] iconColor:[UIColor whiteColor] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_commentBtn setImage:[UIImage imageWithIcon:@"fa-comment" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
     [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_commentBtn];
     
@@ -148,18 +149,21 @@
     [_imageView7 setHidden:YES];
     [_imageView8 setHidden:YES];
     [_wbForwardText setEmojiText:@""];
+    [_wbForwardText setBackgroundColor:[UIColor clearColor]];
     [_wbDetail setEmojiText:@""];
 }
 
 
 /////////////////////////////////////////////////////////
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg{
+    
+    CGFloat width = self.frame.size.width - 20;
+    
     [self removeNeedRemoveView];
     
     //初始化 － 头像
     CGRect avatarRect = CGRectMake(10, 10, WBStatusCellAvatarWidth, WBStatusCellAvatarHeight);
-    
-    [_avatar sd_setImageWithURL:[NSURL URLWithString:weiboMsg.user.profile_image_url] placeholderImage:[UIImage imageNamed:@"WifiMan_Sign_4"]];
+    [_avatar sd_setImageWithURL:[NSURL URLWithString:weiboMsg.user.profile_image_url]];
     _avatar.userInfo = weiboMsg.user;
     _avatar.frame = avatarRect;
     
@@ -230,6 +234,7 @@
                                context:nil].size;
         CGRect wbForwardTextRect = CGRectMake(wbForwardTextX, wbForwardTextY, wbForwardTextSize.width, wbForwardTextSize.height);
         _wbForwardText.frame = wbForwardTextRect;
+        //_wbForwardText.backgroundColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0];
         [_wbForwardText setEmojiText:retweeted_text];
         [_wbForwardText sizeToFit];
         //转发。 有配图
@@ -237,14 +242,15 @@
         if (weiboMsg.retweeted_status.thumbnail_pic) {
             NSArray *pic_urls = [self getPicUrls:weiboMsg.retweeted_status.pic_urls];
             if (pic_urls.count == 1) {
-                CGFloat imageWidth = 120;
+                
                 CGFloat imageHight = 120;
-                CGFloat imageX = WBStatusCellControlSpacing;
+                CGFloat imageX = 10;
+                CGFloat imageWidth = self.frame.size.width - 30;
                 CGFloat imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellControlSpacing;
                 CGRect imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 _imageView0.hidden = NO;
                 _imageView0.frame = imageRect;
-                [self setImageOfView:_imageView0 Url:weiboMsg.retweeted_status.thumbnail_pic];
+                [self setImageOfView:_imageView0 Url:[self getBimmdlePicUrl:weiboMsg.retweeted_status.thumbnail_pic]];
                 _imageView0.original_pic_urls = [self getPicUrls:weiboMsg.retweeted_status.original_pic_urls ];
                 _imageView0.bmiddle_pic_urls = [self getPicUrls:weiboMsg.retweeted_status.bmiddle_pic_urls];
                 imageHeight = CGRectGetMaxY(_imageView0.frame);
@@ -252,19 +258,25 @@
             for (int i = 0; i < pic_urls.count; i++) {
                 CGFloat imageY;
                 CGRect imageRect;
-                CGFloat imageWidth = 60;
-                CGFloat imageHight = 60;
+                CGFloat imageWidth ;
+                
+                if (pic_urls.count >= 3) {
+                    imageWidth = (width -  WBStatusCellImageViewSpacing * 2 -  10)/3;
+                }else {
+                    imageWidth = (width -  10 - WBStatusCellImageViewSpacing)/2;
+                }
+                CGFloat imageHight = imageWidth ;
                 if (i >= 6) {
-                    CGFloat imageX = WBStatusCellControlSpacing*(i - 5) + imageWidth * (i - 6);
-                    imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellControlSpacing*3 + imageHight*2;
+                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 5) + imageWidth * (i - 6) + 10 -WBStatusCellImageViewSpacing;
+                    imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellImageViewSpacing*2 + imageHight*2 + WBStatusCellControlSpacing;
                     imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 }else if(i <= 2){
-                    CGFloat imageX = WBStatusCellControlSpacing*(i + 1) + imageWidth * i;
-                    imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellControlSpacing;
+                    CGFloat imageX = WBStatusCellImageViewSpacing*(i + 1) + imageWidth * i + 10 - WBStatusCellImageViewSpacing;
+                    imageY = CGRectGetMaxY(_wbForwardText.frame)  + WBStatusCellControlSpacing;
                     imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 }else{
-                    CGFloat imageX = WBStatusCellControlSpacing*(i - 2) + imageWidth * (i-3);
-                    imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellControlSpacing*2 + imageHight;
+                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 2) + imageWidth * (i-3) + 10 - WBStatusCellImageViewSpacing;
+                    imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellImageViewSpacing + imageHight + WBStatusCellControlSpacing;
                     imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 }
                 switch (i) {
@@ -356,15 +368,15 @@
        if (weiboMsg.thumbnail_pic) {
            NSArray *pic_urls = [self getPicUrls:weiboMsg.pic_urls];
            if (pic_urls.count == 1) {
-               CGFloat imageWidth = 120;
+               CGFloat imageWidth = self.frame.size.width - 30;
                CGFloat imageHight = 120;
-               CGFloat imageX = WBStatusCellControlSpacing;
+               CGFloat imageX = 10;
                CGFloat imageY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellControlSpacing;
                CGRect imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                _imageView0.hidden = NO;
                _imageView0.contentMode = UIViewContentModeScaleAspectFill;
                _imageView0.frame = imageRect;
-               [self setImageOfView:_imageView0 Url:weiboMsg.thumbnail_pic];
+               [self setImageOfView:_imageView0 Url:[self getBimmdlePicUrl:weiboMsg.thumbnail_pic]];
                _imageView0.original_pic_url = weiboMsg.original_pic;
                _imageView0.bmiddle_pic_url = weiboMsg.bmiddle_pic;
                imageHeight = CGRectGetMaxY(_imageView0.frame);
@@ -373,19 +385,25 @@
            for (int i = 0; i < pic_urls.count; i++) {
                CGFloat imageY;
                CGRect imageRect;
-               CGFloat imageWidth = 60;
-               CGFloat imageHight = 60;
+               CGFloat imageWidth ;
+               CGFloat imageHight ;
+               if (pic_urls.count >= 3) {
+                   imageWidth = (width -  WBStatusCellImageViewSpacing * 2 -  10)/3;
+               }else {
+                   imageWidth = (width -  10 - WBStatusCellImageViewSpacing)/2;
+               }
+               imageHight = imageWidth ;
                if (i >= 6) {
-                   CGFloat imageX = WBStatusCellControlSpacing*(i - 5) + imageWidth * (i - 6);
-                   imageY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellControlSpacing*3 + imageHight*2;
+                   CGFloat imageX = WBStatusCellImageViewSpacing*(i - 5) + imageWidth * (i - 6) + 10 -WBStatusCellImageViewSpacing;
+                   imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellImageViewSpacing*2 + imageHight*2 + WBStatusCellControlSpacing;
                    imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                }else if(i <= 2){
-                   CGFloat imageX = WBStatusCellControlSpacing*(i + 1) + imageWidth * i;
-                   imageY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellControlSpacing;
+                   CGFloat imageX = WBStatusCellImageViewSpacing*(i + 1) + imageWidth * i + 10 - WBStatusCellImageViewSpacing;
+                   imageY = CGRectGetMaxY(_wbForwardText.frame)  + WBStatusCellControlSpacing;
                    imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                }else{
-                   CGFloat imageX = WBStatusCellControlSpacing*(i - 2) + imageWidth * (i-3);
-                   imageY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellControlSpacing*2 + imageHight;
+                   CGFloat imageX = WBStatusCellImageViewSpacing*(i - 2) + imageWidth * (i-3) + 10 - WBStatusCellImageViewSpacing;
+                   imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellImageViewSpacing + imageHight + WBStatusCellControlSpacing;
                    imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                }
                switch (i) {

@@ -34,22 +34,23 @@
 #define WBStatusGrayColor WBColor(0,0,0)
 #define WBStatusLightGrayColor WBColor(120,120,180)
 //
-#define WBStatusCellControlSpacing 10//控件间距
+#define WBStatusCellControlSpacing 12//控件间距
+#define WBStatusCellImageViewSpacing 3
 #define WBStatusCellBackgroundColor WBColor(255,255,255)
 //头像、会员标识长宽
-#define WBStatusCellAvatarWidth 40
-#define WBStatusCellAvatarHeight 40
+#define WBStatusCellAvatarWidth 30
+#define WBStatusCellAvatarHeight 30
 #define WBStatusCellMBTypeWidth 13
 #define WBStatusCellMBTypeHeight 13
 //微博各个字体
-#define WBStatusCellUserNameFont [UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:15.0]
-#define WBStatusCellSourceFont   [UIFont fontWithName:@ "STHeitiJ-Light" size:10.0]
-#define WBStatusCellCreatTimeFont [UIFont fontWithName:@ "STHeitiJ-Light" size:10.0]
-#define WBStatusCellCountFont [UIFont fontWithName:@ "STHeitiJ-Light" size:14.0]
-#define WBStatusCellDetailFont    [UIFont fontWithName:@ "TimesNewRomanPSMT" size:14.0]
-#define WBStatusCellForwardFont   [UIFont fontWithName:@ "TimesNewRomanPSMT" size:14.0]
+#define WBStatusCellUserNameFont [UIFont fontWithName:@ "HYQiHei-BEJ" size:12.0]
+#define WBStatusCellSourceFont   [UIFont fontWithName:@ "HYQiHei-BEJ" size:10.0]
+#define WBStatusCellCreatTimeFont [UIFont fontWithName:@ "HYQiHei-BEJ" size:10.0]
+#define WBStatusCellCountFont [UIFont fontWithName:@ "HYQiHei-BEJ" size:14.0]
+#define WBStatusCellDetailFont    [UIFont fontWithName:@ "TimesNewRomanPSMT" size:13.0]
+#define WBStatusCellForwardFont   [UIFont fontWithName:@ "TimesNewRomanPSMT" size:13.0]
 #define WBStatusHUDTextFont   [UIFont fontWithName:@ "STHeitiJ-Light" size:12.0]
-#define WBStatusButtonFont  [UIFont fontWithName:@ "HelveticaNeue-CondensedBlack" size:15.0]
+#define WBStatusButtonFont  [UIFont fontWithName:@ "HYQiHei-BEJ" size:15.0]
 
 #define SystemFont [UIFont systemFontOfSize:14.0]
 

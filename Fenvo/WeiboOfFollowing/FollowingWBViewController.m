@@ -62,7 +62,8 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
     //self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
-    self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
+    self.tableView.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
+    //[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
     //取消tableview向下延伸。避免被tabBar遮盖
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
@@ -96,7 +97,6 @@
 
 
 - (void)getWeiboMsg:(NSNotification *)notification {
-    
     
     _weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboStoreManager queryAllWeiboStore]];
     if (_weiboMsgArray.count > 0) {
