@@ -143,10 +143,10 @@ static CGFloat widthCallback(void *refCon) {
     NSMutableDictionary *mutableInactiveLinkAttributes = [NSMutableDictionary dictionary];
     [mutableInactiveLinkAttributes setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCTUnderlineStyleAttributeName];
     
-    UIColor *commonLinkColor = [UIColor colorWithRed:0.112 green:0.000 blue:0.791 alpha:1.000];
+    UIColor *commonLinkColor = RGBACOLOR(50, 103, 115, 1.0);
     
     //点击时候的背景色
-    [mutableActiveLinkAttributes setValue:(__bridge id)[[UIColor colorWithWhite:0.631 alpha:1.000] CGColor] forKey:(NSString *)kTTTBackgroundFillColorAttributeName];
+    [mutableActiveLinkAttributes setValue:(__bridge id)[RGBACOLOR(181, 209, 213, 1) CGColor] forKey:(NSString *)kTTTBackgroundFillColorAttributeName];
     
     if ([NSMutableParagraphStyle class]) {
         [mutableLinkAttributes setObject:commonLinkColor forKey:(NSString *)kCTForegroundColorAttributeName];
@@ -396,6 +396,14 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
     
     NSRange stringRange = NSMakeRange(0, mutableAttributedString.length);
     
+    //-----------------------------modified by chan--------------------------
+//    NSRegularExpression * regexp = kURLRegularExpression();
+//    __block NSString *tmpString = self.text;
+//    [regexp enumerateMatchesInString:[mutableAttributedString string] options:0 range:stringRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+//        tmpString = [self.text stringByReplacingCharactersInRange:result.range withString:@""];
+//    }];
+//    
+    
     NSRegularExpression * const regexps[] = {kURLRegularExpression(),kPhoneNumerRegularExpression(),kEmailRegularExpression(),kAtRegularExpression(),kPoundSignRegularExpression()};
     
     NSMutableArray *results = [NSMutableArray array];
@@ -414,6 +422,7 @@ static inline CGFloat TTTFlushFactorForTextAlignment(NSTextAlignment textAlignme
                     return;
                 }
             }
+            
             
             //添加链接
             NSString *actionString = [NSString stringWithFormat:@"%@%@",urlAction,[self.text substringWithRange:result.range]];

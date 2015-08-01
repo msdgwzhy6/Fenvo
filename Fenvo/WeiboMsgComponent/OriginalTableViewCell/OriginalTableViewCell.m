@@ -47,8 +47,8 @@
     [self.containView addSubview:_avatar];
     //用户名
     _userName = [[UILabel alloc]init];
-    _userName.textColor = WBStatusGrayColor;
     _userName.font = WBStatusCellUserNameFont;
+    _userName.textColor = WBStatusGrayColor;
     [self.containView addSubview:_userName];
     //会员标识
     _mbType = [[UIImageView alloc]init];
@@ -113,19 +113,19 @@
     _praiseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _praiseBtn.tag = 100;
     _praiseBtn.titleLabel.font = BUTTON_FONT;
-    [_praiseBtn setImage:[UIImage imageWithIcon:@"fa-thumbs-o-up" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_praiseBtn setImage:[UIImage imageWithIcon:@"fa-thumbs-o-up" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(16.0f, 16.0f)] forState:UIControlStateNormal];
     [_praiseBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_praiseBtn];
     _forwardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _forwardBtn.tag = 101;
     [_forwardBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_forwardBtn setImage:[UIImage imageWithIcon:@"fa-share" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_forwardBtn setImage:[UIImage imageWithIcon:@"fa-share" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(16.0f, 16.0f)] forState:UIControlStateNormal];
     _forwardBtn.titleLabel.font = BUTTON_FONT;
     [self.containView addSubview:_forwardBtn];
     _commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _commentBtn.tag = 102;
     _commentBtn.titleLabel.font = BUTTON_FONT;
-    [_commentBtn setImage:[UIImage imageWithIcon:@"fa-comment" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(20.0f, 20.0f)] forState:UIControlStateNormal];
+    [_commentBtn setImage:[UIImage imageWithIcon:@"fa-comment" backgroundColor:[UIColor clearColor] iconColor:[UIColor colorWithRed:230.0/255.0f green:230.0/255.0f blue:230.0/255.0f alpha:1] andSize:CGSizeMake(16.0f, 16.0f)] forState:UIControlStateNormal];
     [_commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.containView addSubview:_commentBtn];
     
@@ -208,7 +208,8 @@
     CGFloat wbDetailY = CGRectGetMaxY(_avatar.frame) + WBStatusCellControlSpacing;
     CGFloat wbDetailWidth = IPHONE_SCREEN_WIDTH - WBStatusCellControlSpacing * 2;
     //[_wbDetail setText:weiboMsg.wbDetail];
-    [_wbDetail setEmojiText:weiboMsg.wbDetail];
+    NSString * wbDetail = [weiboMsg.wbDetail copy];
+    [_wbDetail setEmojiText:wbDetail];
     CGSize wbDetailSize = [weiboMsg.wbDetail
                            boundingRectWithSize:CGSizeMake(wbDetailWidth, MAXFLOAT)
                            options:NSStringDrawingUsesLineFragmentOrigin
@@ -235,7 +236,7 @@
         CGRect wbForwardTextRect = CGRectMake(wbForwardTextX, wbForwardTextY, wbForwardTextSize.width, wbForwardTextSize.height);
         _wbForwardText.frame = wbForwardTextRect;
         //_wbForwardText.backgroundColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0];
-        [_wbForwardText setEmojiText:retweeted_text];
+        [_wbForwardText setEmojiText:[retweeted_text copy]];
         [_wbForwardText sizeToFit];
         //转发。 有配图
         
@@ -491,9 +492,9 @@
     
     
     
-    CGFloat btnWidth = (IPHONE_SCREEN_WIDTH - 10)/3;
+    CGFloat btnWidth = (IPHONE_SCREEN_WIDTH/2 - 10)/3;
     
-    CGRect commentRect = CGRectMake(5, imageHeight + 5, btnWidth, 30);
+    CGRect commentRect = CGRectMake(IPHONE_SCREEN_WIDTH / 2 + 5, imageHeight + 5, btnWidth, 30);
     _commentBtn.frame = commentRect;
     [_commentBtn setTitle:[self countToString:weiboMsg.comments_count.integerValue] forState:UIControlStateNormal];
     CGRect forwardRect = CGRectMake(CGRectGetMaxX(_commentBtn.frame), imageHeight +5, btnWidth, 30);
@@ -595,8 +596,9 @@
     WebViewController *webview = [[WebViewController alloc]init];
     switch (type) {
         case MLEmojiLabelLinkTypeURL:
-            [webview initWithLink:link];
-            [[self viewController].navigationController pushViewController:webview animated:YES];
+            //[webview initWithLink:link];
+            //[[self viewController].navigationController pushViewController:webview animated:YES];
+            NSLog(@"点击了URL%@",link);
             break;
             
         case MLEmojiLabelLinkTypePhoneNumber:

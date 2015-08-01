@@ -356,7 +356,7 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
     [mutableInactiveLinkAttributes setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCTUnderlineStyleAttributeName];
 
     if ([NSMutableParagraphStyle class]) {
-        [mutableLinkAttributes setObject:[UIColor blueColor] forKey:(NSString *)kCTForegroundColorAttributeName];
+        [mutableLinkAttributes setObject:RGBACOLOR(50, 103, 115, 1) forKey:(NSString *)kCTForegroundColorAttributeName];
         [mutableActiveLinkAttributes setObject:[UIColor redColor] forKey:(NSString *)kCTForegroundColorAttributeName];
         [mutableInactiveLinkAttributes setObject:[UIColor grayColor] forKey:(NSString *)kCTForegroundColorAttributeName];
 
@@ -1121,7 +1121,7 @@ afterInheritingLabelAttributesAndConfiguringWithBlock:(NSMutableAttributedString
 - (UIColor *)textColor {
 	UIColor *color = [super textColor];
 	if (!color) {
-		color = [UIColor blackColor];
+		color = RGBACOLOR(60, 71, 73, 1);
 	}
 
 	return color;
