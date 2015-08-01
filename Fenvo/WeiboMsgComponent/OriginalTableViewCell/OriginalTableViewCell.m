@@ -208,8 +208,7 @@
     CGFloat wbDetailY = CGRectGetMaxY(_avatar.frame) + WBStatusCellControlSpacing;
     CGFloat wbDetailWidth = IPHONE_SCREEN_WIDTH - WBStatusCellControlSpacing * 2;
     //[_wbDetail setText:weiboMsg.wbDetail];
-    NSString * wbDetail = [weiboMsg.wbDetail copy];
-    [_wbDetail setEmojiText:wbDetail];
+    [_wbDetail setEmojiText:weiboMsg.wbDetail];
     CGSize wbDetailSize = [weiboMsg.wbDetail
                            boundingRectWithSize:CGSizeMake(wbDetailWidth, MAXFLOAT)
                            options:NSStringDrawingUsesLineFragmentOrigin
@@ -236,7 +235,7 @@
         CGRect wbForwardTextRect = CGRectMake(wbForwardTextX, wbForwardTextY, wbForwardTextSize.width, wbForwardTextSize.height);
         _wbForwardText.frame = wbForwardTextRect;
         //_wbForwardText.backgroundColor = [UIColor colorWithRed:240/255.0f green:240/255.0f blue:240/255.0f alpha:1.0];
-        [_wbForwardText setEmojiText:[retweeted_text copy]];
+        [_wbForwardText setEmojiText:retweeted_text];
         [_wbForwardText sizeToFit];
         //转发。 有配图
         
@@ -396,15 +395,15 @@
                imageHight = imageWidth ;
                if (i >= 6) {
                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 5) + imageWidth * (i - 6) + 10 -WBStatusCellImageViewSpacing;
-                   imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellImageViewSpacing*2 + imageHight*2 + WBStatusCellControlSpacing;
+                   imageY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellImageViewSpacing*2 + imageHight*2 + WBStatusCellControlSpacing;
                    imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                }else if(i <= 2){
                    CGFloat imageX = WBStatusCellImageViewSpacing*(i + 1) + imageWidth * i + 10 - WBStatusCellImageViewSpacing;
-                   imageY = CGRectGetMaxY(_wbForwardText.frame)  + WBStatusCellControlSpacing;
+                   imageY = CGRectGetMaxY(_wbDetail.frame)  + WBStatusCellControlSpacing;
                    imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                }else{
                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 2) + imageWidth * (i-3) + 10 - WBStatusCellImageViewSpacing;
-                   imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellImageViewSpacing + imageHight + WBStatusCellControlSpacing;
+                   imageY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellImageViewSpacing + imageHight + WBStatusCellControlSpacing;
                    imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                }
                switch (i) {

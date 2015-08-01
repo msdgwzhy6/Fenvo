@@ -44,6 +44,8 @@
     return weiboMsgArr;
 }
 
+
+
 + (NSArray *)queryAllWeiboMsg {
     UIApplication *application = [UIApplication sharedApplication];
     id delegate = application.delegate;

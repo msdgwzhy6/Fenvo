@@ -51,23 +51,61 @@ NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
     
 }
 
-+ (NSArray *)queryAllWeiboStore {
-    UIApplication *application = [UIApplication sharedApplication];
-    id delegate = application.delegate;
-    NSManagedObjectContext *context = [delegate managedObjectContext];
++ (void)queryTimeLineWithMaxId:(NSNumber *)max_id success:(timeLineBlock)success failure:(failuresBlock)failure {
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboStore class])];
-    NSArray *arr = [context executeFetchRequest:request error:nil];
+
     
-    [WeiboStoreManager sortArray:arr];
+    dispatch_queue_t fetchQueue = dispatch_queue_create("coredata.query.withMaxId", NULL);
     
-    NSMutableArray *weiboArr = [[NSMutableArray alloc]init];
-    for (WeiboStore *weiboStore in arr) {
-        [weiboArr addObject:weiboStore.weiboMsg];
-    }
+    dispatch_async(fetchQueue, ^{
+        UIApplication *application = [UIApplication sharedApplication];
+        id delegate = application.delegate;
+        NSManagedObjectContext *context = [delegate managedObjectContext];
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboStore class])];
+        NSSortDescriptor *sortDesciptor = [[NSSortDescriptor alloc]initWithKey:@"weiboID" ascending:YES];
+        [request setSortDescriptors:@[sortDesciptor]];
+        request.predicate = [NSPredicate predicateWithFormat:@"weiboID < %lld", max_id.longLongValue];
+        request.fetchLimit = 20;
+        NSArray *arr = [context executeFetchRequest:request error:nil];
+        
+        if (arr.count > 0) {
+            WeiboStore *weiboStore = (WeiboStore *)[arr lastObject];
+            long long max_id = [weiboStore.weiboID longLongValue];
+            success(arr, max_id);
+        }else {
+            failure(@"That is no cache.");
+        }
+        
+    });
     
+}
+
+
++ (void)queryAllWeiboStoreSucces:(timeLineBlock)success failure:(failuresBlock)failure {
     
-    return [weiboArr copy];
+   // dispatch_queue_t queryQueue = dispatch_queue_create("coredata.query.all", NULL);
+    //dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        UIApplication *application = [UIApplication sharedApplication];
+        id delegate = application.delegate;
+        NSManagedObjectContext *context = [delegate managedObjectContext];
+        
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboStore class])];
+        NSArray *arr = [context executeFetchRequest:request error:nil];
+        
+        [WeiboStoreManager sortArray:arr];
+        
+        NSMutableArray *weiboArr = [[NSMutableArray alloc]init];
+        for (WeiboStore *weiboStore in arr) {
+            [weiboArr addObject:weiboStore.weiboMsg];
+        }
+        
+        if (weiboArr.count > 0) {
+            success(weiboArr, 0);
+        }
+        else {
+            failure(@"That is no cache.");
+        }
+   // });
 }
 
 + (NSArray *)sortArray:(NSArray *)array {

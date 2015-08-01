@@ -98,7 +98,12 @@
 
 - (void)getWeiboMsg:(NSNotification *)notification {
     
-    _weiboMsgArray = [[NSMutableArray alloc]initWithArray:[WeiboStoreManager queryAllWeiboStore]];
+    
+    [WeiboStoreManager queryAllWeiboStoreSucces:^(NSArray *timeLineArr, long long max_id) {
+        _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];
+    } failure:^(NSString *desc) {
+        
+    }];
     if (_weiboMsgArray.count > 0) {
         NSLog(@"-------core data has data: %ld------",_weiboMsgArray.count);
         return;
