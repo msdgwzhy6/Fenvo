@@ -21,9 +21,9 @@
     [super layoutSubviews];
     [self setUserInteractionEnabled:YES];
     [self setTintColor:RGBACOLOR(250, 143, 5, 1) ];
-    [self setBackgroundColor:[UIColor clearColor]];
+    [self setBackgroundColor:[UIColor blackColor]];
     
-    [self setAlpha:0.75];
+    [self setAlpha:1];
 }
 
 @end

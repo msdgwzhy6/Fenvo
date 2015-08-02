@@ -24,8 +24,7 @@
     
     if (self) {
 
-        _writeNewWeibo = [[UIBarButtonItem alloc]initWithImage:[UIImage imageWithIcon:@"fa-pencil-square-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] style:UIBarButtonItemStyleDone target:self action:@selector(writeWeibo)];
-        self.navigationItem.rightBarButtonItem = _writeNewWeibo;
+
     
     }
     
@@ -34,6 +33,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _writeNewWeibo = [[UIBarButtonItem alloc]initWithImage:[UIImage imageWithIcon:@"fa-pencil-square-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] style:UIBarButtonItemStyleDone target:self action:@selector(writeWeibo)];
+    self.navigationItem.rightBarButtonItem = _writeNewWeibo;
+
+    self.navigationBar.barStyle = UIBarStyleBlack;
 }
 
 - (void)didReceiveMemoryWarning {

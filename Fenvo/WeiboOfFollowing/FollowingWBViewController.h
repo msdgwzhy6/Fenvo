@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "WebImageView.h"
 #import "WeiboLabel.h"
+#import "ANBlurredTableView.h"
+#import "AMScrollingNavbarViewController.h"
+
 @interface FollowingWBViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,WeiboLabelDelegate>
 @property(strong, nonatomic)NSString *access_token;
+@property(strong, nonatomic)ANBlurredTableView *tableView;
 @end

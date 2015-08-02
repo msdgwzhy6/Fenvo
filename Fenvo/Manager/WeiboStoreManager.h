@@ -8,20 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^timeLineBlock)(NSArray *timeLineArr, long long max_id);
-typedef void(^failuresBlock)(NSString *desc);
+
 
 @interface WeiboStoreManager : NSObject
+
+typedef void(^querySuccessBlock)(NSArray *timeLineArr, long long max_id);
+typedef void(^queryfailureBlock)(NSString *desc);
 
 + (NSArray *)getWeiboMsgInCoreData;
 
 + (void)queryTimeLineWithMaxId:(NSNumber *)max_id
-                       success:(timeLineBlock)success
-                       failure:(failuresBlock)failure;
+                       success:(querySuccessBlock)success
+                       failure:(queryfailureBlock)failure;
 
 
-+ (void)queryAllWeiboStoreSucces:(timeLineBlock)success
-                         failure:(failuresBlock)failure;
++ (void)queryAllWeiboStoreSucces:(querySuccessBlock)success
+                         failure:(queryfailureBlock)failure;
 
 + (void)removeAllWeiboStore;
 + (void)removeWeiboMsg:(long long)weiboID;

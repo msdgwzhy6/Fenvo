@@ -95,20 +95,20 @@ NSString *access_token;
             break;
         case 1:
             self.title = @"Remind";
-            self.navigationItem.rightBarButtonItem = nil;
-            self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+            //self.navigationItem.rightBarButtonItem = nil;
+            //self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
             break;
         case 2:
             self.title = @"Hot";
-            self.navigationItem.rightBarButtonItem = nil;
+            //self.navigationItem.rightBarButtonItem = nil;
             break;
         case 3:
             self.title = @"Profile";
-            self.navigationItem.rightBarButtonItem = nil;
+            //self.navigationItem.rightBarButtonItem = nil;
             //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_bg.png"] forBarMetrics:UIBarMetricsDefault];
             //self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
             //self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-            self.navigationItem.rightBarButtonItem = _settingBtn;
+            //self.navigationItem.rightBarButtonItem = _settingBtn;
             break;
         default:
             break;

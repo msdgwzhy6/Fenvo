@@ -23,7 +23,7 @@
 
 -(UIImage*)getBlurImage:(UIImage*)image
 {
-    return [self gaussBlur:0.1 andImage:image];
+    return [self gaussBlur:0.11 andImage:image];
 }
 - (UIImage*)gaussBlur:(CGFloat)blurLevel andImage:(UIImage*)originImage
 {

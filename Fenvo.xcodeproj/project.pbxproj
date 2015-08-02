@@ -143,6 +143,10 @@
 		399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 399AE4F01B30166300D4E81F /* FVNavigationController.m */; };
 		39BA30F31B6A6B3700DEFDB0 /* QiHei.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */; };
 		39C0551F1B64C36100F0A267 /* TimeLineRPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C0551E1B64C36100F0A267 /* TimeLineRPC.m */; };
+		39CBC7751B6DD20E00FEBE6E /* ANBlurredTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7721B6DD20E00FEBE6E /* ANBlurredTableView.m */; };
+		39CBC7761B6DD20E00FEBE6E /* UIImage+BoxBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7741B6DD20E00FEBE6E /* UIImage+BoxBlur.m */; };
+		39CBC7791B6DD2F900FEBE6E /* UIView+Borders.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7781B6DD2F900FEBE6E /* UIView+Borders.m */; };
+		39CBC77B1B6DDC5900FEBE6E /* beach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 39CBC77A1B6DDC5900FEBE6E /* beach.jpg */; };
 		39CC40171B398FB000D94A09 /* add_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFC1B398FB000D94A09 /* add_image@2x.png */; };
 		39CC40181B398FB000D94A09 /* delete_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFD1B398FB000D94A09 /* delete_image@2x.png */; };
 		39CC40191B398FB000D94A09 /* minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 39CC3FFE1B398FB000D94A09 /* minus.png */; };
@@ -409,6 +413,13 @@
 		39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = QiHei.ttf; path = Resource/QiHei.ttf; sourceTree = "<group>"; };
 		39C0551D1B64C36100F0A267 /* TimeLineRPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeLineRPC.h; path = Manager/TimeLineRPC.h; sourceTree = "<group>"; };
 		39C0551E1B64C36100F0A267 /* TimeLineRPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeLineRPC.m; path = Manager/TimeLineRPC.m; sourceTree = "<group>"; };
+		39CBC7711B6DD20E00FEBE6E /* ANBlurredTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANBlurredTableView.h; sourceTree = "<group>"; };
+		39CBC7721B6DD20E00FEBE6E /* ANBlurredTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANBlurredTableView.m; sourceTree = "<group>"; };
+		39CBC7731B6DD20E00FEBE6E /* UIImage+BoxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BoxBlur.h"; sourceTree = "<group>"; };
+		39CBC7741B6DD20E00FEBE6E /* UIImage+BoxBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BoxBlur.m"; sourceTree = "<group>"; };
+		39CBC7771B6DD2F900FEBE6E /* UIView+Borders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Borders.h"; sourceTree = "<group>"; };
+		39CBC7781B6DD2F900FEBE6E /* UIView+Borders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Borders.m"; sourceTree = "<group>"; };
+		39CBC77A1B6DDC5900FEBE6E /* beach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = beach.jpg; path = Resource/beach.jpg; sourceTree = "<group>"; };
 		39CC3FFC1B398FB000D94A09 /* add_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_image@2x.png"; sourceTree = "<group>"; };
 		39CC3FFD1B398FB000D94A09 /* delete_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete_image@2x.png"; sourceTree = "<group>"; };
 		39CC3FFE1B398FB000D94A09 /* minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minus.png; sourceTree = "<group>"; };
@@ -717,8 +728,7 @@
 				397530381B1EDBD5009E3E98 /* JSONKit.m */,
 				397530391B1EDBD5009E3E98 /* README.md */,
 			);
-			name = "JSONKit-1.4";
-			path = "Fenvo/JSONKit-1.4";
+			path = "JSONKit-1.4";
 			sourceTree = "<group>";
 		};
 		397530491B1EE793009E3E98 /* FeSpinner */ = {
@@ -728,8 +738,7 @@
 				397530531B1EE793009E3E98 /* Tool */,
 				397530581B1EE793009E3E98 /* Type */,
 			);
-			name = FeSpinner;
-			path = Fenvo/FeSpinner;
+			path = FeSpinner;
 			sourceTree = "<group>";
 		};
 		3975304A1B1EE793009E3E98 /* Resource */ = {
@@ -827,6 +836,7 @@
 		39BA30F11B6A6B1800DEFDB0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				39CBC77A1B6DDC5900FEBE6E /* beach.jpg */,
 				39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */,
 			);
 			name = Resource;
@@ -843,6 +853,30 @@
 				39D07B111B0893F800385D3E /* WebViewController.m */,
 			);
 			name = WeiboOfFollowing;
+			sourceTree = "<group>";
+		};
+		39CBC76F1B6DD1E700FEBE6E /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				39CBC7701B6DD20E00FEBE6E /* ANBlurredTableView */,
+				397530491B1EE793009E3E98 /* FeSpinner */,
+				397530351B1EDBD5009E3E98 /* JSONKit-1.4 */,
+			);
+			name = Vendors;
+			sourceTree = "<group>";
+		};
+		39CBC7701B6DD20E00FEBE6E /* ANBlurredTableView */ = {
+			isa = PBXGroup;
+			children = (
+				39CBC7771B6DD2F900FEBE6E /* UIView+Borders.h */,
+				39CBC7781B6DD2F900FEBE6E /* UIView+Borders.m */,
+				39CBC7711B6DD20E00FEBE6E /* ANBlurredTableView.h */,
+				39CBC7721B6DD20E00FEBE6E /* ANBlurredTableView.m */,
+				39CBC7731B6DD20E00FEBE6E /* UIImage+BoxBlur.h */,
+				39CBC7741B6DD20E00FEBE6E /* UIImage+BoxBlur.m */,
+			);
+			name = ANBlurredTableView;
+			path = Vendors/ANBlurredTableView;
 			sourceTree = "<group>";
 		};
 		39CC3FFA1B398FAF00D94A09 /* WBImageSelect */ = {
@@ -944,8 +978,6 @@
 		39CF25D11AB8088C006AA556 = {
 			isa = PBXGroup;
 			children = (
-				397530491B1EE793009E3E98 /* FeSpinner */,
-				397530351B1EDBD5009E3E98 /* JSONKit-1.4 */,
 				39CED5D91B0B633C005DBA93 /* CoreImage.framework */,
 				39D70CFB1ACFEAE600F34A7C /* MapKit.framework */,
 				39CF25DC1AB8088C006AA556 /* Fenvo */,
@@ -968,6 +1000,7 @@
 		39CF25DC1AB8088C006AA556 /* Fenvo */ = {
 			isa = PBXGroup;
 			children = (
+				39CBC76F1B6DD1E700FEBE6E /* Vendors */,
 				39BA30F11B6A6B1800DEFDB0 /* Resource */,
 				39E5B4291B5ACCC100C2A734 /* Model */,
 				39ED9F2F1B5566C500E2B545 /* RPC */,
@@ -1392,6 +1425,7 @@
 				3975307A1B1EE793009E3E98 /* wifimanhub@2x.png in Resources */,
 				393B444F1B396221005F8998 /* face74@2x.png in Resources */,
 				393B44121B396221005F8998 /* face19@2x.png in Resources */,
+				39CBC77B1B6DDC5900FEBE6E /* beach.jpg in Resources */,
 				39CF25EE1AB8088C006AA556 /* Images.xcassets in Resources */,
 				393B44441B396221005F8998 /* face64@2x.png in Resources */,
 				39CC405F1B39947500D94A09 /* btn_add_photo.png in Resources */,
@@ -1551,6 +1585,7 @@
 				39CD1EF71B204EA800F2DBCA /* CheckBox.m in Sources */,
 				397530881B1EE793009E3E98 /* FeVietNamLoader.m in Sources */,
 				3975307E1B1EE793009E3E98 /* FeEqualize.m in Sources */,
+				39CBC7751B6DD20E00FEBE6E /* ANBlurredTableView.m in Sources */,
 				39D3BB111B271E5D002B0412 /* FollowerListTableViewController.m in Sources */,
 				39E5B4271B5AB21800C2A734 /* MainTabBar.m in Sources */,
 				39CE3C911B219191004E4D92 /* FollowingListTableViewController.m in Sources */,
@@ -1562,6 +1597,7 @@
 				396E6D0D1ABA89BA00AE86CC /* FollowingWBViewController.m in Sources */,
 				39DECE071B5BA6270044FD39 /* WeiboMsgManager.m in Sources */,
 				39D239141AE140D100D714A5 /* WebImageView.m in Sources */,
+				39CBC7761B6DD20E00FEBE6E /* UIImage+BoxBlur.m in Sources */,
 				397530811B1EE793009E3E98 /* FeLoadingIcon.m in Sources */,
 				39E02BEA1B5A836B0064A8A3 /* FAImageView.m in Sources */,
 				39E02BEF1B5A836B0064A8A3 /* UIFont+FontAwesome.m in Sources */,
@@ -1580,6 +1616,7 @@
 				39C0551F1B64C36100F0A267 /* TimeLineRPC.m in Sources */,
 				397530481B1EDBD5009E3E98 /* README.md in Sources */,
 				395C57D71B43EF5E00374047 /* SingleImageView.m in Sources */,
+				39CBC7791B6DD2F900FEBE6E /* UIView+Borders.m in Sources */,
 				39D239131AE140D100D714A5 /* WebImageBrowser.m in Sources */,
 				395C57D61B43EF5E00374047 /* SingleImageBrowser.m in Sources */,
 				395C57D41B43EF5E00374047 /* MutiImageBrowser.m in Sources */,

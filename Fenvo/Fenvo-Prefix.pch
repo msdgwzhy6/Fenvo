@@ -31,8 +31,11 @@
 
 //
 #define WBColor(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
-#define WBStatusGrayColor WBColor(62,71,71)
+#define WBStatusGrayColor WBColor(240, 240, 240)
+//WBColor(62,71,71)
 #define WBStatusLightGrayColor WBColor(120,120,180)
+
+#define WBUserNameColor WBColor()
 //
 #define WBStatusCellControlSpacing 12//控件间距
 #define WBStatusCellImageViewSpacing 3

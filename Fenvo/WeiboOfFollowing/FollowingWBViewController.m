@@ -21,6 +21,10 @@
 #import "TimeLineRPC.h"
 #import "WeiboStoreManager.h"
 #import "WeiboStore.h"
+#import "WeiboGetBlurImage.h"
+
+
+
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
 
 
@@ -45,6 +49,10 @@
     //next_cursor、previous_cursor指定返回的之后、之前的游标值。暂未支持
     long long _next_cursor;
     long long _previous_cursor;
+    
+    
+    //是从coredata中找数据还是从服务器上
+    BOOL _isFindInCoredata;
 }
 @end
 @implementation FollowingWBViewController
@@ -56,17 +64,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //仅做去除重用标志
-    refreshtime = 1;
-    //设置TableView样式
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.modalPresentationStyle = UIModalPresentationCurrentContext;
-    //self.tableView.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
-    self.tableView.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
+    //
+    _isFindInCoredata = true;
+    
+    //self.tableView = [[ANBlurredTableView alloc]initWithFrame:];
+    self.tableView = [[ANBlurredTableView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    //self.tableView.style = UITableViewStylePlain;
+    self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
+    self.tableView.delegate =self;
+    self.tableView.dataSource = self;
+    
     //[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"background"]];
     //取消tableview向下延伸。避免被tabBar遮盖
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.modalPresentationStyle = UIModalPresentationCurrentContext;
+
+    [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
+    
+    [self.tableView setBlurTintColor:[UIColor colorWithWhite:0.2 alpha:0.5]];
+    // We want to animate our background's alpha, so switch this to yes.
+    [self.tableView setAnimateTintAlpha:YES];
+    [self.tableView setStartTintAlpha:0.2f];
+    [self.tableView setEndTintAlpha:0.6f];
+
+    
     NSNotificationCenter  *center = [NSNotificationCenter defaultCenter];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WBNOTIFICATION_DOWNLOADDATA object:nil];
     [center addObserver:self selector:@selector(getWeiboMsg:) name:WBNOTIFICATION_DOWNLOADDATA object:nil];
@@ -101,6 +123,7 @@
     
     [WeiboStoreManager queryAllWeiboStoreSucces:^(NSArray *timeLineArr, long long max_id) {
         _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];
+        _max_id = max_id;
     } failure:^(NSString *desc) {
         
     }];
@@ -188,6 +211,31 @@
 }
 - (void)getMoreWeibo{
     
+    if (_isFindInCoredata == false) {
+        [self getMoreWeiboFromRemote];
+        return;
+    };
+
+    [WeiboStoreManager queryTimeLineWithMaxId:[NSNumber numberWithLongLong:_max_id]
+                                      success:^(NSArray *timeLineArr, long long max_id) {
+                                          
+                                          if (timeLineArr.count > 0) {
+                                              [self reloadData:timeLineArr];
+                                          }else {
+                                              [self getMoreWeiboFromRemote];
+                                          }
+                                          
+                                      } failure:^(NSString *desc) {
+                                          [self getMoreWeiboFromRemote];
+                                      }];
+    
+
+}
+
+- (void)getMoreWeiboFromRemote {
+    
+    _isFindInCoredata = false;
+    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         NSNumber *max_id = [NSNumber numberWithLongLong:_max_id];
@@ -196,26 +244,37 @@
                                         orMaxId:max_id
                                         success:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
                                             
-                                            if (timeLineArr.count > 0) {
-                                                for (int i = 0; i < timeLineArr.count; i ++) {
-                                                    WeiboMsg *weiboMsg = (WeiboMsg *)timeLineArr[i];
-                                                    [_weiboMsgArray addObject:weiboMsg];
-                                                    
-                                                    
-                                                }
-                                            }
-                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                NSLog(@"%lld",_max_id);
-                                                [self.tableView reloadData];
-                                                [self.tableView.footer endRefreshing];
-                                            });
-
-        } failure:^(NSString *desc, NSError *error) {
-            [self.tableView.footer endRefreshing];
-            NSLog(@"public weibo get failure");
-        }];
-
+                                            [self reloadData:timeLineArr];
+                                            
+                                            _max_id = max_id;
+                                            
+                                        } failure:^(NSString *desc, NSError *error) {
+                                            [self.tableView.footer endRefreshing];
+                                            NSLog(@"public weibo get failure");
+                                        }];
+        
     });
+}
+
+- (void)reloadData:(NSArray *)timeLineArr {
+         
+    if (timeLineArr.count > 0) {
+        for (int i = 0; i < timeLineArr.count; i ++) {
+            WeiboMsg *weiboMsg = (WeiboMsg *)timeLineArr[i];
+            [_weiboMsgArray addObject:weiboMsg];
+        }
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"%lld",_max_id);
+        [self.tableView reloadData];
+        [self.tableView.footer endRefreshing];
+    });
+    [self getMaxId:[_weiboMsgArray lastObject]];
+}
+
+- (void)getMaxId:(WeiboMsg *)weiboMsg {
+    
+    _max_id = weiboMsg.ids.longLongValue;
 }
 
 

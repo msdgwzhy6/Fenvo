@@ -36,7 +36,7 @@
 
 - (void) initSubView{
     self.containView = [[UIView alloc]init];
-    self.containView.backgroundColor = [UIColor whiteColor];
+    self.containView.backgroundColor = [UIColor clearColor];
     //RGBACOLOR(245, 245, 245, 0.4);
     //self.containView.layer.cornerRadius = 10.0;
     //self.containView.layer.masksToBounds = YES;
@@ -208,7 +208,7 @@
     CGFloat wbDetailY = CGRectGetMaxY(_avatar.frame) + WBStatusCellControlSpacing;
     CGFloat wbDetailWidth = IPHONE_SCREEN_WIDTH - WBStatusCellControlSpacing * 2;
     //[_wbDetail setText:weiboMsg.wbDetail];
-    [_wbDetail setEmojiText:weiboMsg.wbDetail];
+    
     CGSize wbDetailSize = [weiboMsg.wbDetail
                            boundingRectWithSize:CGSizeMake(wbDetailWidth, MAXFLOAT)
                            options:NSStringDrawingUsesLineFragmentOrigin
@@ -216,6 +216,7 @@
                            context:nil].size;
     CGRect wbDetailRect = CGRectMake(wbDetailX, wbDetailY, wbDetailSize.width, wbDetailSize.height);
     _wbDetail.frame = wbDetailRect;
+    [_wbDetail setEmojiText:weiboMsg.wbDetail];
     [_wbDetail sizeToFit];
     
     CGRect containViewRect;
@@ -491,9 +492,9 @@
     
     
     
-    CGFloat btnWidth = (IPHONE_SCREEN_WIDTH/2 - 10)/3;
+    CGFloat btnWidth = IPHONE_SCREEN_WIDTH/6;
     
-    CGRect commentRect = CGRectMake(IPHONE_SCREEN_WIDTH / 2 + 5, imageHeight + 5, btnWidth, 30);
+    CGRect commentRect = CGRectMake(IPHONE_SCREEN_WIDTH / 2 - 20 , imageHeight + 5, btnWidth, 30);
     _commentBtn.frame = commentRect;
     [_commentBtn setTitle:[self countToString:weiboMsg.comments_count.integerValue] forState:UIControlStateNormal];
     CGRect forwardRect = CGRectMake(CGRectGetMaxX(_commentBtn.frame), imageHeight +5, btnWidth, 30);

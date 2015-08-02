@@ -8,6 +8,7 @@
 
 #import "WeiboStoreManager.h"
 #import "WeiboStore.h"
+#import "WeiboMsg.h"
 
 @implementation WeiboStoreManager
 
@@ -24,7 +25,7 @@ NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];
 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([WeiboStore class])];
 
 //定义分组与排序规则：通过weiboMsg.ids进行排序
-NSSortDescriptor *sortDesciptor = [[NSSortDescriptor alloc]initWithKey:@"weiboID" ascending:YES];
+NSSortDescriptor *sortDesciptor = [[NSSortDescriptor alloc]initWithKey:@"weiboID" ascending:NO];
 [fetchRequest setSortDescriptors:@[sortDesciptor]];
 
 //请求结果进行转换，转换为WeiboMsg数据对象
@@ -51,27 +52,38 @@ NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
     
 }
 
-+ (void)queryTimeLineWithMaxId:(NSNumber *)max_id success:(timeLineBlock)success failure:(failuresBlock)failure {
++ (void)queryTimeLineWithMaxId:(NSNumber *)max_id success:(querySuccessBlock)success failure:(queryfailureBlock)failure {
     
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
 
     
     dispatch_queue_t fetchQueue = dispatch_queue_create("coredata.query.withMaxId", NULL);
     
     dispatch_async(fetchQueue, ^{
-        UIApplication *application = [UIApplication sharedApplication];
-        id delegate = application.delegate;
-        NSManagedObjectContext *context = [delegate managedObjectContext];
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboStore class])];
-        NSSortDescriptor *sortDesciptor = [[NSSortDescriptor alloc]initWithKey:@"weiboID" ascending:YES];
+        //升序则ascending为YES，否则为NO
+        NSSortDescriptor *sortDesciptor = [[NSSortDescriptor alloc]initWithKey:@"weiboMsg.ids" ascending:NO];
         [request setSortDescriptors:@[sortDesciptor]];
-        request.predicate = [NSPredicate predicateWithFormat:@"weiboID < %lld", max_id.longLongValue];
+        request.predicate = [NSPredicate predicateWithFormat:@"weiboMsg.ids < %lld", max_id.longLongValue];
         request.fetchLimit = 20;
         NSArray *arr = [context executeFetchRequest:request error:nil];
         
+        
+        
         if (arr.count > 0) {
             WeiboStore *weiboStore = (WeiboStore *)[arr lastObject];
-            long long max_id = [weiboStore.weiboID longLongValue];
-            success(arr, max_id);
+            
+            
+            NSMutableArray *weiboArr = [[NSMutableArray alloc]init];
+            for (WeiboStore *weiboStore in arr) {
+                [weiboArr addObject:weiboStore.weiboMsg];
+            }
+            WeiboMsg *weibo = [weiboArr lastObject];
+        
+            long long max_id = [weibo.ids longLongValue];
+            success([weiboArr copy], max_id);
         }else {
             failure(@"That is no cache.");
         }
@@ -81,18 +93,20 @@ NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
 }
 
 
-+ (void)queryAllWeiboStoreSucces:(timeLineBlock)success failure:(failuresBlock)failure {
++ (void)queryAllWeiboStoreSucces:(querySuccessBlock)success failure:(queryfailureBlock)failure {
     
-   // dispatch_queue_t queryQueue = dispatch_queue_create("coredata.query.all", NULL);
-    //dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        UIApplication *application = [UIApplication sharedApplication];
-        id delegate = application.delegate;
-        NSManagedObjectContext *context = [delegate managedObjectContext];
-        
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    
+    dispatch_queue_t queryQueue = dispatch_queue_create("coredata.query.all", NULL);
+    dispatch_async(queryQueue, ^{
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboStore class])];
+        NSSortDescriptor *sortDesc = [[NSSortDescriptor alloc]initWithKey:@"weiboMsg.ids" ascending:NO];
+        [request setSortDescriptors:@[sortDesc]];
+        request.fetchLimit = 20;
         NSArray *arr = [context executeFetchRequest:request error:nil];
-        
-        [WeiboStoreManager sortArray:arr];
         
         NSMutableArray *weiboArr = [[NSMutableArray alloc]init];
         for (WeiboStore *weiboStore in arr) {
@@ -105,7 +119,7 @@ NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
         else {
             failure(@"That is no cache.");
         }
-   // });
+    });
 }
 
 + (NSArray *)sortArray:(NSArray *)array {
