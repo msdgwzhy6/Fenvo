@@ -11,6 +11,7 @@
 #import "WeiboMsg.h"
 #import "WeiboUserInfo.h"
 #import "WeiboVisibleInfo.h"
+#import "WeiboStoreManager.h"
 
 
 @implementation WeiboMsg
@@ -40,6 +41,12 @@
 @dynamic visible;
 
 + (WeiboMsg *)createByDictionary:(NSDictionary *)dic {
+    
+    if ([WeiboStoreManager isWeiboStoreExist:[NSNumber numberWithLongLong:[dic[@"id"] longLongValue]]]) {
+        WeiboStore *weiboStore = [WeiboStoreManager updateWeiboStore:dic];
+        return weiboStore.weiboMsg;
+    }
+    
     UIApplication *application = [UIApplication sharedApplication];
     id delegate = application.delegate;
     NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];

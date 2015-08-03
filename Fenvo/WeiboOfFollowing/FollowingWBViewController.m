@@ -22,6 +22,7 @@
 #import "WeiboStoreManager.h"
 #import "WeiboStore.h"
 #import "WeiboGetBlurImage.h"
+#import "AppDelegate.h"
 
 
 
@@ -123,16 +124,28 @@
     
     [WeiboStoreManager queryAllWeiboStoreSucces:^(NSArray *timeLineArr, long long max_id) {
         _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];
-        _max_id = max_id;
+        WeiboMsg *weibo = [_weiboMsgArray lastObject];
+        _max_id = weibo.ids.integerValue;
+        
+        if (_weiboMsgArray.count > 0)
+            return ;
+        else{
+            [self getWeiboMsgFromRemote];
+            [WeiboStoreManager saveInCoreData];
+        }
+        
     } failure:^(NSString *desc) {
         
     }];
-    if (_weiboMsgArray.count > 0) {
-        NSLog(@"-------core data has data: %ld------",_weiboMsgArray.count);
-        return;
-    }
     
-    _access_token = [notification.userInfo objectForKey:@"token"];
+    //[WeiboStoreManager saveInCoreData];
+    
+}
+
+- (void)getWeiboMsgFromRemote {
+    
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    _access_token = delegate.access_token;
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
@@ -167,15 +180,13 @@
                                                 [_spinnerHud removeFromSuperview];
                                                 [_spinnerView removeFromSuperview];
                                             });
-
+                                            
                                         } failure:^(NSString *desc, NSError *error) {
-                                             NSLog(@"%@", desc);
+                                            NSLog(@"%@", desc);
                                         }];
         
     });
-    
-    [WeiboStoreManager saveInCoreData];
-    
+
 }
 - (void)refreshWeiboMsg{
     

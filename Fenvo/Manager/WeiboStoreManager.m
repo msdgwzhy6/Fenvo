@@ -12,45 +12,6 @@
 
 @implementation WeiboStoreManager
 
-+ (NSArray *)getWeiboMsgInCoreData {
-UIApplication *application = [UIApplication sharedApplication];
-id delegate = application.delegate;
-NSManagedObjectContext *managedObjectContext = [delegate managedObjectContext];
-
-/**************
- 通过CoreData获取sqlite中的WeiboMsg数据
- *************/
-
-//通过实体名进行请求
-NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([WeiboStore class])];
-
-//定义分组与排序规则：通过weiboMsg.ids进行排序
-NSSortDescriptor *sortDesciptor = [[NSSortDescriptor alloc]initWithKey:@"weiboID" ascending:NO];
-[fetchRequest setSortDescriptors:@[sortDesciptor]];
-
-//请求结果进行转换，转换为WeiboMsg数据对象
-NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc]initWithFetchRequest:fetchRequest
-                                                                                          managedObjectContext:managedObjectContext
-                                                                                            sectionNameKeyPath:nil
-                                                                                                     cacheName:nil];
-
-NSError *error;
-if ([fetchedResultsController performFetch:&error]) {
-    NSLog(@"%@", [error localizedDescription]);
-}
-
-
-NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
-
-    NSMutableArray *weiboArr = [[NSMutableArray alloc]init];
-    for (WeiboStore *weiboStore in weiboMsgArr) {
-        [weiboArr addObject:weiboStore.weiboMsg];
-    }
-    
-    
-    return [weiboArr copy];
-    
-}
 
 + (void)queryTimeLineWithMaxId:(NSNumber *)max_id success:(querySuccessBlock)success failure:(queryfailureBlock)failure {
     
@@ -66,15 +27,11 @@ NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
         //升序则ascending为YES，否则为NO
         NSSortDescriptor *sortDesciptor = [[NSSortDescriptor alloc]initWithKey:@"weiboMsg.ids" ascending:NO];
         [request setSortDescriptors:@[sortDesciptor]];
-        request.predicate = [NSPredicate predicateWithFormat:@"weiboMsg.ids < %lld", max_id.longLongValue];
+        request.predicate = [NSPredicate predicateWithFormat:@"weiboMsg.ids.longLongValue < %lld", max_id.longLongValue];
         request.fetchLimit = 20;
         NSArray *arr = [context executeFetchRequest:request error:nil];
-        
-        
-        
+       
         if (arr.count > 0) {
-            WeiboStore *weiboStore = (WeiboStore *)[arr lastObject];
-            
             
             NSMutableArray *weiboArr = [[NSMutableArray alloc]init];
             for (WeiboStore *weiboStore in arr) {
@@ -178,25 +135,22 @@ NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
     
 }
 
-
-/**
- *  暂时基本不需要，因为没有需要改动的地方
- *
- *  @param weiboStore <#weiboStore description#>
- */
-+ (void)modifiedWeibo:(WeiboStore *)weiboStore {
++ (WeiboStore *)updateWeiboStore:(NSDictionary *)dic {
     
     UIApplication *application = [UIApplication sharedApplication];
     id delegate = application.delegate;
     NSManagedObjectContext *context = [delegate managedObjectContext];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboStore class])];
-    request.predicate = [NSPredicate predicateWithFormat:@"weiboID = %ld",weiboStore.weiboID.longLongValue];
+    request.predicate = [NSPredicate predicateWithFormat:@"weiboID = %lld",[dic[@"id"] longLongValue]];
     
     NSArray *result = [context executeFetchRequest:request error:nil];
     
     for (WeiboStore *weiboStore_query in result) {
-
+        WeiboMsg *weiboMsg = weiboStore_query.weiboMsg;
+        weiboMsg.attitudes_count = [NSNumber numberWithInteger:[dic[@"attitudes_count"]integerValue]];
+        weiboMsg.reposts_count = [NSNumber numberWithInteger:[dic[@"reposts_count"]integerValue]];
+        weiboMsg.comments_count = [NSNumber numberWithInteger:[dic[@"comments_count"]integerValue]];
     }
     
     //save
@@ -205,6 +159,32 @@ NSArray *weiboMsgArr = [fetchedResultsController fetchedObjects];
     }else {
         NSLog(@"WeiboMsgManager--delete object fail");
     }
+    
+    return (WeiboStore *)result[0];
+}
+
++ (BOOL)isWeiboStoreExist:(NSNumber *)weiboID {
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboStore class])];
+    request.predicate = [NSPredicate predicateWithFormat:@"weiboID = %lld",weiboID.longLongValue];
+    
+    NSArray *result = [context executeFetchRequest:request error:nil];
+    
+    if (result.count > 0)return true;
+    else return false;
+}
+
+/**
+ *  暂时基本不需要，因为没有需要改动的地方
+ *
+ *  @param weiboStore
+ */
++ (void)modifiedWeibo:(WeiboStore *)weiboStore {
+    
+
 }
 
 + (void)saveInCoreData {
