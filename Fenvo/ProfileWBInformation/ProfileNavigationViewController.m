@@ -1,47 +1,28 @@
 //
-//  HomeNavigationController.m
+//  ProfileNavigationViewController.m
 //  Fenvo
 //
-//  Created by Caesar on 15/7/26.
+//  Created by Caesar on 15/8/4.
 //  Copyright (c) 2015年 Caesar. All rights reserved.
 //
 
-#import "HomeNavigationController.h"
-#import "NSString+FontAwesome.h"
-#import "UIImage+FontAwesome.h"
-#import "NewWeiboVC.h"
+#import "ProfileNavigationViewController.h"
 
-@interface HomeNavigationController ()
-{
-        
-}
+@interface ProfileNavigationViewController ()
+
 @end
 
-@implementation HomeNavigationController
-
-- (id)initWithRootViewController:(UIViewController *)rootViewController {
-    self = [super initWithRootViewController:rootViewController];
-    
-    if (self) {
-
-    
-    }
-    
-    return self;
-}
+@implementation ProfileNavigationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationBar.barStyle = UIBarStyleBlackOpaque;
-    
+    // Do any additional setup after loading the view.
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
-
-
 
 /*
 #pragma mark - Navigation

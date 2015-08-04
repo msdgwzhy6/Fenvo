@@ -23,6 +23,9 @@
 #import "WeiboStore.h"
 #import "WeiboGetBlurImage.h"
 #import "AppDelegate.h"
+#import "NSString+FontAwesome.h"
+#import "UIImage+FontAwesome.h"
+#import "NewWeiboVC.h"
 
 
 
@@ -42,6 +45,9 @@
     NSMutableArray *_tmp;
     NSInteger refreshtime;
     
+    //
+    UIBarButtonItem *_writeNewWeibo;
+    
     //刷新微博
     //下次返回比since_id晚的微博
     long long _since_id;
@@ -58,13 +64,18 @@
 @end
 @implementation FollowingWBViewController
 - (void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.navigationController.navigationBar.tintColor = RGBACOLOR(250, 143, 5, 1);
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _writeNewWeibo = [[UIBarButtonItem alloc]initWithImage:[UIImage imageWithIcon:@"fa-pencil-square-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] style:UIBarButtonItemStyleDone target:self action:@selector(writeWeibo)];
+    self.navigationItem.rightBarButtonItem = _writeNewWeibo;
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.title = @"HOME";
     //
     _isFindInCoredata = true;
     
@@ -127,15 +138,8 @@
         WeiboMsg *weibo = [_weiboMsgArray lastObject];
         _max_id = weibo.ids.integerValue;
         
-        if (_weiboMsgArray.count > 0)
-            return ;
-        else{
-            [self getWeiboMsgFromRemote];
-            [WeiboStoreManager saveInCoreData];
-        }
-        
     } failure:^(NSString *desc) {
-        
+         [self getWeiboMsgFromRemote];
     }];
     
     //[WeiboStoreManager saveInCoreData];
@@ -333,6 +337,11 @@
     WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
     CGFloat yHeight = weiboMsg.height.floatValue;
     return yHeight;
+}
+
+- (void)writeWeibo {
+    NewWeiboVC *newWeiboVC = [[NewWeiboVC alloc]initWithNibName:@"NewWeiboVC" bundle:[NSBundle mainBundle]];
+    [self.navigationController pushViewController:newWeiboVC animated:YES];
 }
 
 @end

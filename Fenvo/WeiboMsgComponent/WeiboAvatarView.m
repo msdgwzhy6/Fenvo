@@ -7,10 +7,10 @@
 //
 
 #import "WeiboAvatarView.h"
-#import "ProfileViewController.h"
-#import "MainViewController.h"
+#import "OthersViewController.h"
+#import "FollowingWBViewController.h"
 @interface WeiboAvatarView(){
-    ProfileViewController *_profileVC;
+    OthersViewController *_profileVC;
 }
 @end
 @implementation WeiboAvatarView
@@ -54,8 +54,9 @@
 }
 
 - (void)openUserProfile{
+    NSLog(@"you clicked the weibo avatar");
     if (_userInfo) {
-        _profileVC = [[ProfileViewController alloc]init];
+        _profileVC = [[OthersViewController alloc]init];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshUserInfo" object:_userInfo];
         [[self viewController].navigationController pushViewController:_profileVC animated:YES];
     }else {
@@ -67,7 +68,7 @@
     for (UIView* next = [self superview]; next; next =
          next.superview) {
         UIResponder* nextResponder = [next nextResponder];
-        if ([nextResponder isKindOfClass:[MainViewController class]]) {
+        if ([nextResponder isKindOfClass:[UIViewController class]]) {
             return (UIViewController*)nextResponder;
         }
     }

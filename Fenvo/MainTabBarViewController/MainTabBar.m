@@ -22,7 +22,7 @@
     [self setUserInteractionEnabled:YES];
     [self setTintColor:RGBACOLOR(250, 143, 5, 1) ];
     [self setBackgroundColor:[UIColor blackColor]];
-    
+    self.barStyle = UIBarStyleBlackOpaque;
     [self setAlpha:1];
 }
 

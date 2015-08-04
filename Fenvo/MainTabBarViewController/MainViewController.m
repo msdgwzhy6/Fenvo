@@ -15,6 +15,8 @@
 #import "UIImage+FontAwesome.h"
 #import "MainTabBar.h"
 #import "HomeNavigationController.h"
+#import "MessageNavigationController.h"
+#import "ProfileNavigationViewController.h"
 
 @interface MainViewController ()<UITabBarDelegate,UITabBarControllerDelegate>
 {
@@ -22,10 +24,10 @@
     HomeNavigationController *_followingWeiboNC;
     
     ProfileViewController *_profileVC;
-    UINavigationController *_profileNC;
+    ProfileNavigationViewController *_profileNC;
     
     WeiboRemindVC *_remindVC;
-    UINavigationController *_remindNC;
+    MessageNavigationController *_remindNC;
     
 
     UIBarButtonItem *_settingBtn;
@@ -52,33 +54,35 @@ NSString *access_token;
     [self setValue:rootTabBar forKey:@"tabBar"];
 
     _followingWeiboVC = [[FollowingWBViewController alloc]initWithStyle:UITableViewStylePlain];
-    _followingWeiboVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
-    _followingWeiboVC.tabBarItem.tag = 0;
-    
     _followingWeiboNC = [[HomeNavigationController alloc]initWithRootViewController:_followingWeiboVC];
+    _followingWeiboNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"HOME" image:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-home" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _followingWeiboNC.tabBarItem.tag = 0;
 
     [self selectedTapTabBarItems:_followingWeiboNC.tabBarItem];
     [self unselectedTapTabBarItems:_followingWeiboNC.tabBarItem];
     
     
     _remindVC = [[WeiboRemindVC alloc]initWithStyle:UITableViewStyleGrouped];
-    _remindVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Message" image:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
-    _remindVC.tabBarItem.tag = 1;
-    [self selectedTapTabBarItems:_remindVC.tabBarItem];
-    [self unselectedTapTabBarItems:_remindVC.tabBarItem];
+    _remindNC = [[MessageNavigationController alloc]initWithRootViewController:_remindVC];
+    _remindNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"MESSAGE" image:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-envelope" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+    _remindNC.tabBarItem.tag = 1;
+    [self selectedTapTabBarItems:_remindNC.tabBarItem];
+    [self unselectedTapTabBarItems:_remindNC.tabBarItem];
     
     _profileVC = [[ProfileViewController alloc]init];
-    _profileVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Me" image:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
-    _profileVC.tabBarItem.tag = 3;
-    [self selectedTapTabBarItems:_profileVC.tabBarItem];
-    [self unselectedTapTabBarItems:_profileVC.tabBarItem];
+    _profileNC = [[ProfileNavigationViewController alloc]initWithRootViewController:_profileVC];
+    _profileNC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"ME" image:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:[UIColor lightGrayColor] andSize:CGSizeMake(20.0f, 20.0f)] selectedImage:[UIImage imageWithIcon:@"fa-user" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20.0f, 20.0f)]];
+
+    _profileNC.tabBarItem.tag = 3;
+    [self selectedTapTabBarItems:_profileNC.tabBarItem];
+    [self unselectedTapTabBarItems:_profileNC.tabBarItem];
     
     
     
-    self.viewControllers = @[_followingWeiboNC,_remindVC,_profileVC];
-    for (UIViewController *controller in self.viewControllers) {
-        UIViewController *view= controller.view;
-    }
+    self.viewControllers = @[_followingWeiboNC,_remindNC,_profileNC];
+//    for (UIViewController *controller in self.viewControllers) {
+//        UIViewController *view= controller.view;
+//    }
     
 }
 - (void)didReceiveMemoryWarning {
@@ -89,30 +93,7 @@ NSString *access_token;
 
 #pragma mark - UITabBarDelegate
 -(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
-    switch (item.tag) {
-        case 0:
-            self.title = @"Home";
-            break;
-        case 1:
-            self.title = @"Remind";
-            //self.navigationItem.rightBarButtonItem = nil;
-            //self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-            break;
-        case 2:
-            self.title = @"Hot";
-            //self.navigationItem.rightBarButtonItem = nil;
-            break;
-        case 3:
-            self.title = @"Profile";
-            //self.navigationItem.rightBarButtonItem = nil;
-            //[self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_bg.png"] forBarMetrics:UIBarMetricsDefault];
-            //self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-            //self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-            //self.navigationItem.rightBarButtonItem = _settingBtn;
-            break;
-        default:
-            break;
-    }
+
 }
 
 - (void)selectedTapTabBarItems: (UITabBarItem *)tabBarItem{

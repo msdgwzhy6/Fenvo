@@ -42,8 +42,8 @@
     //cancel tableview extend edge
     //because navigationBar or tabBar maybe covers the tableView
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
-    self.tableView.contentInset = UIEdgeInsetsMake(69, 0, 44, 0);
+    //self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
+    //self.tableView.contentInset = UIEdgeInsetsMake(69, 0, 44, 0);
     //add refresh control
     //[self addRefreshViewController];
     

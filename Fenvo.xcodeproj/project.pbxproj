@@ -143,6 +143,11 @@
 		399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 399AE4F01B30166300D4E81F /* FVNavigationController.m */; };
 		39BA30F31B6A6B3700DEFDB0 /* QiHei.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */; };
 		39C0551F1B64C36100F0A267 /* TimeLineRPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C0551E1B64C36100F0A267 /* TimeLineRPC.m */; };
+		39C4A6E31B70FC0C00A5940E /* ProfileNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6E21B70FC0C00A5940E /* ProfileNavigationViewController.m */; };
+		39C4A6E61B70FE1E00A5940E /* OthersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6E51B70FE1E00A5940E /* OthersViewController.m */; };
+		39C4A6EF1B71059200A5940E /* RemindBaseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6ED1B71059200A5940E /* RemindBaseTableViewCell.m */; };
+		39C4A6F31B71099F00A5940E /* RemindBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6F21B71099F00A5940E /* RemindBaseView.m */; };
+		39C4A6F61B710AD600A5940E /* StyleOfRemindSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6F51B710AD600A5940E /* StyleOfRemindSubviews.m */; };
 		39CBC7751B6DD20E00FEBE6E /* ANBlurredTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7721B6DD20E00FEBE6E /* ANBlurredTableView.m */; };
 		39CBC7761B6DD20E00FEBE6E /* UIImage+BoxBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7741B6DD20E00FEBE6E /* UIImage+BoxBlur.m */; };
 		39CBC7791B6DD2F900FEBE6E /* UIView+Borders.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7781B6DD2F900FEBE6E /* UIView+Borders.m */; };
@@ -357,8 +362,8 @@
 		395C57CE1B43EF5E00374047 /* SingleImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleImageView.m; sourceTree = "<group>"; };
 		3960B1381B648E950051C8A3 /* HomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HomeNavigationController.h; path = MainTabBarViewController/HomeNavigationController.h; sourceTree = "<group>"; };
 		3960B1391B648E960051C8A3 /* HomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HomeNavigationController.m; path = MainTabBarViewController/HomeNavigationController.m; sourceTree = "<group>"; };
-		3960B13B1B64903C0051C8A3 /* MessageNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNavigationController.h; path = MainTabBarViewController/MessageNavigationController.h; sourceTree = "<group>"; };
-		3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNavigationController.m; path = MainTabBarViewController/MessageNavigationController.m; sourceTree = "<group>"; };
+		3960B13B1B64903C0051C8A3 /* MessageNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageNavigationController.h; path = ../MainTabBarViewController/MessageNavigationController.h; sourceTree = "<group>"; };
+		3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageNavigationController.m; path = ../MainTabBarViewController/MessageNavigationController.m; sourceTree = "<group>"; };
 		39643CFD1AD5537A00ADE889 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		39643CFF1AD554CD00ADE889 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		396E6D0B1ABA89BA00AE86CC /* FollowingWBViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowingWBViewController.h; path = WeiboOfFollowing/FollowingWBViewController.h; sourceTree = "<group>"; };
@@ -413,6 +418,16 @@
 		39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = QiHei.ttf; path = Resource/QiHei.ttf; sourceTree = "<group>"; };
 		39C0551D1B64C36100F0A267 /* TimeLineRPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeLineRPC.h; path = Manager/TimeLineRPC.h; sourceTree = "<group>"; };
 		39C0551E1B64C36100F0A267 /* TimeLineRPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimeLineRPC.m; path = Manager/TimeLineRPC.m; sourceTree = "<group>"; };
+		39C4A6E11B70FC0C00A5940E /* ProfileNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileNavigationViewController.h; path = ProfileWBInformation/ProfileNavigationViewController.h; sourceTree = "<group>"; };
+		39C4A6E21B70FC0C00A5940E /* ProfileNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNavigationViewController.m; path = ProfileWBInformation/ProfileNavigationViewController.m; sourceTree = "<group>"; };
+		39C4A6E41B70FE1E00A5940E /* OthersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OthersViewController.h; path = ProfileWBInformation/OthersViewController.h; sourceTree = "<group>"; };
+		39C4A6E51B70FE1E00A5940E /* OthersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OthersViewController.m; path = ProfileWBInformation/OthersViewController.m; sourceTree = "<group>"; };
+		39C4A6EC1B71059200A5940E /* RemindBaseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindBaseTableViewCell.h; sourceTree = "<group>"; };
+		39C4A6ED1B71059200A5940E /* RemindBaseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindBaseTableViewCell.m; sourceTree = "<group>"; };
+		39C4A6F11B71099F00A5940E /* RemindBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemindBaseView.h; path = Base/RemindBaseView.h; sourceTree = "<group>"; };
+		39C4A6F21B71099F00A5940E /* RemindBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemindBaseView.m; path = Base/RemindBaseView.m; sourceTree = "<group>"; };
+		39C4A6F41B710AD600A5940E /* StyleOfRemindSubviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StyleOfRemindSubviews.h; path = Base/StyleOfRemindSubviews.h; sourceTree = "<group>"; };
+		39C4A6F51B710AD600A5940E /* StyleOfRemindSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StyleOfRemindSubviews.m; path = Base/StyleOfRemindSubviews.m; sourceTree = "<group>"; };
 		39CBC7711B6DD20E00FEBE6E /* ANBlurredTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANBlurredTableView.h; sourceTree = "<group>"; };
 		39CBC7721B6DD20E00FEBE6E /* ANBlurredTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANBlurredTableView.m; sourceTree = "<group>"; };
 		39CBC7731B6DD20E00FEBE6E /* UIImage+BoxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BoxBlur.h"; sourceTree = "<group>"; };
@@ -592,6 +607,10 @@
 		3921C6901B344086006339F9 /* WeiboRemind */ = {
 			isa = PBXGroup;
 			children = (
+				39C4A6E81B7104CF00A5940E /* Base */,
+				39C4A6E71B7104AA00A5940E /* Comment */,
+				3960B13B1B64903C0051C8A3 /* MessageNavigationController.h */,
+				3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */,
 				39D1876B1B3449B400ACF6CB /* WeiboRemindVC.h */,
 				39D1876C1B3449B400ACF6CB /* WeiboRemindVC.m */,
 				3921C6991B3443E9006339F9 /* ChatCell.h */,
@@ -842,9 +861,31 @@
 			name = Resource;
 			sourceTree = "<group>";
 		};
+		39C4A6E71B7104AA00A5940E /* Comment */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Comment;
+			sourceTree = "<group>";
+		};
+		39C4A6E81B7104CF00A5940E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				39C4A6EC1B71059200A5940E /* RemindBaseTableViewCell.h */,
+				39C4A6ED1B71059200A5940E /* RemindBaseTableViewCell.m */,
+				39C4A6F11B71099F00A5940E /* RemindBaseView.h */,
+				39C4A6F21B71099F00A5940E /* RemindBaseView.m */,
+				39C4A6F41B710AD600A5940E /* StyleOfRemindSubviews.h */,
+				39C4A6F51B710AD600A5940E /* StyleOfRemindSubviews.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		39CB10841ABA73E500BDE51F /* WeiboOfFollowing */ = {
 			isa = PBXGroup;
 			children = (
+				3960B1381B648E950051C8A3 /* HomeNavigationController.h */,
+				3960B1391B648E960051C8A3 /* HomeNavigationController.m */,
 				39CE3C841B217FC6004E4D92 /* FollowingWBViewCell.h */,
 				39CE3C851B217FC6004E4D92 /* FollowingWBViewCell.m */,
 				396E6D0B1ABA89BA00AE86CC /* FollowingWBViewController.h */,
@@ -1223,6 +1264,10 @@
 				39CFCBCC1B0E0A450096D263 /* WeiboTableView */,
 				39CED5D41B0B45DC005DBA93 /* ProfileViewController.h */,
 				39CED5D51B0B45DC005DBA93 /* ProfileViewController.m */,
+				39C4A6E11B70FC0C00A5940E /* ProfileNavigationViewController.h */,
+				39C4A6E21B70FC0C00A5940E /* ProfileNavigationViewController.m */,
+				39C4A6E41B70FE1E00A5940E /* OthersViewController.h */,
+				39C4A6E51B70FE1E00A5940E /* OthersViewController.m */,
 			);
 			name = ProfileWBInformation;
 			sourceTree = "<group>";
@@ -1234,10 +1279,6 @@
 				39E5B4241B5AB21800C2A734 /* MainTabBar.m */,
 				39E5B4251B5AB21800C2A734 /* MainViewController.h */,
 				39E5B4261B5AB21800C2A734 /* MainViewController.m */,
-				3960B1381B648E950051C8A3 /* HomeNavigationController.h */,
-				3960B1391B648E960051C8A3 /* HomeNavigationController.m */,
-				3960B13B1B64903C0051C8A3 /* MessageNavigationController.h */,
-				3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */,
 			);
 			name = MainTabBarViewController;
 			sourceTree = "<group>";
@@ -1585,6 +1626,7 @@
 				39CD1EF71B204EA800F2DBCA /* CheckBox.m in Sources */,
 				397530881B1EE793009E3E98 /* FeVietNamLoader.m in Sources */,
 				3975307E1B1EE793009E3E98 /* FeEqualize.m in Sources */,
+				39C4A6E61B70FE1E00A5940E /* OthersViewController.m in Sources */,
 				39CBC7751B6DD20E00FEBE6E /* ANBlurredTableView.m in Sources */,
 				39D3BB111B271E5D002B0412 /* FollowerListTableViewController.m in Sources */,
 				39E5B4271B5AB21800C2A734 /* MainTabBar.m in Sources */,
@@ -1595,6 +1637,7 @@
 				39D07B121B0893F800385D3E /* WebViewController.m in Sources */,
 				397530891B1EE793009E3E98 /* FeWifiManHub.m in Sources */,
 				396E6D0D1ABA89BA00AE86CC /* FollowingWBViewController.m in Sources */,
+				39C4A6F31B71099F00A5940E /* RemindBaseView.m in Sources */,
 				39DECE071B5BA6270044FD39 /* WeiboMsgManager.m in Sources */,
 				39D239141AE140D100D714A5 /* WebImageView.m in Sources */,
 				39CBC7761B6DD20E00FEBE6E /* UIImage+BoxBlur.m in Sources */,
@@ -1624,6 +1667,7 @@
 				399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */,
 				390BCB431AD434810053CCAF /* TmpViewController.m in Sources */,
 				39D2DCB51B24083C00E51AB6 /* FollowingListViewCell.m in Sources */,
+				39C4A6EF1B71059200A5940E /* RemindBaseTableViewCell.m in Sources */,
 				39D2274E1B0DDB0100038DB3 /* WeiboGetBlurImage.m in Sources */,
 				39CFCBD81B0E0CFC0096D263 /* WeiboTableView.m in Sources */,
 				39DECDFB1B5B5AED0044FD39 /* WeiboVisibleInfo.m in Sources */,
@@ -1639,6 +1683,7 @@
 				39CF25E01AB8088C006AA556 /* main.m in Sources */,
 				39D239111AE140D100D714A5 /* SingleWebImageBrowser.m in Sources */,
 				39E02BF01B5A836B0064A8A3 /* UIImage+FontAwesome.m in Sources */,
+				39C4A6E31B70FC0C00A5940E /* ProfileNavigationViewController.m in Sources */,
 				3975307C1B1EE793009E3E98 /* FXBlurView.m in Sources */,
 				39CF5A901B1711C400A7A5F0 /* ImageScaleDown.m in Sources */,
 				395C57D51B43EF5E00374047 /* MutiImageView.m in Sources */,
@@ -1662,6 +1707,7 @@
 				3975308B1B1EE793009E3E98 /* FeZeroLoader.m in Sources */,
 				39CF25E61AB8088C006AA556 /* Fenvo.xcdatamodeld in Sources */,
 				39CC40261B398FB000D94A09 /* WBImagePickerVC.m in Sources */,
+				39C4A6F61B710AD600A5940E /* StyleOfRemindSubviews.m in Sources */,
 				39D239DC1B0CB28F00A5592B /* TTTAttributedLabel.m in Sources */,
 				397530831B1EE793009E3E98 /* FeRollingLoader.m in Sources */,
 			);

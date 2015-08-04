@@ -9,47 +9,13 @@
 #import "ProfileViewController.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "JSONKit.h"
-#import "WeiboUserInfo.h"
-#import "UIImageView+WebCache.h"
-#import "UIImage+MostColor.h"
-#import "MJRefresh.h"
-#import "WeiboGetBlurImage.h"
-#import "WeiboTableView.h"
-#import "AlbumView.h"
-#import "FollowingListTableViewController.h"
-#import "FollowerListTableViewController.h"
-#import "UserInfoView.h"
 #import "AppDelegate.h"
 
 
 
 @interface ProfileViewController ()<UIScrollViewDelegate>
 {
-    UIScrollView *_refreshView;
-    UIImageView *_basicInfoView;
-    UILabel *_gender;
-    UILabel *_address;
-    UIImageView *_profileAvatar;
-    UILabel *_descriptions;
-    
-    UIButton *_weiboNumber;
-    UILabel *_weiboLabel;
-    UIButton *_followingNumber;
-    UILabel *_followingLabel;
-    UIButton *_followerNumber;
-    UILabel *_followerLabel;
-    
-    UISegmentedControl *_segmentControl;
-    
-    //
-    WeiboUserInfo *userProfile;
-    
-    //
-    WeiboTableView *_weiboTableView;
-    AlbumView *_albumView;
-    UserInfoView *_userInfoView;
-    //
-    UIViewController *_currentVC;
+
 }
 @end
 
@@ -63,9 +29,14 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+}
+
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+    self.title = @"ME";
     
     //let the view will not move down when it pushed into navigation
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -83,9 +54,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WBNOTIFICATION_DOWNLOADDATA object:nil];
     [center addObserver:self selector:@selector(downloadUserProfile:) name:WBNOTIFICATION_DOWNLOADDATA object:nil];
     
-    [center removeObserver:self name:@"refreshUserInfo" object:nil];
-    [center addObserver:self selector:@selector(refreshUserProfileWithUser:) name:@"refreshUserInfo" object:nil];
-    // Do any additional setup after loading the view from its nib.
 }
 - (void)downloadUserProfile:(NSNotification *)notification{
     _access_token = [notification.userInfo objectForKey:@"token"];
@@ -114,11 +82,11 @@
                  NSLog(@"%@",jsonString);
                  
                  NSDictionary *userProfileDictionary = [jsonString objectFromJSONString];
-                 userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
+                 _userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self refreshUserProfile];
-                     _userInfoView.userInfo = userProfile;
+                     _userInfoView.userInfo = _userProfile;
                  });
                  
                  
@@ -161,11 +129,11 @@
                  NSLog(@"%@",jsonString);
                  
                  NSDictionary *userProfileDictionary = [jsonString objectFromJSONString];
-                 userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
+                 _userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self refreshUserProfile];
-                     _userInfoView.userInfo = userProfile;
+                     _userInfoView.userInfo = _userProfile;
                  });
                  
                  
@@ -186,7 +154,7 @@
     _refreshView = [[UIScrollView alloc]init];
     _refreshView.autoresizesSubviews = NO;
     _refreshView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
-    [_refreshView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"1"]]];
+    [_refreshView setBackgroundColor:RGBACOLOR(30, 30, 30, 0.75)];
     _refreshView.showsHorizontalScrollIndicator = NO;
     _refreshView.showsVerticalScrollIndicator = NO;
     _refreshView.contentSize =CGSizeMake(IPHONE_SCREEN_WIDTH,IPHONE_SCREEN_HEIGHT);
@@ -326,7 +294,7 @@
                  NSLog(@"%@",jsonString);
                  
                  NSDictionary *userProfileDictionary = [jsonString objectFromJSONString];
-                 userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
+                 _userProfile = [WeiboUserInfo createdByDictionary:userProfileDictionary];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self refreshUserProfile];
@@ -387,7 +355,7 @@
 
 - (void)refreshUserProfile {
     [_profileAvatar sd_setImageWithURL:
-     [NSURL URLWithString:userProfile.profile_image_url]
+     [NSURL URLWithString:_userProfile.profile_image_url]
                       placeholderImage:nil
                                options:SDWebImageProgressiveDownload
                              completed:^(UIImage *image,
@@ -420,51 +388,13 @@
      [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingNumber.titleLabel];
     */
 
-    _gender.text = userProfile.gender;
-    _address.text = userProfile.location;
-    _descriptions.text = userProfile.descriptions;
-    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count.longLongValue] forState:UIControlStateNormal];
-    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count.longLongValue] forState:UIControlStateNormal];
-    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
+    _gender.text = _userProfile.gender;
+    _address.text = _userProfile.location;
+    _descriptions.text = _userProfile.descriptions;
+    [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",_userProfile.statuses_count.longLongValue] forState:UIControlStateNormal];
+    [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",_userProfile.followers_count.longLongValue] forState:UIControlStateNormal];
+    [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",_userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
     }
-
-- (void)refreshUserProfileWithUser:(NSNotification *)notice {
-    userProfile = (WeiboUserInfo *)notice.object;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.title = userProfile.screen_name;
-        [_profileAvatar sd_setImageWithURL:[NSURL URLWithString:userProfile.profile_image_url]];
-        /*[_basicInfoView sd_setImageWithURL:
-         [NSURL URLWithString:userProfile.avatar_hd]
-         placeholderImage:nil
-         options:SDWebImageProgressiveDownload
-         completed:^(UIImage *image,
-         NSError *error,
-         SDImageCacheType cacheType,
-         NSURL *imageURL){
-         if (image) {
-         //_basicInfoView.image = [[WeiboGetBlurImage shareWeiboGetBlurImage]getBlurImage:image];
-         }
-         }];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboLabel];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingLabel];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerLabel];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_gender];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_address];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_weiboNumber.titleLabel];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followerNumber.titleLabel];
-         [self setTextColorWithBackgroundImage:_basicInfoView.image andComponent:_followingNumber.titleLabel];
-         */
-        
-        _gender.text = userProfile.gender;
-        _address.text = userProfile.location;
-        _descriptions.text = userProfile.descriptions;
-        [_weiboNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.statuses_count.longLongValue] forState:UIControlStateNormal];
-        [_followingNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.followers_count.longLongValue] forState:UIControlStateNormal];
-        [_followerNumber setTitle:[NSString stringWithFormat:@"%lld",userProfile.friends_count.longLongValue] forState:UIControlStateNormal];
-    });
-    _userInfoView.userInfo = userProfile;
-}
 
 
 - (void)openFollowingList {

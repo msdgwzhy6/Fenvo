@@ -42,7 +42,7 @@
 }
 
 - (void)loginStateChange:(NSNotification *)notification {
-    UINavigationController *nav = nil;
+    //UINavigationController *nav = nil;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //[userDefaults synchronize];
     NSString *access_token = [userDefaults stringForKey:@"access_token"];
@@ -51,14 +51,14 @@
         if (_mainVC == nil) {
             _mainVC = [[MainViewController alloc]init];
             _mainVC.selectedIndex = 0;
-            nav = [[UINavigationController alloc]initWithRootViewController:_mainVC];
-        }else{
-            nav = _mainVC.navigationController;
+            //nav = [[UINavigationController alloc]initWithRootViewController:_mainVC];
         }
         _access_token = access_token;
         _uid = uid;
         NSDictionary *userInfo = @{@"token":access_token,@"uid":uid};
         [[NSNotificationCenter defaultCenter]postNotificationName:WBNOTIFICATION_DOWNLOADDATA object:nil userInfo:userInfo];
+        self.window.rootViewController = _mainVC;
+        return;
     }else{
   
     BOOL loginSuccess = [notification.object boolValue];
@@ -67,9 +67,10 @@
         if (_mainVC == nil) {
             _mainVC = [[MainViewController alloc]init];
             _mainVC.selectedIndex = 0;
-            nav = [[UINavigationController alloc]initWithRootViewController:_mainVC];
+            //nav = [[UINavigationController alloc]initWithRootViewController:_mainVC];
+            //nav = (UINavigationController *)_mainVC.selectedViewController;
         }else{
-            nav = _mainVC.navigationController;
+            //nav = (UINavigationController *)_mainVC.selectedViewController;
         }
         NSString *token = [notification.userInfo objectForKey:@"token"];
         NSString *uid = [notification.userInfo objectForKey:@"uid"];
@@ -81,20 +82,17 @@
         [userDefaults synchronize];
         [[NSNotificationCenter defaultCenter]postNotificationName:WBNOTIFICATION_DOWNLOADDATA object:nil userInfo:notification.userInfo];
         
-        
+        self.window.rootViewController = _mainVC;
+        return;
     }
     else{
         _mainVC = nil;
         ViewController *loginVC = [[ViewController alloc]init];
-        nav = [[UINavigationController alloc]initWithRootViewController:loginVC];
+        UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:loginVC];
         loginVC.title = @"登陆授权";
-           }
+        self.window.rootViewController = nav;
     }
-    self.window.rootViewController = nav;
-
-    [nav setNavigationBarHidden:YES];
-    [nav setNavigationBarHidden:NO];
-    
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
