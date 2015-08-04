@@ -15,4 +15,5 @@
 + (CGFloat)detailHeight;
 + (UIFont *)usernameFont;
 + (UIFont *)detailFont;
+//base 
 @end

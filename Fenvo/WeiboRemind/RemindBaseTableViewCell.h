@@ -11,9 +11,11 @@
 #import "WeiboAvatarView.h"
 #import "WeiboComment.h"
 
+
 @interface RemindBaseTableViewCell : UITableViewCell
 
 //数据模型对象
+
 @property (nonatomic, strong)WeiboComment *comment;
 //背景框
 @property(nonatomic, strong)UIView *containView;
