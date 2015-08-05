@@ -343,6 +343,7 @@
 		39CAD9051B72567A00B9BB58 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 39CAD8E91B72567A00B9BB58 /* CHANGELOG.md */; };
 		39CAD9061B72567A00B9BB58 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CAD8EB1B72567A00B9BB58 /* JSONKit.m */; };
 		39CAD9071B72567A00B9BB58 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 39CAD8EC1B72567A00B9BB58 /* README.md */; };
+		39CAD90A1B72650900B9BB58 /* CommentRPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CAD9091B72650900B9BB58 /* CommentRPC.m */; };
 		39CBC7751B6DD20E00FEBE6E /* ANBlurredTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7721B6DD20E00FEBE6E /* ANBlurredTableView.m */; };
 		39CBC7761B6DD20E00FEBE6E /* UIImage+BoxBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7741B6DD20E00FEBE6E /* UIImage+BoxBlur.m */; };
 		39CBC7791B6DD2F900FEBE6E /* UIView+Borders.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CBC7781B6DD2F900FEBE6E /* UIView+Borders.m */; };
@@ -812,6 +813,8 @@
 		39CAD8EA1B72567A00B9BB58 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		39CAD8EB1B72567A00B9BB58 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		39CAD8EC1B72567A00B9BB58 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		39CAD9081B72650900B9BB58 /* CommentRPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentRPC.h; path = RemoteRequest/CommentRPC.h; sourceTree = "<group>"; };
+		39CAD9091B72650900B9BB58 /* CommentRPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentRPC.m; path = RemoteRequest/CommentRPC.m; sourceTree = "<group>"; };
 		39CBC7711B6DD20E00FEBE6E /* ANBlurredTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANBlurredTableView.h; sourceTree = "<group>"; };
 		39CBC7721B6DD20E00FEBE6E /* ANBlurredTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANBlurredTableView.m; sourceTree = "<group>"; };
 		39CBC7731B6DD20E00FEBE6E /* UIImage+BoxBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+BoxBlur.h"; sourceTree = "<group>"; };
@@ -1899,6 +1902,8 @@
 			children = (
 				39CAD7331B72551400B9BB58 /* TimeLineRPC.h */,
 				39CAD7341B72551400B9BB58 /* TimeLineRPC.m */,
+				39CAD9081B72650900B9BB58 /* CommentRPC.h */,
+				39CAD9091B72650900B9BB58 /* CommentRPC.m */,
 			);
 			name = RemoteRequest;
 			sourceTree = "<group>";
@@ -2383,6 +2388,7 @@
 				39DECE0A1B5BC87A0044FD39 /* WeiboMsg.m in Sources */,
 				39CE3C8E1B218059004E4D92 /* OriginalTableViewCell.m in Sources */,
 				39CAD8FB1B72567A00B9BB58 /* FeLoadingIconBox.m in Sources */,
+				39CAD90A1B72650900B9BB58 /* CommentRPC.m in Sources */,
 				3960B13D1B64903C0051C8A3 /* MessageNavigationController.m in Sources */,
 				39CAD8F71B72567A00B9BB58 /* FeEqualize.m in Sources */,
 				39CD1EF71B204EA800F2DBCA /* CheckBox.m in Sources */,

@@ -23,4 +23,8 @@
 @property (nonatomic, retain) WeiboMsg *weiboMsg;
 @property (nonatomic, retain) WeiboUserInfo *user;
 
+
++ (WeiboComment *)createByDictionary:(NSDictionary *)dic;
++ (WeiboComment *)createdInCoreData;
+
 @end
