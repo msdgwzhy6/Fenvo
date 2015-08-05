@@ -5,6 +5,8 @@
 
 ![image](https://github.com/ChenNan-FRAM/Fenvo/blob/master/Fenvo/FenvoPreview.gif)
 
+----------------------------------
+
 ### 已实现模块
 - 登录、注册
 - 微博个人关注微博主页内容（微博信息图片浏览，转发，回复，赞，收藏等）
@@ -19,19 +21,26 @@
 
 ### 主要数据模型（Model）
 基于Core Data存储（7.18更改）
-- WeiboMsg.h   //主要微博信
+
+- WeiboMsg.h   //主要微博信息
 - WeiboGeoInfo.h  //地理信息
 - WeiboRemind.h  //提示信息
 - WeiboUserInfo.h  //用户个人信息
 - WeiboVisibleInfo.h  //微博可见性
 - WeiboPrivacySetting.h //微博隐私分组
-- ----------暂未完成----------
 - WeiboComment.h  //评论
+- ---------暂未完成---------
 - WeiboChatMsg.h  //私信
- ---------------------------------------
 
-### 远程数据请求功能（RPC）
-- ----------暂未完成---------
+ ---------------------------------------
+### 数据管理
+
+#### 远程数据请求（RemoteRequest）
+- TimeLineRPC.h //微博数据异步请求网络数据
+
+#### 本地数据管理 (LocalManager)
+- WeiboStoreManager.h //本地微博缓存数据管理
+- WeiboCommentManager.h //本地微博评论缓存数据管理
 
  
 ---------------------------------------
@@ -45,23 +54,19 @@
 - FollowerListTableViewController.h //用户关注列表
 - NewWeiboVC.h //用户写新微博
 - WebViewController.h //微博附带网站跳转
-- 未完待续
 
 ---------------------------------------
 
-### 各种自定义控件
+### 各种界面组件
 位于WeiboMsgComponent组下
 
-- WeiboCommentView //微博评论页
-- WeiboForwardView //微博转发页
-- WebImageBrowser //微博网络图片浏览
-- WBImageBrowser //微博本地图片浏览（写微博）
-- OriginalTableViewCell //微博基本Cell
-- WeiboAvatarView //微博头像
-- WeiboLabel //由MLEmojiLabel更改而来，微博label
-- WBImageSelect //更改自QBImagePickerController，多图选择
-- 未完待续
+---------------------------
+#### 控制器结构：
+- windows -> MainTabBarController -> UINavigationController -> 各个根控制器。
 
+#### 微博Cell主要结构：
+- HeaderView -> TextView -> DetailView -> ButtonView;
 
- 
+----------------
+（未完待续）
 
