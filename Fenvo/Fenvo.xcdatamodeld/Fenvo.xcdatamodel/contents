@@ -8,6 +8,7 @@
         <attribute name="source" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="reply_comment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeiboComment" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeiboUserInfo" syncable="YES"/>
         <relationship name="weiboMsg" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeiboMsg" syncable="YES"/>
     </entity>
     <entity name="WeiboGeoInfo" representedClassName="WeiboGeoInfo" syncable="YES">
@@ -114,13 +115,13 @@
         <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="WeiboComment" positionX="72" positionY="198" width="128" height="30"/>
+        <element name="WeiboComment" positionX="72" positionY="198" width="128" height="180"/>
         <element name="WeiboGeoInfo" positionX="115" positionY="405" width="128" height="30"/>
         <element name="WeiboMsg" positionX="-207" positionY="117" width="128" height="388"/>
         <element name="WeiboPrivacySetting" positionX="115" positionY="564" width="128" height="30"/>
         <element name="WeiboRemind" positionX="117" positionY="357" width="128" height="30"/>
+        <element name="WeiboStore" positionX="-45" positionY="270" width="128" height="75"/>
         <element name="WeiboUserInfo" positionX="115" positionY="459" width="128" height="30"/>
         <element name="WeiboVisibleInfo" positionX="115" positionY="513" width="128" height="30"/>
-        <element name="WeiboStore" positionX="-45" positionY="270" width="128" height="75"/>
     </elements>
 </model>

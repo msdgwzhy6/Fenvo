@@ -13,7 +13,14 @@
 + (CGFloat)imageHeight;
 + (CGFloat)usernameHeight;
 + (CGFloat)detailHeight;
-+ (UIFont *)usernameFont;
-+ (UIFont *)detailFont;
-//base 
+
++ (UIFont *)buttonFont;
++ (UIFont *)middleFont;
++ (UIFont *)smallFont;
++ (UIFont *)largeFont;
+
++ (UIColor *)middleGreyColor;
++ (UIColor *)greyColor;
++ (UIColor *)lightGreyColor;
+//base
 @end

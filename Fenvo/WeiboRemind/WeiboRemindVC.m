@@ -34,6 +34,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    self.title = @"MESSAGE";
 
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     //let the view which in front of the tableview be opaque

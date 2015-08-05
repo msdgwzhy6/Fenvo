@@ -12,6 +12,7 @@
 #import "WeiboUserInfo.h"
 #import "WeiboVisibleInfo.h"
 #import "WeiboStoreManager.h"
+#import "StringFormatTool.h"
 
 
 @implementation WeiboMsg
@@ -93,9 +94,9 @@
         weiboMsg.bmiddle_pic_urls = [WeiboMsg getBmiddlePicUrl:weiboMsg.pic_urls];
         
         NSString *timeStr = dic[@"created_at"];
-        weiboMsg.created_at = [WeiboMsg getTimeString:timeStr];
+        weiboMsg.created_at = [StringFormatTool getTimeString:timeStr];
         NSString *wbSource = dic[@"source"];
-        wbSource = [WeiboMsg getSourceString:wbSource];
+        wbSource = [StringFormatTool getSourceString:wbSource];
         if (wbSource != nil && ![wbSource isEqualToString:@""]) {
             weiboMsg.source = [NSString stringWithFormat:@"来自 %@", wbSource];
         }else{
@@ -122,29 +123,7 @@
 
 
 //------------------数据转换部分--------------------
-+ (NSString *) getTimeString : (NSString *)timeStr{
-    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc]init];
-    [inputFormatter setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en_US"]];
-    [inputFormatter setDateFormat:@"EEE MMM dd HH:mm:ss Z yyyy"];
-    NSDate *input = [inputFormatter dateFromString:timeStr];
-    
-    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc]init];
-    [outputFormatter setLocale:[NSLocale currentLocale]];
-    [outputFormatter setDateFormat:@"HH:mm:ss"];
-    NSString *output = [outputFormatter stringFromDate:input];
-    return output;
-}
 
-+ (NSString *) getSourceString:(NSString *)src{
-    if(src.length > 0){
-        NSString *tmpStr = [[NSString alloc]init];
-        NSRange range = [src rangeOfString:@">"];
-        tmpStr = [src substringFromIndex:range.location + 1];
-        range = [tmpStr rangeOfString:@"</a>"];
-        src = [tmpStr substringToIndex:range.location];
-    }
-    return src;
-}
 
 
 + (NSString *) getThumbnailUrl:(NSArray *)pic_urls {
