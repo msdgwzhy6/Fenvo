@@ -35,37 +35,35 @@
     }
     
     
-    
+
     [manager GET:Comment_ToMe
       parameters:dict
          success:^(AFHTTPRequestOperation *operation, id responserObject){
              NSError *error;
+             
              NSData *jsonDatas = [responserObject
                                   JSONDataWithOptions:NSJSONWritingPrettyPrinted
                                   error:&error];
              NSString *jsonStrings = [[NSString alloc]
                                       initWithData:jsonDatas
                                       encoding:NSUTF8StringEncoding];
-             
-             NSDictionary *dict = [jsonStrings objectFromJSONString];
-             long long since_id = [dict[@"since_id"] longLongValue];
-             long long max_id = [dict[@"max_id"] longLongValue];
-//             long long previous_cursor = [dict[@"previous_cursor"] longLongValue];
-//             long long next_cursor = [dict[@"next_cursor"] longLongValue];
-             
+
              jsonStrings = [self getNormalJSONString:jsonStrings];
-             
-             
              NSArray *commentDictionary = [jsonStrings objectFromJSONString];
+             
+             
              if (commentDictionary.count > 0) {
                  
                  for (int i = 0; i < commentDictionary.count; i ++) {
                      NSDictionary *dict = commentDictionary[i];
                      WeiboComment *comment = [WeiboComment createByDictionary:dict];
                      [commentArr addObject:comment];
-                     
                  }
+                 
              }
+             
+             NSNumber *since_id = ((WeiboComment *)[commentArr firstObject]).ids;
+             NSNumber *max_id = ((WeiboComment *)[commentArr lastObject]).ids;
              
              success([commentArr copy], since_id, max_id);
              
@@ -82,7 +80,7 @@
     NSRange rangeLeft = [jsonStrings rangeOfString:@"\"comments\":"];
     str1 = [jsonStrings substringFromIndex:rangeLeft.location+rangeLeft.length];
     
-    NSRange rangeRight = [str1 rangeOfString:@"\"previous"];
+    NSRange rangeRight = [str1 rangeOfString:@"\"hasvi"];
     if (rangeRight.length > 0) {
         jsonStrings = [str1 substringToIndex:rangeRight.location - 4];
     }

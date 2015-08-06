@@ -11,7 +11,7 @@
 
 @interface WeiboCommentManager : NSObject
 
-typedef void(^queryCommentSuccessBlock)(NSArray *commentArr, long long max_id);
+typedef void(^queryCommentSuccessBlock)(NSArray *commentArr, NSNumber *max_id);
 typedef void(^queryCommentFailureBlock)(NSString *desc);
 
 + (void)queryCommentWithMaxId:(NSNumber *)max_id

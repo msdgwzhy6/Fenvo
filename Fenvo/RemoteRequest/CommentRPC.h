@@ -10,7 +10,7 @@
 
 #define Comment_ToMe @"https://api.weibo.com/2/comments/to_me.json"
 
-typedef void(^requestCommentSuccessBlock)(NSArray *commentArr, long long since_id, long long max_id);
+typedef void(^requestCommentSuccessBlock)(NSArray *commentArr, NSNumber *since_id, NSNumber *max_id);
 typedef void(^requestCommentFailureBlock)(NSString *desc, NSError *error);
 
 @interface CommentRPC : NSObject

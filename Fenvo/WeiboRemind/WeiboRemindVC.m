@@ -7,12 +7,13 @@
 //
 
 #import "WeiboRemindVC.h"
+#import "CommentTableViewController.h"
+#import "ChatCell.h"
+
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "JSONKit.h"
 #import "KVNProgress.h"
-#import "ChatCell.h"
-
 #import "NSString+FontAwesome.h"
 #import "UIImage+FontAwesome.h"
 
@@ -83,20 +84,15 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
     if (section == 0) {
         return 3;
     }else{
@@ -134,6 +130,21 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 46;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    switch (indexPath.row) {
+        case 0:
+        {
+            CommentTableViewController *commentVC = [[CommentTableViewController alloc]initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:commentVC animated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 /*

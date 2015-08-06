@@ -237,7 +237,7 @@
     
     NSArray *segmentArray = @[@"UserInfo",@"Album",@"Favourite"];
     _segmentControl = [[UISegmentedControl alloc]initWithItems:segmentArray];
-    _segmentControl.segmentedControlStyle = UISegmentedControlStyleBezeled;
+    _segmentControl.segmentedControlStyle = UISegmentedControlStylePlain;
     _segmentControl.frame = CGRectMake(0, CGRectGetMaxY(_followingLabel.frame) + 10, IPHONE_SCREEN_WIDTH, 25);
     _segmentControl.backgroundColor = [UIColor clearColor];
     _segmentControl.tintColor = [UIColor whiteColor];

@@ -350,7 +350,7 @@
                 }
                 if (i >= 6) {
                     imageHeight = CGRectGetMaxY(_imageView6.frame);
-                    CGRect commentBtnRect = CGRectMake(5, CGRectGetMaxY(_imageView6.frame) + 5, (IPHONE_SCREEN_WIDTH - 10)/3, 35);
+                    //CGRect commentBtnRect = CGRectMake(5, CGRectGetMaxY(_imageView6.frame) + 5, (IPHONE_SCREEN_WIDTH - 10)/3, 35);
                 }else if(i <= 2){
                     imageHeight = CGRectGetMaxY(_imageView0.frame);
                 }else{
@@ -360,7 +360,7 @@
         }
             }
         }else{
-            CGRect commentBtnRect = CGRectMake(5, CGRectGetMaxY(_wbForwardText.frame) + 5, (IPHONE_SCREEN_WIDTH - 10)/3, 35);
+            //CGRect commentBtnRect = CGRectMake(5, CGRectGetMaxY(_wbForwardText.frame) + 5, (IPHONE_SCREEN_WIDTH - 10)/3, 35);
             imageHeight = CGRectGetMaxY(_wbForwardText.frame);
         }
     }
@@ -596,8 +596,8 @@
     WebViewController *webview = [[WebViewController alloc]init];
     switch (type) {
         case MLEmojiLabelLinkTypeURL:
-            //[webview initWithLink:link];
-            //[[self viewController].navigationController pushViewController:webview animated:YES];
+            [webview initWithLink:link];
+            [[self viewController].navigationController pushViewController:webview animated:YES];
             NSLog(@"点击了URL%@",link);
             break;
             

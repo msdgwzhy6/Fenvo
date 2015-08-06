@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeiboComment.h"
 
 @interface CommentTableViewCell : UITableViewCell
+
+@property (nonatomic, strong) WeiboComment * comment;
 
 @end

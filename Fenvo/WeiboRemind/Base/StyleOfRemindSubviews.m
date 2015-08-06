@@ -10,7 +10,7 @@
 
 @implementation StyleOfRemindSubviews
 
-+ (CGFloat)imageHeight {
++ (CGFloat)baseWeiboHeight {
     return 50;
 }
 
@@ -20,6 +20,10 @@
 
 + (CGFloat)detailHeight {
     return 30;
+}
+
++ (CGFloat)componentSpacing {
+    return 8.0;
 }
 
 

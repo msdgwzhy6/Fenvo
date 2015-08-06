@@ -73,8 +73,7 @@
     
     _writeNewWeibo = [[UIBarButtonItem alloc]initWithImage:[UIImage imageWithIcon:@"fa-pencil-square-o" backgroundColor:[UIColor clearColor] iconColor:RGBACOLOR(250, 143, 5, 1) andSize:CGSizeMake(20, 20)] style:UIBarButtonItemStyleDone target:self action:@selector(writeWeibo)];
     self.navigationItem.rightBarButtonItem = _writeNewWeibo;
-    
-    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+
     self.title = @"HOME";
     //
     _isFindInCoredata = true;
@@ -148,9 +147,6 @@
 
 - (void)getWeiboMsgFromRemote {
     
-    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
-    _access_token = delegate.access_token;
-    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         
@@ -194,7 +190,6 @@
 }
 - (void)refreshWeiboMsg{
     
-    refreshtime ++;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         NSNumber *since_id = [NSNumber numberWithLongLong:_since_id];

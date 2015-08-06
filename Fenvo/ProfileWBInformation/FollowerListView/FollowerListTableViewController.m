@@ -90,7 +90,7 @@
             manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
             NSString *getFollowingUrl = WBAPIURL_FOLLOWER;
             NSDictionary *dict0 = [[NSDictionary alloc]init];
-            NSNumber *next_cursor = [NSNumber numberWithLongLong:_next_cursor];
+            //NSNumber *next_cursor = [NSNumber numberWithLongLong:_next_cursor];
             dict0 = @{@"access_token":delegate.access_token, @"uid":_uid};
             [manager GET:getFollowingUrl
               parameters:dict0
@@ -212,14 +212,10 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
     return _followingArray.count;
 }
 
@@ -261,7 +257,7 @@
     }
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return NO if you do not want the specified item to be editable.

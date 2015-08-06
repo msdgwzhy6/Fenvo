@@ -34,8 +34,7 @@
         
         if (arr.count > 0) {
             WeiboComment *comment = [arr lastObject];
-            long long _max_id = [comment.ids longLongValue];
-            success(arr, _max_id);
+            success(arr, [comment.ids copy]);
         }else {
             failure(@"That is no cache.");
         }
@@ -63,8 +62,7 @@
         
         if (arr.count > 0) {
             WeiboComment *comment = [arr lastObject];
-            long long _max_id = [comment.ids longLongValue];
-            success(arr, _max_id);
+            success(arr, [comment copy]);
         }else {
             failure(@"That is no cache.");
         }
@@ -78,20 +76,23 @@
     id delegate = application.delegate;
     NSManagedObjectContext *context = [delegate managedObjectContext];
     
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboComment class])];
-    
-    NSArray *arr = [context executeFetchRequest:request error:nil];
-    
-    for (WeiboComment *comment in arr) {
-        [context deleteObject:comment];
-    }
-    
-    if ([context save:nil]) {
-        NSLog(@"WeiboStoreManager--delete all object success");
-    }else {
-        NSLog(@"WeiboStoreManager--delete all object fail");
-    }
-    
+    dispatch_queue_t queryQueue = dispatch_queue_create("coredata.comment.removeAll", NULL);
+    dispatch_async(queryQueue, ^{
+        
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboComment class])];
+        
+        NSArray *arr = [context executeFetchRequest:request error:nil];
+        
+        for (WeiboComment *comment in arr) {
+            [context deleteObject:comment];
+        }
+        
+        if ([context save:nil]) {
+            NSLog(@"WeiboStoreManager--delete all object success");
+        }else {
+            NSLog(@"WeiboStoreManager--delete all object fail");
+        }
+    });
 }
 
 + (void)removeComment:(NSNumber *)ids {

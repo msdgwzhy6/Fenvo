@@ -10,9 +10,10 @@
 
 @interface StyleOfRemindSubviews : NSObject
 
-+ (CGFloat)imageHeight;
++ (CGFloat)baseWeiboHeight;
 + (CGFloat)usernameHeight;
 + (CGFloat)detailHeight;
++ (CGFloat)componentSpacing;
 
 + (UIFont *)buttonFont;
 + (UIFont *)middleFont;

@@ -24,6 +24,8 @@
 @dynamic reply_comment;
 @dynamic weiboMsg;
 @dynamic user;
+//
+@dynamic height;
 
 + (WeiboComment *)createByDictionary:(NSDictionary *)dic {
     
@@ -66,7 +68,9 @@
         else
             comment.source = @"";
         
-        id reply_comment = dic[@"reply_comment"];
+//        if(dic[@"reply_comment"]){
+//            NSNumber *reply_comment_id = dic[@"reply_comment"];
+//        };
     }
     
     NSError *error;
