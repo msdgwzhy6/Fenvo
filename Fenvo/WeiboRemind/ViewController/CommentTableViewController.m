@@ -43,18 +43,17 @@
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
     
-    //self.tableView = [[ANBlurredTableView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.tableView = [[ANBlurredTableView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.backgroundColor = RGBACOLOR(93, 126, 130, 1);
-
-//    self.tableView.delegate =self;
-//    self.tableView.dataSource = self;
-//    [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
-//    [self.tableView setBlurTintColor:[UIColor colorWithWhite:0.2 alpha:0.5]];
+ 
+    self.tableView.delegate =self;
+    self.tableView.dataSource = self;
+    [self.tableView setBlurTintColor:[UIColor colorWithWhite:0.2 alpha:0.5]];
 //    [self.tableView setAnimateTintAlpha:YES];
 //    [self.tableView setStartTintAlpha:0.2f];
-//    [self.tableView setEndTintAlpha:0.6f];
+    [self.tableView setEndTintAlpha:0.6f];
+    [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
     
     _commentArray = [[NSMutableArray alloc]init];
     [self addRefreshViewController];

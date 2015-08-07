@@ -33,19 +33,19 @@
     
     _username = [[UILabel alloc]init];
     _username.font = [StyleOfRemindSubviews largeFont];
-    _username.textColor = [StyleOfRemindSubviews deepBlackColor];
+    _username.textColor = [UIColor whiteColor];
     [self addSubview:_username];
     
     
     _createAt = [[UILabel alloc]init];
     _createAt.font = [StyleOfRemindSubviews smallFont];
-    _createAt.textColor = [StyleOfRemindSubviews greyColor];
+    _createAt.textColor = [StyleOfRemindSubviews lightSkyColor];
     _createAt.numberOfLines = 1;
     [self addSubview:_createAt];
     
     _source = [[UILabel alloc]init];
     _source.font = [StyleOfRemindSubviews smallFont];
-    _source.textColor = [StyleOfRemindSubviews greyColor];
+    _source.textColor = [StyleOfRemindSubviews lightSkyColor];
     _source.numberOfLines = 1;
     [self addSubview:_source];
     

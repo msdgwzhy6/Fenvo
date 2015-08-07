@@ -62,4 +62,12 @@
     return RGBACOLOR(10, 20, 20, 1);
 }
 
++ (UIColor *)orangeColor {
+    return RGBACOLOR(250, 143, 5, 1);
+}
+
++ (UIColor *)lightSkyColor {
+    return RGBACOLOR(211, 227, 235, 1);
+}
+
 @end

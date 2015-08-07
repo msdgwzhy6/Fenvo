@@ -91,13 +91,15 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
 
-    [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
-    
     [self.tableView setBlurTintColor:[UIColor colorWithWhite:0.2 alpha:0.5]];
     // We want to animate our background's alpha, so switch this to yes.
-    [self.tableView setAnimateTintAlpha:YES];
-    [self.tableView setStartTintAlpha:0.2f];
+    //[self.tableView setAnimateTintAlpha:YES];
+   // [self.tableView setStartTintAlpha:0.2f];
     [self.tableView setEndTintAlpha:0.6f];
+    
+    [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
+    
+
 
     
     NSNotificationCenter  *center = [NSNotificationCenter defaultCenter];

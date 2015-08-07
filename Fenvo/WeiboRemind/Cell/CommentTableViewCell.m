@@ -15,7 +15,7 @@
 
 #import "WeiboMsg.h"
 
-@interface CommentTableViewCell() {
+@interface CommentTableViewCell()<WeiboLabelDelegate> {
  
     UIView *_mainContentView;
     
@@ -46,8 +46,10 @@
     self.backgroundColor = [UIColor clearColor];
     
     _mainContentView = [[UIView alloc]init];
-    _mainContentView.backgroundColor = RGBACOLOR(255, 250, 223, 1.0);
+    _mainContentView.backgroundColor = [UIColor clearColor];
     _mainContentView.layer.cornerRadius = 3.0;
+    _mainContentView.layer.borderWidth = 3.0;
+    _mainContentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     //_mainContentView.layer.masksToBounds = YES;
     _mainContentView.layer.shadowColor = [UIColor blackColor].CGColor;
     _mainContentView.layer.shadowOffset = CGSizeMake(3, 3);
@@ -59,9 +61,17 @@
     [_mainContentView addSubview:_header];
     
     _text = [[WeiboLabel alloc]init];
+    _text.textColor = [UIColor whiteColor];
+    _text.font = [StyleOfRemindSubviews middleFont];
+    _text.weiboLabelDelegate = self;
+    _text.isNeedAtAndPoundSign = YES;
     [_mainContentView addSubview:_text];
     
     _reply_text = [[WeiboLabel alloc]init];
+    _reply_text.textColor = [UIColor whiteColor];
+    _reply_text.font = [StyleOfRemindSubviews middleFont];
+    _reply_text.weiboLabelDelegate = self;
+    _reply_text.isNeedAtAndPoundSign = YES;
     [_reply_text setHidden:YES];
     [_mainContentView addSubview:_reply_text];
     
@@ -89,7 +99,7 @@
     CGSize textSize = [comment.text
                            boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                            options:NSStringDrawingUsesLineFragmentOrigin
-                           attributes:@{NSFontAttributeName:WBStatusCellDetailFont}
+                           attributes:@{NSFontAttributeName:[StyleOfRemindSubviews middleFont]}
                            context:nil].size;
     CGRect textRect = CGRectMake(spacing, headerY, width, textSize.height);
     _text.frame = textRect;

@@ -24,5 +24,7 @@
 + (UIColor *)greyColor;
 + (UIColor *)lightGreyColor;
 + (UIColor *)deepBlackColor;
++ (UIColor *)orangeColor;
++ (UIColor *)lightSkyColor;
 //base
 @end

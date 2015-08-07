@@ -138,6 +138,7 @@
         case 0:
         {
             CommentTableViewController *commentVC = [[CommentTableViewController alloc]initWithStyle:UITableViewStylePlain];
+            commentVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:commentVC animated:YES];
         }
             break;
