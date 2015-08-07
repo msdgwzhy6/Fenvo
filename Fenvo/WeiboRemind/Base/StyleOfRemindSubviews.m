@@ -41,7 +41,7 @@
 }
 
 + (UIFont *)largeFont {
-    return [UIFont fontWithName:@ "HYQiHei-BEJ" size:16.0];
+    return [UIFont fontWithName:@ "HYQiHei-BEJ" size:15.0];
 }
 
 
@@ -56,6 +56,10 @@
 
 + (UIColor *)lightGreyColor {
     return RGBACOLOR(220, 220, 220, 1);
+}
+
++ (UIColor *)deepBlackColor {
+    return RGBACOLOR(10, 20, 20, 1);
 }
 
 @end

@@ -26,6 +26,12 @@
     //set the style of avatar
     self.layer.cornerRadius = WBStatusCellAvatarWidth / 2;
     self.layer.masksToBounds = YES;
+    self.layer.shadowRadius = 3.0;
+    self.layer.shadowOpacity = 0.8;
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(3, 3);
+    self.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.layer.borderWidth = 2.0;
     self.hidden = NO;
     self.contentMode = UIViewContentModeScaleAspectFill;
     self.backgroundColor = RGBACOLOR(220, 220, 220, 0.5);

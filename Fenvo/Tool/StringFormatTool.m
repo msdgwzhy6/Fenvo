@@ -18,7 +18,7 @@
     
     NSDateFormatter *outputFormatter = [[NSDateFormatter alloc]init];
     [outputFormatter setLocale:[NSLocale currentLocale]];
-    [outputFormatter setDateFormat:@"HH:mm:ss"];
+    [outputFormatter setDateFormat:@"MMM-dd HH:mm:ss"];
     NSString *output = [outputFormatter stringFromDate:input];
     return output;
 }

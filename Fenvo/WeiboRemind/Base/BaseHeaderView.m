@@ -33,19 +33,19 @@
     
     _username = [[UILabel alloc]init];
     _username.font = [StyleOfRemindSubviews largeFont];
-    _username.textColor = [StyleOfRemindSubviews greyColor];
+    _username.textColor = [StyleOfRemindSubviews deepBlackColor];
     [self addSubview:_username];
     
     
     _createAt = [[UILabel alloc]init];
     _createAt.font = [StyleOfRemindSubviews smallFont];
-    _createAt.textColor = [StyleOfRemindSubviews middleGreyColor];
+    _createAt.textColor = [StyleOfRemindSubviews greyColor];
     _createAt.numberOfLines = 1;
     [self addSubview:_createAt];
     
     _source = [[UILabel alloc]init];
     _source.font = [StyleOfRemindSubviews smallFont];
-    _source.textColor = [StyleOfRemindSubviews middleGreyColor];
+    _source.textColor = [StyleOfRemindSubviews greyColor];
     _source.numberOfLines = 1;
     [self addSubview:_source];
     
@@ -70,7 +70,7 @@
     _username.frame = CGRectMake(avatarX, 0, width - avatarX - 50, 18.0);
     
     CGFloat usernameY = CGRectGetMaxY(_username.frame);
-    _createAt.frame = CGRectMake(avatarX, usernameY, 100, 12.0);
+    _createAt.frame = CGRectMake(avatarX, usernameY, 80, 12.0);
     
     CGFloat createAtX = CGRectGetMaxX(_createAt.frame);
     CGFloat usernameWidth = CGRectGetWidth(_username.frame);

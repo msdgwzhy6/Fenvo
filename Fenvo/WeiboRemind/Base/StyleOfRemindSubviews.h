@@ -23,5 +23,6 @@
 + (UIColor *)middleGreyColor;
 + (UIColor *)greyColor;
 + (UIColor *)lightGreyColor;
++ (UIColor *)deepBlackColor;
 //base
 @end

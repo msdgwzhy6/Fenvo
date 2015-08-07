@@ -62,7 +62,7 @@
         
         if (arr.count > 0) {
             WeiboComment *comment = [arr lastObject];
-            success(arr, [comment copy]);
+            success(arr, comment.ids);
         }else {
             failure(@"That is no cache.");
         }

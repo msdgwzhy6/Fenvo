@@ -17,6 +17,8 @@
 
 @interface CommentTableViewCell() {
  
+    UIView *_mainContentView;
+    
     BaseHeaderView *_header;
     WeiboLabel *_text;
     WeiboLabel *_reply_text;
@@ -41,18 +43,30 @@
 
 - (void)initSubviews {
     
+    self.backgroundColor = [UIColor clearColor];
+    
+    _mainContentView = [[UIView alloc]init];
+    _mainContentView.backgroundColor = RGBACOLOR(255, 250, 223, 1.0);
+    _mainContentView.layer.cornerRadius = 3.0;
+    //_mainContentView.layer.masksToBounds = YES;
+    _mainContentView.layer.shadowColor = [UIColor blackColor].CGColor;
+    _mainContentView.layer.shadowOffset = CGSizeMake(3, 3);
+    _mainContentView.layer.shadowOpacity = 0.6;
+    _mainContentView.layer.shadowRadius = 3.0;
+    [self addSubview:_mainContentView];
+    
     _header = [[BaseHeaderView alloc]init];
-    [self addSubview:_header];
+    [_mainContentView addSubview:_header];
     
     _text = [[WeiboLabel alloc]init];
-    [self addSubview:_text];
+    [_mainContentView addSubview:_text];
     
     _reply_text = [[WeiboLabel alloc]init];
     [_reply_text setHidden:YES];
-    [self addSubview:_reply_text];
+    [_mainContentView addSubview:_reply_text];
     
     _weiboView = [[BaseWeiboView alloc]init];
-    [self addSubview:_weiboView];
+    [_mainContentView addSubview:_weiboView];
     
 }
 
@@ -60,10 +74,10 @@
 
     _comment = comment;
     
-    CGFloat width = self.frame.size.width - 16;
+    _mainContentView.frame = CGRectMake(8, 4, self.frame.size.width - 16, 0);
+    CGFloat width = _mainContentView.frame.size.width - 16;
     CGFloat spacing = [StyleOfRemindSubviews componentSpacing];
 
-    
     _header.frame = CGRectMake(spacing, spacing, width, 30);
     _header.username.text = comment.user.name;
     _header.createAt.text = comment.created_at;
@@ -102,14 +116,25 @@
     _weiboView.frame = CGRectMake(spacing, textY, width, [StyleOfRemindSubviews baseWeiboHeight]);
     if (comment.weiboMsg.thumbnail_pic) {
         [_weiboView.image sd_setImageWithURL:[NSURL URLWithString:comment.weiboMsg.thumbnail_pic]];
-    }else{
+    }else if(_comment.weiboMsg.retweeted_status && _comment.weiboMsg.retweeted_status.thumbnail_pic){
+        [_weiboView.image sd_setImageWithURL:[NSURL URLWithString:comment.weiboMsg.retweeted_status.thumbnail_pic]];
+    }else {
         [_weiboView.image sd_setImageWithURL:[NSURL URLWithString:comment.user.profile_image_url]];
     }
+    if (comment.weiboMsg.retweeted_status) {
+        _weiboView.detail.text = comment.weiboMsg.retweeted_status.wbDetail;
+    }else {
+        _weiboView.detail.text = comment.weiboMsg.wbDetail;
+    }
+    _weiboView.username.text = comment.weiboMsg.user.name;
     
     
     CGFloat height = CGRectGetMaxY(_weiboView.frame) + spacing;
-    comment.height = @(height);
+    _mainContentView.frame = CGRectMake(8, 8, self.frame.size.width - 16, height);
+    CGFloat mainContentViewHeight = CGRectGetMaxY(_mainContentView.frame) + 8;
     
+    
+    comment.height = @(mainContentViewHeight);
 }
 
 

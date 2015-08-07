@@ -22,7 +22,7 @@
 
 - (void)initSubviews {
     
-    self.backgroundColor = RGBACOLOR(220, 220, 220, 0.7);
+    self.backgroundColor = [UIColor whiteColor];
     
 
     _image = [[UIImageView alloc]init];
@@ -31,13 +31,13 @@
     
     _username = [[UILabel alloc]init];
     _username.font = [StyleOfRemindSubviews middleFont];
-    _username.textColor = [StyleOfRemindSubviews greyColor];
+    _username.textColor = [StyleOfRemindSubviews deepBlackColor];
     [self addSubview:_username];
     
     
     _detail = [[UILabel alloc]init];
     _detail.font = [StyleOfRemindSubviews smallFont];
-    _detail.textColor = [StyleOfRemindSubviews middleGreyColor];
+    _detail.textColor = [StyleOfRemindSubviews deepBlackColor];
     _detail.numberOfLines = 2;
     [self addSubview:_detail];
 
