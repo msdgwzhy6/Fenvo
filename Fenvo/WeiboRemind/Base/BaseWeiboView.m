@@ -22,7 +22,7 @@
 
 - (void)initSubviews {
     
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [StyleOfRemindSubviews lightGreyColor];
     
 
     _image = [[UIImageView alloc]init];

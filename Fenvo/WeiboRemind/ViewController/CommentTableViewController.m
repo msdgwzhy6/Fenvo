@@ -56,27 +56,33 @@
     [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
     
     _commentArray = [[NSMutableArray alloc]init];
-    [self addRefreshViewController];
+    [self addHeaderRefreshViewController];
     [self getCommentWhenViewDidLoad];
 }
 
-- (void)addRefreshViewController{
+- (void)addHeaderRefreshViewController{
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(refreshComment)];
-    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getMoreComment)];
-    
+
     //
     self.tableView.header.font = [UIFont systemFontOfSize:15];
     self.tableView.header.textColor = TEXT_COLOR;
-    self.tableView.footer.font = [UIFont systemFontOfSize:15];
-    self.tableView.footer.textColor = TEXT_COLOR;
+
     //
     [self.tableView.header setTitle:@"Pull up to refresh" forState:MJRefreshHeaderStateIdle];
     [self.tableView.header setTitle:@"Release to refresh" forState:MJRefreshHeaderStatePulling];
     [self.tableView.header setTitle:@"Refreshing" forState:MJRefreshHeaderStateRefreshing];
     
+}
+
+- (void)addFooterRefreshViewController {
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getMoreComment)];
+    self.tableView.footer.font = [UIFont systemFontOfSize:15];
+    self.tableView.footer.textColor = TEXT_COLOR;
+    
     [self.tableView.footer setTitle:@"Pull down to refresh" forState:MJRefreshFooterStateIdle];
     [self.tableView.footer setTitle:@"Release to refresh" forState:MJRefreshFooterStateNoMoreData];
     [self.tableView.footer setTitle:@"Refreshing" forState:MJRefreshFooterStateRefreshing];
+
 }
 
 
@@ -90,11 +96,18 @@
         WeiboComment *comment = [_commentArray firstObject];
         _max_id = max_id;
         _since_id = comment.ids;
-    
+        [self reloadData];
+        [self addFooterRefreshViewController];
     } failure:^(NSString *desc) {
         [self clearAndRequestFromRemote];
     }];
 
+}
+
+- (void)reloadData {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 - (void)clearAndRequestFromRemote {
@@ -110,7 +123,7 @@
                                   _since_id = since_id;
                                   _max_id = max_id;
                                   _commentArray = [[NSMutableArray alloc]initWithArray:commentArr];
-                                  
+                                  [self addFooterRefreshViewController];
                               } failure:^(NSString *desc, NSError *error) {
                                   NSLog(@"%@", desc);
                               }];

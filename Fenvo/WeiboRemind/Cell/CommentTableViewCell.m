@@ -46,15 +46,15 @@
     self.backgroundColor = [UIColor clearColor];
     
     _mainContentView = [[UIView alloc]init];
-    _mainContentView.backgroundColor = [UIColor clearColor];
+    _mainContentView.backgroundColor = RGBACOLOR(220, 220, 220, 0.4);
     _mainContentView.layer.cornerRadius = 3.0;
-    _mainContentView.layer.borderWidth = 3.0;
-    _mainContentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    //_mainContentView.layer.borderWidth = 3.0;
+    //_mainContentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     //_mainContentView.layer.masksToBounds = YES;
-    _mainContentView.layer.shadowColor = [UIColor blackColor].CGColor;
-    _mainContentView.layer.shadowOffset = CGSizeMake(3, 3);
-    _mainContentView.layer.shadowOpacity = 0.6;
-    _mainContentView.layer.shadowRadius = 3.0;
+   // _mainContentView.layer.shadowColor = [UIColor blackColor].CGColor;
+    //_mainContentView.layer.shadowOffset = CGSizeMake(3, 3);
+    //_mainContentView.layer.shadowOpacity = 0.6;
+    //_mainContentView.layer.shadowRadius = 3.0;
     [self addSubview:_mainContentView];
     
     _header = [[BaseHeaderView alloc]init];
@@ -63,6 +63,8 @@
     _text = [[WeiboLabel alloc]init];
     _text.textColor = [UIColor whiteColor];
     _text.font = [StyleOfRemindSubviews middleFont];
+    _text.numberOfLines = 0;
+    _text.lineBreakMode = NSLineBreakByCharWrapping;
     _text.weiboLabelDelegate = self;
     _text.isNeedAtAndPoundSign = YES;
     [_mainContentView addSubview:_text];
@@ -84,7 +86,7 @@
 
     _comment = comment;
     
-    _mainContentView.frame = CGRectMake(8, 4, self.frame.size.width - 16, 0);
+    _mainContentView.frame = CGRectMake(12, 4, self.frame.size.width - 24, 0);
     CGFloat width = _mainContentView.frame.size.width - 16;
     CGFloat spacing = [StyleOfRemindSubviews componentSpacing];
 
@@ -99,7 +101,7 @@
     CGSize textSize = [comment.text
                            boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                            options:NSStringDrawingUsesLineFragmentOrigin
-                           attributes:@{NSFontAttributeName:[StyleOfRemindSubviews middleFont]}
+                           attributes:@{NSFontAttributeName:[UIFont fontWithName:@ "HYQiHei-BEJ" size:15.0]}
                            context:nil].size;
     CGRect textRect = CGRectMake(spacing, headerY, width, textSize.height);
     _text.frame = textRect;
@@ -140,7 +142,7 @@
     
     
     CGFloat height = CGRectGetMaxY(_weiboView.frame) + spacing;
-    _mainContentView.frame = CGRectMake(8, 8, self.frame.size.width - 16, height);
+    _mainContentView.frame = CGRectMake(12, 8, self.frame.size.width - 24, height);
     CGFloat mainContentViewHeight = CGRectGetMaxY(_mainContentView.frame) + 8;
     
     

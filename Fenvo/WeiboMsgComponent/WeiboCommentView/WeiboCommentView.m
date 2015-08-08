@@ -137,11 +137,12 @@
     
     [_sentBtn addTarget:self action:@selector(sentComment) forControlEvents:UIControlEventTouchUpInside];
     
-    
+    [_comment becomeFirstResponder];
 }
 
 
 - (void)closeCommentView:(UITapGestureRecognizer *)tap{
+    [_comment resignFirstResponder];
     UIView *mainView = tap.view;
     [UIView animateWithDuration:0.3 animations:^{
         mainView.alpha = 0;
@@ -239,7 +240,7 @@
 //当键退出时调用
 - (void)keyboardWillHide:(NSNotification *)aNotification
 {
-    int height = _keyboardHeight;
+    NSInteger height = _keyboardHeight;
     
     NSTimeInterval animationDuration = 0.30f;
     

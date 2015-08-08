@@ -401,12 +401,14 @@
     NSLog(@"you touch following");
     FollowingListTableViewController *following = [[FollowingListTableViewController alloc]initWithStyle:UITableViewStylePlain];
     [following setUid:_uid];
+    following.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:following animated:YES];
 }
 
 - (void)openFollowerList {
     NSLog(@"you touch follower");
     FollowerListTableViewController *follower = [[FollowerListTableViewController alloc]initWithStyle:UITableViewStylePlain];
+    follower.hidesBottomBarWhenPushed = YES;
     [follower setUid:_uid];
     [self.navigationController pushViewController:follower animated:YES];
 }
@@ -414,6 +416,7 @@
 - (void)openMyWeiboList {
     NSLog(@"you touch myweibo");
     WeiboTableView *myWeibo = [[WeiboTableView alloc]initWithStyle:UITableViewStylePlain];
+    myWeibo.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:myWeibo animated:YES];
 }
 

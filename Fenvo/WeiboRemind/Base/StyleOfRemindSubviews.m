@@ -33,7 +33,7 @@
 }
 
 + (UIFont *)middleFont {
-    return [UIFont fontWithName:@ "HYQiHei-BEJ" size:12.0];
+    return [UIFont fontWithName:@ "HYQiHei-BEJ" size:13.0];
 }
 
 + (UIFont *)smallFont {

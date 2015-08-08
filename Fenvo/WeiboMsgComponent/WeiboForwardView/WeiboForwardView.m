@@ -93,6 +93,7 @@
     }
     [_forward setDelegate:self];
     
+    
     _remainText = [[UILabel alloc]initWithFrame:CGRectMake(IPHONE_SCREEN_WIDTH - 140,CGRectGetMaxY(_forward.frame) + 3, 140, 15)];
     _remainText.textColor = [UIColor lightGrayColor];
     _remainText.text = [NSString stringWithFormat:@"可输入字数剩余: %d",_remainTextNum];
@@ -132,12 +133,13 @@
     _containView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - height, IPHONE_SCREEN_WIDTH, height);
     
     [_sentBtn addTarget:self action:@selector(forwardWeibo) forControlEvents:UIControlEventTouchUpInside];
-    
+    [_forward becomeFirstResponder];
     
 }
 
 
 - (void)closeForwardView:(UITapGestureRecognizer *)tap{
+    [_forward resignFirstResponder];
     UIView *mainView = tap.view;
     [UIView animateWithDuration:0.3 animations:^{
         mainView.alpha = 0;
@@ -195,6 +197,10 @@
 
 
 #pragma mark - UITextFieldDelegate
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    
+}
+
 - (void)textViewDidChange:(UITextView *)textView {
     if (textView.text.length >= 140) {
         textView.text = [textView.text substringToIndex:140];
@@ -243,7 +249,7 @@
 {
     int height = _keyboardHeight;
     
-    NSTimeInterval animationDuration = 0.30f;
+    NSTimeInterval animationDuration = 0.50f;
     
     CGRect frame = _mainView.frame;
     
@@ -254,16 +260,22 @@
     _mainView.frame = frame;
     
     //self.view移回原位置
+    [UIView animateWithDuration:animationDuration
+                     animations:^{
+                         _mainView.frame = frame;
+                     } completion:^(BOOL finished) {
+                          [_sentBtn resignFirstResponder];
+                     }];
     
-    [UIView beginAnimations:@"ResizeView"context:nil];
+    //[UIView beginAnimations:@"ResizeView"context:nil];
     
-    [UIView setAnimationDuration:animationDuration];
+    //[UIView setAnimationDuration:animationDuration];
     
-    _mainView.frame = frame;
     
-    [UIView commitAnimations];
     
-    [_sentBtn resignFirstResponder];
+    //[UIView commitAnimations];
+    
+   
     
     [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }

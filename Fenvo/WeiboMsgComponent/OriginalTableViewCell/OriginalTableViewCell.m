@@ -48,7 +48,7 @@
     //用户名
     _userName = [[UILabel alloc]init];
     _userName.font = WBStatusCellUserNameFont;
-    _userName.textColor = WBStatusGrayColor;
+    _userName.textColor = [UIColor whiteColor];
     [self.containView addSubview:_userName];
     //会员标识
     _mbType = [[UIImageView alloc]init];

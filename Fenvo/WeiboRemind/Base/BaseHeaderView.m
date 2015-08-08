@@ -39,13 +39,13 @@
     
     _createAt = [[UILabel alloc]init];
     _createAt.font = [StyleOfRemindSubviews smallFont];
-    _createAt.textColor = [StyleOfRemindSubviews lightSkyColor];
+    _createAt.textColor = [UIColor whiteColor];
     _createAt.numberOfLines = 1;
     [self addSubview:_createAt];
     
     _source = [[UILabel alloc]init];
     _source.font = [StyleOfRemindSubviews smallFont];
-    _source.textColor = [StyleOfRemindSubviews lightSkyColor];
+    _source.textColor = [UIColor whiteColor];
     _source.numberOfLines = 1;
     [self addSubview:_source];
     

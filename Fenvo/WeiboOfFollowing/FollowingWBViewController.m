@@ -132,7 +132,7 @@
 
 
 - (void)getWeiboMsg:(NSNotification *)notification {
-    
+    [self.tableView.header beginRefreshing];
     
     [WeiboStoreManager queryAllWeiboStoreSucces:^(NSArray *timeLineArr, long long max_id) {
         _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];
@@ -329,6 +329,12 @@
     return NO;
 }
 
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == _weiboMsgArray.count - 5) {
+        [self getMoreWeibo];
+    }
+}
+
 //
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
@@ -338,6 +344,7 @@
 
 - (void)writeWeibo {
     NewWeiboVC *newWeiboVC = [[NewWeiboVC alloc]initWithNibName:@"NewWeiboVC" bundle:[NSBundle mainBundle]];
+    newWeiboVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:newWeiboVC animated:YES];
 }
 
