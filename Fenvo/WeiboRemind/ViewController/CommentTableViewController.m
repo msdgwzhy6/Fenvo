@@ -41,7 +41,7 @@
     
     self.hidesBottomBarWhenPushed = YES;
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.modalPresentationStyle = UIModalPresentationCurrentContext;
+    //self.modalPresentationStyle = UIModalPresentationCurrentContext;
     
     self.tableView = [[ANBlurredTableView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
@@ -205,7 +205,7 @@
 - (void)reloadData:(NSArray *)commentArr {
     
     if (commentArr.count > 0) {
-        for (int i = 0; i < commentArr.count; i ++) {
+        for (int i = 1; i < commentArr.count; i ++) {
             WeiboComment *comment = (WeiboComment *)commentArr[i];
             [_commentArray addObject:comment];
         }

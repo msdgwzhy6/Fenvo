@@ -70,4 +70,8 @@
     return RGBACOLOR(211, 227, 235, 1);
 }
 
++ (UIColor *)whiteOpaqueColor {
+    return RGBACOLOR(220, 220, 220, 0.4);
+}
+
 @end

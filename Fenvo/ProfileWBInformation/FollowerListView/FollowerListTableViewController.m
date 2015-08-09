@@ -31,8 +31,6 @@
 @implementation FollowerListTableViewController
 
 - (void)viewDidLoad {
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"opaque_b.png"] forBarMetrics:UIBarMetricsDefault];
-    self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     self.navigationController.navigationBar.tintColor = RGBACOLOR(250, 143, 5, 1);
     
     //取消tableview向下延伸。避免被tabBar遮盖

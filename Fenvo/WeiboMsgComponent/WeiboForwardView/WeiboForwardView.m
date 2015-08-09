@@ -68,7 +68,7 @@
     
     UITapGestureRecognizer *tap_closeView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeForwardView:)];
     [_mainView addGestureRecognizer:tap_closeView];
-    
+    [_forward becomeFirstResponder];
 }
 
 - (void)initComponent:(long long)weiboID withComment:(NSString *)wbDetail andUserName:(NSString *)username{
@@ -133,7 +133,7 @@
     _containView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - height, IPHONE_SCREEN_WIDTH, height);
     
     [_sentBtn addTarget:self action:@selector(forwardWeibo) forControlEvents:UIControlEventTouchUpInside];
-    [_forward becomeFirstResponder];
+    
     
 }
 

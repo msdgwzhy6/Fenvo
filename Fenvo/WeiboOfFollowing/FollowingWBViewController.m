@@ -132,7 +132,6 @@
 
 
 - (void)getWeiboMsg:(NSNotification *)notification {
-    [self.tableView.header beginRefreshing];
     
     [WeiboStoreManager queryAllWeiboStoreSucces:^(NSArray *timeLineArr, long long max_id) {
         _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];

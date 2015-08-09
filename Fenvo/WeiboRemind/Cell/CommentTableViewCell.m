@@ -10,8 +10,12 @@
 #import "BaseWeiboView.h"
 #import "BaseHeaderView.h"
 #import "WeiboLabel.h"
+#import "WeiboCommentView.h"
+#import "OthersViewController.h"
+#import "WebViewController.h"
 
 #import "StyleOfRemindSubviews.h"
+#import "ViewManagerTool.h"
 
 #import "WeiboMsg.h"
 
@@ -46,7 +50,7 @@
     self.backgroundColor = [UIColor clearColor];
     
     _mainContentView = [[UIView alloc]init];
-    _mainContentView.backgroundColor = RGBACOLOR(220, 220, 220, 0.4);
+    _mainContentView.backgroundColor = RGBACOLOR(0, 0, 0, 0.3);
     _mainContentView.layer.cornerRadius = 3.0;
     //_mainContentView.layer.borderWidth = 3.0;
     //_mainContentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -58,6 +62,12 @@
     [self addSubview:_mainContentView];
     
     _header = [[BaseHeaderView alloc]init];
+    _header.customBtn.layer.borderColor = [UIColor grayColor].CGColor;
+    _header.customBtn.layer.borderWidth = 1.0f;
+    _header.customBtn.layer.cornerRadius = 3.0;
+    _header.customBtn.layer.masksToBounds = YES;
+    [_header.customBtn setTitle:@"回复" forState:UIControlStateNormal];
+    [_header.customBtn addTarget:self action:@selector(customEvent) forControlEvents:UIControlEventTouchUpInside];
     [_mainContentView addSubview:_header];
     
     _text = [[WeiboLabel alloc]init];
@@ -95,6 +105,7 @@
     _header.createAt.text = comment.created_at;
     _header.source.text = comment.source;
     [_header.avatar sd_setImageWithURL:[NSURL URLWithString:comment.user.profile_image_url]];
+    [_header.avatar setUserInfo:comment.user];
     CGFloat headerY = CGRectGetMaxY(_header.frame) + spacing;
     
     
@@ -149,6 +160,46 @@
     comment.height = @(mainContentViewHeight);
 }
 
+- (void)customEvent {
+    [[WeiboCommentView sharedWeiboCommentView]showCommentView:_comment.user.ids.integerValue];
+}
+
+#pragma mark - WeiboLabelDelegate
+- (void)mlEmojiLabel:(WeiboLabel *)emojiLabel didSelectLink:(NSString *)link withType:(WeiboLabelLinkType)type
+{
+    
+    switch (type) {
+        case MLEmojiLabelLinkTypeURL:{
+            WebViewController *webview = [[WebViewController alloc]init];
+            [webview initWithLink:link];
+            [[ViewManagerTool viewController:self].navigationController pushViewController:webview animated:YES];
+            NSLog(@"点击了URL%@",link);
+            }
+            break;
+            
+        case MLEmojiLabelLinkTypePhoneNumber:
+            NSLog(@"点击了电话%@",link);
+            break;
+        case MLEmojiLabelLinkTypeEmail:
+            NSLog(@"点击了邮箱%@",link);
+            break;
+        case MLEmojiLabelLinkTypeAt:{
+            if (_comment.user) {
+                OthersViewController* _profileVC = [[OthersViewController alloc]init];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"refreshUserInfo" object:_comment.user];
+                [[ViewManagerTool viewController:self].navigationController pushViewController:_profileVC animated:YES];
+            }
+            NSLog(@"点击了用户%@",link);
+        }
+            break;
+        case MLEmojiLabelLinkTypePoundSign:
+            NSLog(@"点击了话题%@",link);
+            break;
+        default:
+            NSLog(@"点击了不知道啥%@",link);
+            break;
+    }
+}
 
 
 @end

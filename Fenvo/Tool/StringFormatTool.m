@@ -34,4 +34,20 @@
     return src;
 }
 
++ (NSArray *)getPicUrls:(NSString *)url {
+    return [url componentsSeparatedByString:@","];
+}
+
+//转化小图为中图，因为有的长宽比过大
++ (NSString *)getBimmdlePicUrl:(NSString *)url {
+    url = [url stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+    return [url copy];
+}
+
++ (NSString *) getOriginalPicUrl:(NSString *)url {
+    url = [url stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"large"];
+    
+    return [url copy];
+}
+
 @end

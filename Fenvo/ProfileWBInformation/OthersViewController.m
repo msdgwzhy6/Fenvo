@@ -18,6 +18,7 @@
     [super viewDidLoad];
     
     self.hidesBottomBarWhenPushed = YES;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:@"refreshUserInfo" object:nil];

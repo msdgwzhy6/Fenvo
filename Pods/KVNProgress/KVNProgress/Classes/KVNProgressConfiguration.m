@@ -15,10 +15,10 @@
 - (id)init
 {
 	if (self = [super init]) {
-		_backgroundFillColor = [UIColor colorWithWhite:1.0f alpha:0.85f];
+		_backgroundFillColor = [UIColor colorWithWhite:1.0f alpha:0.60f];
 		_backgroundTintColor = [[UIColor whiteColor] colorWithAlphaComponent:0.6f];
 		_backgroundType = KVNProgressBackgroundTypeBlurred;
-		_fullScreen = NO;
+		_fullScreen = YES;
 		
 		_circleStrokeForegroundColor = [UIColor darkGrayColor];
 		_circleStrokeBackgroundColor = [_circleStrokeForegroundColor colorWithAlphaComponent:0.3f];
@@ -37,7 +37,7 @@
 		_minimumErrorDisplayTime = 1.3f;
 		
 		_tapBlock = nil;
-		_allowUserInteraction = NO;
+		_allowUserInteraction = YES;
 	}
 	
 	return self;

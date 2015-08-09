@@ -156,9 +156,9 @@
 }
 
 + (NSString *)getRefreshJSONString: (NSString *)jsonStrings {
-    NSDictionary *dict = [jsonStrings objectFromJSONString];
-    long long since_id = [dict[@"since_id"] longLongValue];
-    long long previous_cursor = [dict[@"previous_cursor"] longLongValue];
+//    NSDictionary *dict = [jsonStrings objectFromJSONString];
+//    long long since_id = [dict[@"since_id"] longLongValue];
+//    long long previous_cursor = [dict[@"previous_cursor"] longLongValue];
     NSString *str1;
     NSRange rangeLeft = [jsonStrings rangeOfString:@"\"statuses\":"];
     str1 = [jsonStrings substringFromIndex:rangeLeft.location+rangeLeft.length];

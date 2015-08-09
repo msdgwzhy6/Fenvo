@@ -68,7 +68,7 @@
     
     UITapGestureRecognizer *tap_closeView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeCommentView:)];
     [_mainView addGestureRecognizer:tap_closeView];
-    
+    [_comment becomeFirstResponder];
 }
 
 - (void)initComponent:(long long)weiboID {
@@ -137,7 +137,7 @@
     
     [_sentBtn addTarget:self action:@selector(sentComment) forControlEvents:UIControlEventTouchUpInside];
     
-    [_comment becomeFirstResponder];
+    
 }
 
 

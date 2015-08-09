@@ -8,6 +8,7 @@
 
 #import "WeiboRemindVC.h"
 #import "CommentTableViewController.h"
+#import "AtMeTableViewController.h"
 #import "ChatCell.h"
 
 #import "MJRefresh.h"
@@ -142,7 +143,12 @@
             [self.navigationController pushViewController:commentVC animated:YES];
         }
             break;
-            
+        case 1:
+        {
+            AtMeTableViewController *atMeVC = [[AtMeTableViewController alloc]initWithStyle:UITableViewStylePlain];
+            atMeVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:atMeVC animated:YES];
+        }
         default:
             break;
     }

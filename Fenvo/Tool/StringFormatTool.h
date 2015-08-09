@@ -12,5 +12,8 @@
 
 + (NSString *) getTimeString : (NSString *)timeStr;
 + (NSString *) getSourceString:(NSString *)src;
++ (NSArray *)getPicUrls:(NSString *)url;
++ (NSString *)getBimmdlePicUrl:(NSString *)url;
++ (NSString *) getOriginalPicUrl:(NSString *)url;
 
 @end

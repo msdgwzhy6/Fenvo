@@ -13,7 +13,7 @@
 #import "WeiboForwardView.h"
 #import "UIImageView+WebCache.h"
 #import "UIImage+FontAwesome.h"
-
+#import "ViewManagerTool.h"
 
 #define BUTTON_FONT [UIFont systemFontOfSize:13.0]
 @interface OriginalTableViewCell()<WeiboLabelDelegate>{
@@ -578,18 +578,7 @@
     // Configure the view for the selected state
 }
 
-//get the controller of view
-//得到此view 所在的viewController
-- (FollowingWBViewController *)viewController {
-    for (UIView* next = [self superview]; next; next =
-         next.superview) {
-        UIResponder* nextResponder = [next nextResponder];
-        if ([nextResponder isKindOfClass:[FollowingWBViewController class]]) {
-            return (FollowingWBViewController*)nextResponder;
-        }
-    }
-    return nil;
-}
+
 #pragma mark - WeiboLabelDelegate
 - (void)mlEmojiLabel:(WeiboLabel *)emojiLabel didSelectLink:(NSString *)link withType:(WeiboLabelLinkType)type
 {
@@ -597,7 +586,7 @@
     switch (type) {
         case MLEmojiLabelLinkTypeURL:
             [webview initWithLink:link];
-            [[self viewController].navigationController pushViewController:webview animated:YES];
+            [[ViewManagerTool viewController:self].navigationController pushViewController:webview animated:YES];
             NSLog(@"点击了URL%@",link);
             break;
             

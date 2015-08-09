@@ -8,6 +8,7 @@
 
 #import "BaseHeaderView.h"
 #import "StyleOfRemindSubviews.h"
+#import "WeiboCommentView.h"
 
 @implementation BaseHeaderView
 
@@ -26,8 +27,9 @@
     
     
     _avatar = [[WeiboAvatarView alloc]init];
-    _avatar.layer.cornerRadius = 0.0;
-    _avatar.layer.masksToBounds = YES;
+    [_avatar setStyle];
+    //_avatar.layer.cornerRadius = 0.0;
+    //_avatar.layer.masksToBounds = YES;
     [self addSubview:_avatar];
     
     
@@ -51,9 +53,8 @@
     
     _customBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _customBtn.titleLabel.font = [StyleOfRemindSubviews buttonFont];
-    [_customBtn addTarget:self
-                   action:@selector(customEvent)
-         forControlEvents:UIControlEventTouchUpInside];
+    [_customBtn setBackgroundColor:[UIColor clearColor]];
+    [_customBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self addSubview:_customBtn];
     
 }
@@ -81,8 +82,6 @@
     _customBtn.frame = CGRectMake(usernameX, 5, 40, 20);
 }
 
-- (void)customEvent {
-    
-}
+
 
 @end
