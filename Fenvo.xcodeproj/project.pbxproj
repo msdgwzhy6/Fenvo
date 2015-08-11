@@ -111,6 +111,8 @@
 		399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 399AE4F01B30166300D4E81F /* FVNavigationController.m */; };
 		39BA30F31B6A6B3700DEFDB0 /* QiHei.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */; };
 		39BE33F21B7397B400A14651 /* CommentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BE33F11B7397B400A14651 /* CommentTableViewController.m */; };
+		39C425A71B7A397F00F82658 /* WeiboDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C425A61B7A397F00F82658 /* WeiboDetailViewController.m */; };
+		39C425AC1B7A3A5600F82658 /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C425AB1B7A3A5600F82658 /* DetailView.m */; };
 		39C4A6E31B70FC0C00A5940E /* ProfileNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6E21B70FC0C00A5940E /* ProfileNavigationViewController.m */; };
 		39C4A6E61B70FE1E00A5940E /* OthersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6E51B70FE1E00A5940E /* OthersViewController.m */; };
 		39C4A6F31B71099F00A5940E /* BaseWeiboView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6F21B71099F00A5940E /* BaseWeiboView.m */; };
@@ -557,6 +559,10 @@
 		39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = QiHei.ttf; path = Resource/QiHei.ttf; sourceTree = "<group>"; };
 		39BE33F01B7397B400A14651 /* CommentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentTableViewController.h; path = ViewController/CommentTableViewController.h; sourceTree = "<group>"; };
 		39BE33F11B7397B400A14651 /* CommentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentTableViewController.m; path = ViewController/CommentTableViewController.m; sourceTree = "<group>"; };
+		39C425A51B7A397F00F82658 /* WeiboDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboDetailViewController.h; path = WeiboDetailViewController/WeiboDetailViewController.h; sourceTree = "<group>"; };
+		39C425A61B7A397F00F82658 /* WeiboDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboDetailViewController.m; path = WeiboDetailViewController/WeiboDetailViewController.m; sourceTree = "<group>"; };
+		39C425AA1B7A3A5600F82658 /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailView.h; path = WeiboDetailViewController/DetailView.h; sourceTree = "<group>"; };
+		39C425AB1B7A3A5600F82658 /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailView.m; path = WeiboDetailViewController/DetailView.m; sourceTree = "<group>"; };
 		39C4A6E11B70FC0C00A5940E /* ProfileNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileNavigationViewController.h; path = ProfileWBInformation/ProfileNavigationViewController.h; sourceTree = "<group>"; };
 		39C4A6E21B70FC0C00A5940E /* ProfileNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileNavigationViewController.m; path = ProfileWBInformation/ProfileNavigationViewController.m; sourceTree = "<group>"; };
 		39C4A6E41B70FE1E00A5940E /* OthersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OthersViewController.h; path = ProfileWBInformation/OthersViewController.h; sourceTree = "<group>"; };
@@ -1002,7 +1008,6 @@
 			children = (
 				39BE33EF1B73977E00A14651 /* ViewController */,
 				39CAD7241B72433400B9BB58 /* Cell */,
-				39C4A6E81B7104CF00A5940E /* Base */,
 				39C4A6E71B7104AA00A5940E /* Comment */,
 				3960B13B1B64903C0051C8A3 /* MessageNavigationController.h */,
 				3960B13C1B64903C0051C8A3 /* MessageNavigationController.m */,
@@ -1179,6 +1184,33 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
+		39C425A41B7A378800F82658 /* WeiboDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				39C425A91B7A3A1000F82658 /* Header */,
+				39C425A81B7A3A0800F82658 /* Cell */,
+				39C425A51B7A397F00F82658 /* WeiboDetailViewController.h */,
+				39C425A61B7A397F00F82658 /* WeiboDetailViewController.m */,
+			);
+			name = WeiboDetailViewController;
+			sourceTree = "<group>";
+		};
+		39C425A81B7A3A0800F82658 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		39C425A91B7A3A1000F82658 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				39C425AA1B7A3A5600F82658 /* DetailView.h */,
+				39C425AB1B7A3A5600F82658 /* DetailView.m */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 		39C4A6E71B7104AA00A5940E /* Comment */ = {
 			isa = PBXGroup;
 			children = (
@@ -1201,6 +1233,7 @@
 				39C4B25C1B773A01003B3EDF /* BaseImagesView.m */,
 			);
 			name = Base;
+			path = WeiboRemind;
 			sourceTree = "<group>";
 		};
 		39CAD7241B72433400B9BB58 /* Cell */ = {
@@ -1670,7 +1703,9 @@
 		39CF25DC1AB8088C006AA556 /* Fenvo */ = {
 			isa = PBXGroup;
 			children = (
+				39C425A41B7A378800F82658 /* WeiboDetailViewController */,
 				39E5B4291B5ACCC100C2A734 /* Model */,
+				39C4A6E81B7104CF00A5940E /* Base */,
 				39CAD7321B72542400B9BB58 /* LocalManager */,
 				39ED9F2F1B5566C500E2B545 /* RemoteRequest */,
 				3921C6901B344086006339F9 /* WeiboRemind */,
@@ -2455,6 +2490,7 @@
 				396E6D0D1ABA89BA00AE86CC /* FollowingWBViewController.m in Sources */,
 				39C4A6F31B71099F00A5940E /* BaseWeiboView.m in Sources */,
 				39CAD7271B72435800B9BB58 /* LikeTableViewCell.m in Sources */,
+				39C425AC1B7A3A5600F82658 /* DetailView.m in Sources */,
 				39D239141AE140D100D714A5 /* WebImageView.m in Sources */,
 				39CBC7761B6DD20E00FEBE6E /* UIImage+BoxBlur.m in Sources */,
 				39E02BEA1B5A836B0064A8A3 /* FAImageView.m in Sources */,
@@ -2491,6 +2527,7 @@
 				39CC40EB1B77214800038B10 /* WeiboStore.m in Sources */,
 				39CFCBD81B0E0CFC0096D263 /* WeiboTableView.m in Sources */,
 				39DECDFB1B5B5AED0044FD39 /* WeiboVisibleInfo.m in Sources */,
+				39C425A71B7A397F00F82658 /* WeiboDetailViewController.m in Sources */,
 				39CC40221B398FB000D94A09 /* WBImagePickerAssetCell.m in Sources */,
 				3921C69C1B3443E9006339F9 /* ChatCell.m in Sources */,
 				39DECDF51B5B5AEC0044FD39 /* WeiboPrivacySetting.m in Sources */,
