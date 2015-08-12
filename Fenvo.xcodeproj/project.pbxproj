@@ -409,6 +409,7 @@
 		39D3BB121B271E5D002B0412 /* FollowerListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D3BB0F1B271E5D002B0412 /* FollowerListViewCell.m */; };
 		39D3BB131B271E5D002B0412 /* FollowerListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D3BB101B271E5D002B0412 /* FollowerListViewCell.xib */; };
 		39D3DF6C1B393AE300E19728 /* NewWeiboVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D3DF6A1B393AE300E19728 /* NewWeiboVC.xib */; };
+		39D42F571B7B854400CF8933 /* BaseRetweetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39D42F561B7B854400CF8933 /* BaseRetweetView.m */; };
 		39D70CFC1ACFEAE600F34A7C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39D70CFB1ACFEAE600F34A7C /* MapKit.framework */; };
 		39DB170C1B177F1500639223 /* AlbumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DB170B1B177F1500639223 /* AlbumView.m */; };
 		39DECDEF1B5B5AEA0044FD39 /* WeiboRemind.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DECDEE1B5B5AEA0044FD39 /* WeiboRemind.m */; };
@@ -940,6 +941,8 @@
 		39D3BB0F1B271E5D002B0412 /* FollowerListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowerListViewCell.m; sourceTree = "<group>"; };
 		39D3BB101B271E5D002B0412 /* FollowerListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowerListViewCell.xib; sourceTree = "<group>"; };
 		39D3DF6A1B393AE300E19728 /* NewWeiboVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewWeiboVC.xib; path = WriteNewWeibo/NewWeiboVC.xib; sourceTree = "<group>"; };
+		39D42F551B7B854400CF8933 /* BaseRetweetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseRetweetView.h; path = Base/BaseRetweetView.h; sourceTree = "<group>"; };
+		39D42F561B7B854400CF8933 /* BaseRetweetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseRetweetView.m; path = Base/BaseRetweetView.m; sourceTree = "<group>"; };
 		39D70CFB1ACFEAE600F34A7C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		39DB170A1B177F1500639223 /* AlbumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumView.h; path = ProfileWBInformation/AlbumView/AlbumView.h; sourceTree = "<group>"; };
 		39DB170B1B177F1500639223 /* AlbumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumView.m; path = ProfileWBInformation/AlbumView/AlbumView.m; sourceTree = "<group>"; };
@@ -1231,6 +1234,8 @@
 				39CAD7221B723E5800B9BB58 /* BaseHeaderView.m */,
 				39C4B25B1B773A01003B3EDF /* BaseImagesView.h */,
 				39C4B25C1B773A01003B3EDF /* BaseImagesView.m */,
+				39D42F551B7B854400CF8933 /* BaseRetweetView.h */,
+				39D42F561B7B854400CF8933 /* BaseRetweetView.m */,
 			);
 			name = Base;
 			path = WeiboRemind;
@@ -2523,6 +2528,7 @@
 				39CAD7231B723E5800B9BB58 /* BaseHeaderView.m in Sources */,
 				399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */,
 				39D2DCB51B24083C00E51AB6 /* FollowingListViewCell.m in Sources */,
+				39D42F571B7B854400CF8933 /* BaseRetweetView.m in Sources */,
 				39D2274E1B0DDB0100038DB3 /* WeiboGetBlurImage.m in Sources */,
 				39CC40EB1B77214800038B10 /* WeiboStore.m in Sources */,
 				39CFCBD81B0E0CFC0096D263 /* WeiboTableView.m in Sources */,

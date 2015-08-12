@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 Caesar. All rights reserved.
 //
 #import "FollowingWBViewController.h"
+#import "WeiboDetailViewController.h"
 #import "WeiboMsg.h"
 #import "WeiboMsgManager.h"
 #import "FollowingWBViewCell.h"
@@ -332,6 +333,13 @@
     if (indexPath.row == _weiboMsgArray.count - 5) {
         [self getMoreWeibo];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
+    WeiboDetailViewController *detailVC = [[WeiboDetailViewController alloc]initWithStyle:UITableViewStyleGrouped];
+    detailVC.weiboMsg = weiboMsg;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 //

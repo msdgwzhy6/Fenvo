@@ -14,6 +14,8 @@
 + (CGFloat)usernameHeight;
 + (CGFloat)detailHeight;
 + (CGFloat)componentSpacing;
++ (CGFloat)componentSpacing_small;
++ (CGFloat)componentSpacing_large;
 
 + (UIFont *)buttonFont;
 + (UIFont *)middleFont;
@@ -26,5 +28,6 @@
 + (UIColor *)deepBlackColor;
 + (UIColor *)orangeColor;
 + (UIColor *)lightSkyColor;
++ (UIColor *)whiteOpaqueColor;
 //base
 @end

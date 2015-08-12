@@ -54,7 +54,7 @@
     
     CGFloat btnWidth = width/6;
     
-    CGRect commentRect = CGRectMake(IPHONE_SCREEN_WIDTH / 2 - 20 , 0, btnWidth, height);
+    CGRect commentRect = CGRectMake(width / 2 - 20 , 0, btnWidth, height);
     _comment.frame = commentRect;
     
     CGRect forwardRect = CGRectMake(CGRectGetMaxX(_comment.frame), 0, btnWidth, height);

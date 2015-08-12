@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeiboMsg.h"
+#import "DetailView.h"
+#import "ANBlurredTableView.h"
 
 @interface WeiboDetailViewController : UITableViewController
+
+@property (nonatomic, strong)ANBlurredTableView *tableView;
+@property (nonatomic, strong)WeiboMsg *weiboMsg;
 
 @end

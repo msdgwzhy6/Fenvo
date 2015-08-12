@@ -101,15 +101,15 @@
                 }
                 imageHight = imageWidth ;
                 if (i >= 6) {
-                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 5) + imageWidth * (i - 6) + 10 - WBStatusCellImageViewSpacing;
+                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 5) + imageWidth * (i - 6) - WBStatusCellImageViewSpacing;
                     imageY = WBStatusCellImageViewSpacing*2 + imageHight*2;
                     imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 }else if(i <= 2){
-                    CGFloat imageX = WBStatusCellImageViewSpacing*(i + 1) + imageWidth * i + 10 - WBStatusCellImageViewSpacing;
+                    CGFloat imageX = WBStatusCellImageViewSpacing*(i + 1) + imageWidth * i - WBStatusCellImageViewSpacing;
                     imageY = 0;
                     imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 }else{
-                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 2) + imageWidth * (i-3) + 10 - WBStatusCellImageViewSpacing;
+                    CGFloat imageX = WBStatusCellImageViewSpacing*(i - 2) + imageWidth * (i-3)  - WBStatusCellImageViewSpacing;
                     imageY = WBStatusCellImageViewSpacing + imageHight;
                     imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 }

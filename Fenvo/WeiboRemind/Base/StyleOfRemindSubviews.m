@@ -26,6 +26,13 @@
     return 8.0;
 }
 
++ (CGFloat)componentSpacing_small {
+    return 4.0;
+}
+
++ (CGFloat)componentSpacing_large {
+    return 12.0;
+}
 
 
 + (UIFont *)buttonFont {
@@ -71,7 +78,7 @@
 }
 
 + (UIColor *)whiteOpaqueColor {
-    return RGBACOLOR(220, 220, 220, 0.4);
+    return RGBACOLOR(220, 220, 220, 0.3);
 }
 
 @end

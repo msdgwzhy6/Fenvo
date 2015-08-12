@@ -11,4 +11,5 @@
 
 @interface DetailView : UIView
 @property (nonatomic, strong)WeiboMsg *weiboMsg;
+@property (nonatomic, assign)CGFloat height;
 @end
