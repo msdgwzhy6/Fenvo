@@ -122,6 +122,7 @@
 		39C4B2631B77596C003B3EDF /* WeiboAtMeManaer.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4B2621B77596C003B3EDF /* WeiboAtMeManaer.m */; };
 		39C4B2661B777098003B3EDF /* AtMeRPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4B2651B777098003B3EDF /* AtMeRPC.m */; };
 		39C6A11B1B7CD83E00319C0D /* BottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C6A11A1B7CD83E00319C0D /* BottomView.m */; };
+		39C6A11E1B7CF92B00319C0D /* DetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C6A11D1B7CF92B00319C0D /* DetailTableViewCell.m */; };
 		39CAD7201B72386E00B9BB58 /* BaseButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CAD71F1B72386E00B9BB58 /* BaseButtonView.m */; };
 		39CAD7231B723E5800B9BB58 /* BaseHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CAD7221B723E5800B9BB58 /* BaseHeaderView.m */; };
 		39CAD7271B72435800B9BB58 /* LikeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 39CAD7261B72435800B9BB58 /* LikeTableViewCell.m */; };
@@ -583,6 +584,8 @@
 		39C4B2651B777098003B3EDF /* AtMeRPC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AtMeRPC.m; path = RemoteRequest/AtMeRPC.m; sourceTree = "<group>"; };
 		39C6A1191B7CD83E00319C0D /* BottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BottomView.h; path = WeiboDetailViewController/Base/BottomView.h; sourceTree = "<group>"; };
 		39C6A11A1B7CD83E00319C0D /* BottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BottomView.m; path = WeiboDetailViewController/Base/BottomView.m; sourceTree = "<group>"; };
+		39C6A11C1B7CF92B00319C0D /* DetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailTableViewCell.h; path = WeiboDetailViewController/Cell/DetailTableViewCell.h; sourceTree = "<group>"; };
+		39C6A11D1B7CF92B00319C0D /* DetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailTableViewCell.m; path = WeiboDetailViewController/Cell/DetailTableViewCell.m; sourceTree = "<group>"; };
 		39CAD71E1B72386E00B9BB58 /* BaseButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseButtonView.h; path = Base/BaseButtonView.h; sourceTree = "<group>"; };
 		39CAD71F1B72386E00B9BB58 /* BaseButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseButtonView.m; path = Base/BaseButtonView.m; sourceTree = "<group>"; };
 		39CAD7211B723E5800B9BB58 /* BaseHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseHeaderView.h; path = Base/BaseHeaderView.h; sourceTree = "<group>"; };
@@ -1206,6 +1209,8 @@
 		39C425A81B7A3A0800F82658 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				39C6A11C1B7CF92B00319C0D /* DetailTableViewCell.h */,
+				39C6A11D1B7CF92B00319C0D /* DetailTableViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2480,6 +2485,7 @@
 				39CAD90A1B72650900B9BB58 /* CommentRPC.m in Sources */,
 				3960B13D1B64903C0051C8A3 /* MessageNavigationController.m in Sources */,
 				39CAD8F71B72567A00B9BB58 /* FeEqualize.m in Sources */,
+				39C6A11E1B7CF92B00319C0D /* DetailTableViewCell.m in Sources */,
 				39CD1EF71B204EA800F2DBCA /* CheckBox.m in Sources */,
 				39C4A6E61B70FE1E00A5940E /* OthersViewController.m in Sources */,
 				39CBC7751B6DD20E00FEBE6E /* ANBlurredTableView.m in Sources */,
