@@ -16,6 +16,7 @@
 + (CGFloat)componentSpacing;
 + (CGFloat)componentSpacing_small;
 + (CGFloat)componentSpacing_large;
++ (CGFloat)bottomHeight;
 
 + (UIFont *)buttonFont;
 + (UIFont *)middleFont;
@@ -29,5 +30,6 @@
 + (UIColor *)orangeColor;
 + (UIColor *)lightSkyColor;
 + (UIColor *)whiteOpaqueColor;
++ (UIColor *)blackOpaqueColor_light;
 //base
 @end

@@ -8,6 +8,7 @@
 
 #import "BaseRetweetView.h"
 #import "StyleOfRemindSubviews.h"
+#import "WeiboUserInfo.h"
 
 @implementation BaseRetweetView
 
@@ -45,14 +46,15 @@
     CGFloat width = self.frame.size.width - [StyleOfRemindSubviews componentSpacing_small]*2;
     CGFloat spacing = [StyleOfRemindSubviews componentSpacing_small];
     
-    CGSize textSize = [weiboMsg.wbDetail
+    NSString *text = [NSString stringWithFormat:@"@%@ :%@",weiboMsg.user.name, weiboMsg.wbDetail];
+    CGSize textSize = [text
                        boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                        options:NSStringDrawingUsesLineFragmentOrigin
                        attributes:@{NSFontAttributeName:[UIFont fontWithName:@ "HYQiHei-BEJ" size:15.0]}
                        context:nil].size;
     CGRect textRect = CGRectMake(spacing, spacing, width, textSize.height);
     _text.frame = textRect;
-    [_text setEmojiText:weiboMsg.wbDetail];
+    [_text setEmojiText:text];
     CGFloat textY = CGRectGetMaxY(_text.frame) + spacing;
     
     if (weiboMsg.pic_urls) {

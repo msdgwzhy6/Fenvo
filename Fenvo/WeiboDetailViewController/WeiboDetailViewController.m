@@ -9,10 +9,12 @@
 #import "WeiboDetailViewController.h"
 #import "DetailView.h"
 #import "StyleOfRemindSubviews.h"
+#import "BottomView.h"
 
 @interface WeiboDetailViewController ()
 {
     DetailView *_detailView;
+    BottomView *_buttonView;
 }
 @end
 
@@ -33,9 +35,10 @@
     self.hidesBottomBarWhenPushed = YES;
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.modalPresentationStyle = UIModalPresentationCurrentContext;
+    self.title = @"DETAIL";
     
     if (![self.tableView isKindOfClass:[ANBlurredTableView class]]) {
-        self.tableView = [[ANBlurredTableView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        self.tableView = [[ANBlurredTableView alloc]initWithFrame:CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, [UIScreen mainScreen].bounds.size.height - 44) style:UITableViewStyleGrouped];
     }
     
     self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
@@ -47,14 +50,21 @@
     [self.tableView setEndTintAlpha:0.6f];
     [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
     
+    _buttonView = [[BottomView alloc]init];
+    _buttonView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - [StyleOfRemindSubviews bottomHeight], IPHONE_SCREEN_WIDTH, [StyleOfRemindSubviews bottomHeight]);
+    UIWindow *window = [UIApplication sharedApplication].windows[0];
+    [window addSubview:_buttonView];
     
-    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_buttonView removeFromSuperview];
 }
 
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg {
     _weiboMsg = weiboMsg;
     
-    CGFloat spacing = [StyleOfRemindSubviews componentSpacing];
     if (![self.tableView isKindOfClass:[ANBlurredTableView class]]) {
         self.tableView = [[ANBlurredTableView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     }
@@ -77,26 +87,51 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
     return 0;
 }
 
-/*
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return @"dfdf";
+//}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
+//    if (sectionTitle == nil) {
+//        return  nil;
+//    }
+//    
+//    BottomView *bottom = [[BottomView alloc]init];
+//    bottom.frame = CGRectMake(0, 0, tableView.bounds.size.width, 22);
+//    
+//    UIView * sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+//    [sectionView setBackgroundColor:[UIColor blackColor]];
+//    [sectionView addSubview:bottom];
+//    return sectionView;
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 35;
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    NSString *cellIdentifier = @"detailCell";
     
-    // Configure the cell...
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:cellIdentifier];
+    }
+    cell.backgroundColor = [StyleOfRemindSubviews whiteOpaqueColor];
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

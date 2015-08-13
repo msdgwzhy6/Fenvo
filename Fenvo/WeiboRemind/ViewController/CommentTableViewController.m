@@ -244,7 +244,6 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    //去除重用机制
     NSString *cellIdentifier = @"commentCell";
     //[NSString stringWithFormat:@"cell%ld%ld",indexPath.row,refreshtime];
     

@@ -34,6 +34,10 @@
     return 12.0;
 }
 
++ (CGFloat)bottomHeight {
+    return 44.0f;
+}
+
 
 + (UIFont *)buttonFont {
     return [UIFont fontWithName:@ "HYQiHei-BEJ" size:13.0];
@@ -79,6 +83,10 @@
 
 + (UIColor *)whiteOpaqueColor {
     return RGBACOLOR(220, 220, 220, 0.3);
+}
+
++ (UIColor *)blackOpaqueColor_light{
+    return RGBACOLOR(60, 60, 60, 0.75);
 }
 
 @end

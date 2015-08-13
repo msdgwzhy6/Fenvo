@@ -21,7 +21,6 @@
     WeiboLabel *_text;
     BaseRetweetView *_retweetView;
     BaseImagesView *_imagesView;
-    BaseButtonView *_buttonView;
 }
 @end
 @implementation DetailView
@@ -52,14 +51,12 @@
     _text.lineBreakMode = NSLineBreakByCharWrapping;
     _text.weiboLabelDelegate = self;
     _text.isNeedAtAndPoundSign = YES;
+    
     [self addSubview:_text];
     
     _retweetView = [[BaseRetweetView alloc]init];
     [_retweetView setHidden:YES];
     [self addSubview:_retweetView];
-    
-    _buttonView = [[BaseButtonView alloc]init];
-    [self addSubview:_buttonView];
 }
 
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg {
@@ -85,6 +82,7 @@
     CGRect textRect = CGRectMake(spacing, headerY, width, textSize.height);
     _text.frame = textRect;
     [_text setEmojiText:weiboMsg.wbDetail];
+    [_text sizeToFit];
     CGFloat textY = CGRectGetMaxY(_text.frame) + spacing;
     
     if (weiboMsg.retweeted_status){
@@ -102,11 +100,7 @@
         textY = CGRectGetMaxY(imagesView.frame) + spacing;
     }
     
-    _buttonView.frame = CGRectMake(spacing, textY, width, 20);
-    
-    CGFloat height = CGRectGetMaxY(_buttonView.frame) + spacing;
-    
-    self.frame = CGRectMake(0, 0, self.frame.size.width, height);
-    _height = height;
+    self.frame = CGRectMake(0, 0, self.frame.size.width, textY);
+    _height = textY;
 }
 @end
