@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WeiboMsg.h"
 
 @interface BottomView : UIView
 @property (nonatomic, weak)UIButton *comment;
 @property (nonatomic, weak)UIButton *like;
 @property (nonatomic, weak)UIButton *repost;
+
+@property (nonatomic, strong)WeiboMsg *weiboMsg;
 @end

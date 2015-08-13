@@ -9,6 +9,9 @@
 #import "BottomView.h"
 #import "UIImage+FontAwesome.h"
 #import "StyleOfRemindSubviews.h"
+#import "WeiboCommentView.h"
+#import "WeiboForwardView.h"
+#import "WeiboUserInfo.h"
 
 @implementation BottomView
 
@@ -64,6 +67,10 @@
     
     CGRect praiseRect = CGRectMake(CGRectGetMaxX(_repost.frame), 0, btnWidth, height);
     _like.frame = praiseRect;
+}
+
+- (void)setWeiboMsg:(WeiboMsg *)weiboMsg {
+    _weiboMsg = weiboMsg;
     
     [_comment addTarget:self
                  action:@selector(commentEvent)
@@ -77,15 +84,22 @@
 }
 
 - (void)commentEvent {
-    
+    [[WeiboCommentView sharedWeiboCommentView]showCommentView:_weiboMsg.ids.integerValue];
 }
 
 - (void)repostEvent {
-    
+    if (_weiboMsg.retweeted_status) {
+        [[WeiboForwardView sharedWeiboForwardView]showForwardView:_weiboMsg.ids.integerValue withComment:_weiboMsg.wbDetail andUserName:_weiboMsg.user.screen_name];
+    }
+    else {
+        [[WeiboForwardView sharedWeiboForwardView]showForwardView:_weiboMsg.ids.integerValue withComment:@"" andUserName:@""];
+    }
 }
 
 - (void)likeEvent {
     
 }
+
+
 
 @end

@@ -52,8 +52,7 @@
     
     _buttonView = [[BottomView alloc]init];
     _buttonView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - [StyleOfRemindSubviews bottomHeight], IPHONE_SCREEN_WIDTH, [StyleOfRemindSubviews bottomHeight]);
-    UIWindow *window = [UIApplication sharedApplication].windows[0];
-    [window addSubview:_buttonView];
+
     
 }
 
@@ -77,6 +76,10 @@
     UIView *view = self.tableView.tableHeaderView;
     CGRect frame = view.frame;
     self.tableView.tableHeaderView.frame = frame;
+    
+    UIWindow *window = [UIApplication sharedApplication].windows[0];
+    [window addSubview:_buttonView];
+    _buttonView.weiboMsg = weiboMsg;
     
 }
 
