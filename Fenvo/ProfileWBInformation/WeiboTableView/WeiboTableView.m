@@ -134,7 +134,7 @@
                      
                      for (int i = 0; i < weiboMsgDictionary.count; i ++) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict Option:NO];
                          [_weiboMsgArray addObject:weiboMsg];
                          
                      }
@@ -188,7 +188,7 @@
                      //将数据加入数组
                      for (long i = (weiboMsgDictionary.count - 1); i >= 0; i --) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict Option:NO];
                          [_weiboMsgArray insertObject:weiboMsg atIndex:0];
                          
                      }
@@ -245,7 +245,7 @@
                      
                      for (int i = 1; i < weiboMsgDictionary.count; i ++) {
                          NSDictionary *dict = weiboMsgDictionary[i];
-                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict Option:NO];
                          [_weiboMsgArray addObject:weiboMsg];
                          
                      }

@@ -10,11 +10,14 @@
 #import "DetailView.h"
 #import "StyleOfRemindSubviews.h"
 #import "BottomView.h"
+#import "MJRefresh.h"
 
 @interface WeiboDetailViewController ()
 {
     DetailView *_detailView;
     BottomView *_buttonView;
+    
+    NSMutableArray *_commentArray;
 }
 @end
 
@@ -82,6 +85,7 @@
     _buttonView.weiboMsg = weiboMsg;
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

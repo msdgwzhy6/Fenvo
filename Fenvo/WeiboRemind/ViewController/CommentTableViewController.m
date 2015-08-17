@@ -24,6 +24,7 @@
     NSNumber *_max_id;
     
     BOOL _isFindInCoreData;
+    UIActivityIndicatorView *_indicator;
 }
 @end
 
@@ -56,6 +57,9 @@
     [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
     
     _commentArray = [[NSMutableArray alloc]init];
+    _indicator = [[UIActivityIndicatorView alloc]init];
+    _indicator.center = self.view.center;
+    [self.tableView addSubview: _indicator];
     [self addHeaderRefreshViewController];
     [self getCommentWhenViewDidLoad];
 }
@@ -88,7 +92,7 @@
 
 - (void)getCommentWhenViewDidLoad {
     
-    [self.tableView.header beginRefreshing];
+    [_indicator startAnimating];
     
     [WeiboCommentManager queryAllCommentSucces:^(NSArray *commentArr, NSNumber *max_id) {
     
@@ -98,6 +102,7 @@
         _since_id = comment.ids;
         [self reloadData];
         [self addFooterRefreshViewController];
+        [_indicator stopAnimating];
     } failure:^(NSString *desc) {
         [self clearAndRequestFromRemote];
     }];
@@ -124,6 +129,7 @@
                                   _max_id = max_id;
                                   _commentArray = [[NSMutableArray alloc]initWithArray:commentArr];
                                   [self addFooterRefreshViewController];
+                                  [_indicator stopAnimating];
                               } failure:^(NSString *desc, NSError *error) {
                                   NSLog(@"%@", desc);
                               }];

@@ -41,7 +41,7 @@
 @dynamic user;
 @dynamic visible;
 
-+ (WeiboMsg *)createByDictionary:(NSDictionary *)dic {
++ (WeiboMsg *)createByDictionary:(NSDictionary *)dic Option:(BOOL)isSave{
     
     if ([WeiboStoreManager isWeiboStoreExist:[NSNumber numberWithLongLong:[dic[@"id"] longLongValue]]]) {
         WeiboStore *weiboStore = [WeiboStoreManager updateWeiboStore:dic];
@@ -75,7 +75,7 @@
         //
         NSDictionary *retweeted_weibo = dic[@"retweeted_status"];
         if (retweeted_weibo) {
-            weiboMsg.retweeted_status = [WeiboMsg createByDictionary:retweeted_weibo];
+            weiboMsg.retweeted_status = [WeiboMsg createByDictionary:retweeted_weibo Option:YES];
         }
         // attitudes_count	int	表态数
         weiboMsg.attitudes_count = [NSNumber numberWithInteger:[dic[@"attitudes_count"]integerValue]];
@@ -105,9 +105,7 @@
     }
     
     NSError *error;
-    if (![managedObjectContext save:&error]) {
-        NSLog(@"%@",[error description]);
-    }
+    if (isSave)[managedObjectContext save:&error];
     
     return weiboMsg;
 }

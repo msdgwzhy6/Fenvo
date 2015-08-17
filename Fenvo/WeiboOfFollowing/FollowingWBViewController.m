@@ -191,8 +191,6 @@
 
 }
 - (void)refreshWeiboMsg{
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
         NSNumber *since_id = [NSNumber numberWithLongLong:_since_id];
         
@@ -217,8 +215,6 @@
                                             [self.tableView.header endRefreshing];
                                             NSLog(@"public weibo get failure");
                                         }];
-        
-    });
     
 }
 - (void)getMoreWeibo{
@@ -330,8 +326,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == _weiboMsgArray.count - 5) {
-        [self getMoreWeibo];
+    if (indexPath.row == _weiboMsgArray.count - 10) {
+        [self.tableView.footer beginRefreshing];
     }
 }
 

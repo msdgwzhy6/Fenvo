@@ -37,5 +37,5 @@
 @property (nonatomic, retain) WeiboUserInfo *user;
 @property (nonatomic, retain) WeiboVisibleInfo *visible;
 
-+ (WeiboMsg *)createByDictionary:(NSDictionary *)dic;
++ (WeiboMsg *)createByDictionary:(NSDictionary *)dic Option:(BOOL)isSave;
 @end

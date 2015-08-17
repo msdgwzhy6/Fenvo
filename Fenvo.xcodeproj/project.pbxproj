@@ -1196,6 +1196,7 @@
 		39C425A41B7A378800F82658 /* WeiboDetailViewController */ = {
 			isa = PBXGroup;
 			children = (
+				39D3099D1B821CF600CAF7F9 /* Model */,
 				39C6A1191B7CD83E00319C0D /* BottomView.h */,
 				39C6A11A1B7CD83E00319C0D /* BottomView.m */,
 				39C425A91B7A3A1000F82658 /* Header */,
@@ -1865,6 +1866,13 @@
 				39DB170B1B177F1500639223 /* AlbumView.m */,
 			);
 			name = AlbumView;
+			sourceTree = "<group>";
+		};
+		39D3099D1B821CF600CAF7F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		39D3BB0B1B271E5D002B0412 /* FollowerListView */ = {

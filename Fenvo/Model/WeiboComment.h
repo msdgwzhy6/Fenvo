@@ -26,7 +26,7 @@
 //
 @property (nonatomic, assign) NSNumber * height;
 
-+ (WeiboComment *)createByDictionary:(NSDictionary *)dic;
++ (WeiboComment *)createByDictionary:(NSDictionary *)dic Option:(BOOL)isSave;
 + (WeiboComment *)createdInCoreData;
 
 @end

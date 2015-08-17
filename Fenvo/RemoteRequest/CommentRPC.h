@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define Comment_ToMe @"https://api.weibo.com/2/comments/to_me.json"
+#define Comment_Show @"https://api.weibo.com/2/comments/show.json"
 
 typedef void(^requestCommentSuccessBlock)(NSArray *commentArr, NSNumber *since_id, NSNumber *max_id);
 typedef void(^requestCommentFailureBlock)(NSString *desc, NSError *error);
@@ -19,5 +20,14 @@ typedef void(^requestCommentFailureBlock)(NSString *desc, NSError *error);
                       success:(requestCommentSuccessBlock)success
                       failure:(requestCommentFailureBlock)failure;
 
++ (void)getCommentWithID:(NSNumber *)ID
+                 success:(requestCommentSuccessBlock)success
+                 failure:(requestCommentFailureBlock)failure;
+
++ (void)getCommentWithID:(NSNumber *)ID
+                 SinceId:(NSNumber *)since_id
+                 orMaxId:(NSNumber *)max_id
+                 success:(requestCommentSuccessBlock)success
+                 failure:(requestCommentFailureBlock)failure;
 
 @end

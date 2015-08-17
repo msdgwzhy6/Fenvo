@@ -27,12 +27,7 @@
 //
 @dynamic height;
 
-+ (WeiboComment *)createByDictionary:(NSDictionary *)dic {
-    
-//    if ([WeiboStoreManager isWeiboStoreExist:[NSNumber numberWithLongLong:[dic[@"id"] longLongValue]]]) {
-//        WeiboStore *weiboStore = [WeiboStoreManager updateWeiboStore:dic];
-//        return weiboStore.weiboMsg;
-//    }
++ (WeiboComment *)createByDictionary:(NSDictionary *)dic Option:(BOOL)isSave{
     
     UIApplication *application = [UIApplication sharedApplication];
     id delegate = application.delegate;
@@ -55,7 +50,7 @@
         comment.user = [WeiboUserInfo createdByDictionary:user];
         
         NSDictionary *status = dic[@"status"];
-        comment.weiboMsg = [WeiboMsg createByDictionary:status];
+        comment.weiboMsg = [WeiboMsg createByDictionary:status Option:YES];
 
         
         NSString *timeStr = dic[@"created_at"];
@@ -74,9 +69,7 @@
     }
     
     NSError *error;
-    if (![managedObjectContext save:&error]) {
-        NSLog(@"%@",[error description]);
-    }
+    if (isSave)[managedObjectContext save:&error];
     
     return comment;
 }
