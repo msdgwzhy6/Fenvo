@@ -192,9 +192,9 @@
            imageWidth = (width -  WBStatusCellImageViewSpacing)/2;
         }
         
-        if (thumbnail_urls.count >= 6) {
+        if (thumbnail_urls.count > 6) {
             selfHeight = WBStatusCellImageViewSpacing*2 + imageWidth*3;
-        }else if(thumbnail_urls.count <= 2){
+        }else if(thumbnail_urls.count <= 3){
             selfHeight = imageWidth;
         }else{
             selfHeight = imageWidth*2 + WBStatusCellImageViewSpacing;

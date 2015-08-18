@@ -11,7 +11,7 @@
 
 @class WeiboComment, WeiboMsg, WeiboUserInfo;
 
-@interface WeiboComment : NSManagedObject
+@interface WeiboComment : NSManagedObject<NSCoding>
 
 @property (nonatomic, retain) NSString * created_at;
 @property (nonatomic, retain) NSNumber * ids;
