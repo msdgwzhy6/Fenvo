@@ -143,6 +143,62 @@
     
 }
 
++ (void)downloadTimeLineWithCount:(NSNumber *)count success:(homeTimeLineBlock)success failure:(failureBlock)failure {
+    
+}
+
++ (void)download:(NSDictionary *)paramters
+             url:(NSString *)url
+         success:(homeTimeLineBlock)success
+         failure:(failureBlock)failure {
+    dispatch_queue_t getHomeTimeLineQueue = dispatch_queue_create("timeline.download", NULL);
+    dispatch_async(getHomeTimeLineQueue, ^{
+        NSMutableArray *weiboMsgArray = [[NSMutableArray alloc]init];
+        
+        //http请求头应该添加text/plain。接受类型内容无text/plain
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [[AFJSONResponseSerializer alloc]init];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
+        
+        [manager GET:url
+          parameters:paramters
+             success:^(AFHTTPRequestOperation *operation, id responserObject){
+                 NSError *error;
+                 NSData *jsonDatas = [responserObject
+                                      JSONDataWithOptions:NSJSONWritingPrettyPrinted
+                                      error:&error];
+                 NSString *jsonStrings = [[NSString alloc]
+                                          initWithData:jsonDatas
+                                          encoding:NSUTF8StringEncoding];
+                 
+                 NSDictionary *dict = [jsonStrings objectFromJSONString];
+                 long long since_id = [dict[@"since_id"] longLongValue];
+                 long long max_id = [dict[@"max_id"] longLongValue];
+                 long long previous_cursor = [dict[@"previous_cursor"] longLongValue];
+                 long long next_cursor = [dict[@"next_cursor"] longLongValue];
+                 
+                 jsonStrings = [self getNormalJSONString:jsonStrings];
+                 
+                 
+                 NSArray *weiboMsgDictionary = [jsonStrings objectFromJSONString];
+                 if (weiboMsgDictionary.count > 0) {
+                     for (int i = 0; i < weiboMsgDictionary.count; i ++) {
+                         NSDictionary *dict = weiboMsgDictionary[i];
+                         WeiboMsg *weiboMsg = [WeiboMsg createByDictionary:dict Option:YES];
+                         [weiboMsgArray addObject:weiboMsg];
+                     }
+                 }
+                 
+                 success(weiboMsgArray, since_id, max_id, previous_cursor, next_cursor);
+                 
+                 
+             }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+                 failure(@"Download timeline failure.",error);
+             }];
+    });
+
+}
+
 
 
 #pragma mark - 微博API返回的数据不是标准的json格式数据。我们需要返回的String类型JSON数据进行一定的处理

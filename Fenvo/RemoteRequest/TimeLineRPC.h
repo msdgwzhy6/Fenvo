@@ -26,4 +26,7 @@ typedef void(^failureBlock)(NSString *desc, NSError *error);
                            success:(homeTimeLineBlock)success
                            failure:(failureBlock)failure;
 
++ (void)downloadTimeLineWithCount:(NSNumber *)count
+                          success:(homeTimeLineBlock)success
+                          failure:(failureBlock)failure;
 @end
