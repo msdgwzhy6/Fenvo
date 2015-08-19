@@ -144,7 +144,9 @@
 }
 
 + (void)downloadTimeLineWithCount:(NSNumber *)count success:(homeTimeLineBlock)success failure:(failureBlock)failure {
-    
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    NSDictionary *dict;
+        dict = @{@"access_token":appDelegate.access_token, @"count":count};
 }
 
 + (void)download:(NSDictionary *)paramters
