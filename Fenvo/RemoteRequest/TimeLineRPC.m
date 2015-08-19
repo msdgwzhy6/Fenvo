@@ -146,12 +146,25 @@
 + (void)downloadTimeLineWithCount:(NSNumber *)count success:(homeTimeLineBlock)success failure:(failureBlock)failure {
     AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
     NSDictionary *dict;
-        dict = @{@"access_token":appDelegate.access_token, @"count":count};
+    NSMutableArray *list = [[NSMutableArray alloc]init];
+    __block NSNumber *max_id = 0;
+    for (NSInteger i = 1; i < (NSInteger)count/100; i ++) {
+        dict = @{@"access_token":appDelegate.access_token, @"count":count, @"max_id":max_id};
+        [TimeLineRPC download:dict url:Home_TimeLine success:^(NSArray *array) {
+            [list addObjectsFromArray:array];
+            WeiboMsg *weiboMsg = [list lastObject];
+            max_id = weiboMsg.ids;
+        } failure:^(NSString *desc, NSError *error) {
+            
+        }];
+    }
+    
+    
 }
 
 + (void)download:(NSDictionary *)paramters
              url:(NSString *)url
-         success:(homeTimeLineBlock)success
+         success:(void(^)(NSArray *array))success
          failure:(failureBlock)failure {
     dispatch_queue_t getHomeTimeLineQueue = dispatch_queue_create("timeline.download", NULL);
     dispatch_async(getHomeTimeLineQueue, ^{
@@ -173,12 +186,6 @@
                                           initWithData:jsonDatas
                                           encoding:NSUTF8StringEncoding];
                  
-                 NSDictionary *dict = [jsonStrings objectFromJSONString];
-                 long long since_id = [dict[@"since_id"] longLongValue];
-                 long long max_id = [dict[@"max_id"] longLongValue];
-                 long long previous_cursor = [dict[@"previous_cursor"] longLongValue];
-                 long long next_cursor = [dict[@"next_cursor"] longLongValue];
-                 
                  jsonStrings = [self getNormalJSONString:jsonStrings];
                  
                  
@@ -191,7 +198,7 @@
                      }
                  }
                  
-                 success(weiboMsgArray, since_id, max_id, previous_cursor, next_cursor);
+                 success(weiboMsgArray);
                  
                  
              }failure:^(AFHTTPRequestOperation *operation, NSError *error){

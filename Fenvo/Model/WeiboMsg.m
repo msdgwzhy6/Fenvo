@@ -157,4 +157,13 @@
     
     return [url copy];
 }
+
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        
+    }
+    return self;
+}
 @end

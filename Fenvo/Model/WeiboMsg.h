@@ -11,7 +11,7 @@
 
 @class WeiboGeoInfo, WeiboMsg, WeiboUserInfo, WeiboVisibleInfo;
 
-@interface WeiboMsg : NSManagedObject
+@interface WeiboMsg : NSManagedObject<NSCoding>
 
 @property (nonatomic, retain) NSNumber * attitudes_count;
 @property (nonatomic, retain) NSString * bmiddle_pic;
