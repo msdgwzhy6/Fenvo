@@ -111,6 +111,10 @@
 		399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 399AE4F01B30166300D4E81F /* FVNavigationController.m */; };
 		39BA30F31B6A6B3700DEFDB0 /* QiHei.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */; };
 		39BE33F21B7397B400A14651 /* CommentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BE33F11B7397B400A14651 /* CommentTableViewController.m */; };
+		39C060121B861D8B00BB2AA9 /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C060111B861D8B00BB2AA9 /* UserManager.m */; };
+		39C060151B861E2B00BB2AA9 /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C060141B861E2B00BB2AA9 /* CoreDataManager.m */; };
+		39C060181B861F2300BB2AA9 /* DiskCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C060171B861F2300BB2AA9 /* DiskCacheManager.m */; };
+		39C0601B1B8621AC00BB2AA9 /* NSString+MD5String.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C0601A1B8621AC00BB2AA9 /* NSString+MD5String.m */; };
 		39C425A71B7A397F00F82658 /* WeiboDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C425A61B7A397F00F82658 /* WeiboDetailViewController.m */; };
 		39C425AC1B7A3A5600F82658 /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C425AB1B7A3A5600F82658 /* DetailView.m */; };
 		39C4A6E31B70FC0C00A5940E /* ProfileNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C4A6E21B70FC0C00A5940E /* ProfileNavigationViewController.m */; };
@@ -562,6 +566,14 @@
 		39BA30F21B6A6B3700DEFDB0 /* QiHei.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = QiHei.ttf; path = Resource/QiHei.ttf; sourceTree = "<group>"; };
 		39BE33F01B7397B400A14651 /* CommentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentTableViewController.h; path = ViewController/CommentTableViewController.h; sourceTree = "<group>"; };
 		39BE33F11B7397B400A14651 /* CommentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentTableViewController.m; path = ViewController/CommentTableViewController.m; sourceTree = "<group>"; };
+		39C060101B861D8B00BB2AA9 /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserManager.h; path = LocalManager/UserManager.h; sourceTree = "<group>"; };
+		39C060111B861D8B00BB2AA9 /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserManager.m; path = LocalManager/UserManager.m; sourceTree = "<group>"; };
+		39C060131B861E2B00BB2AA9 /* CoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoreDataManager.h; path = LocalManager/CoreDataManager.h; sourceTree = "<group>"; };
+		39C060141B861E2B00BB2AA9 /* CoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoreDataManager.m; path = LocalManager/CoreDataManager.m; sourceTree = "<group>"; };
+		39C060161B861F2300BB2AA9 /* DiskCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiskCacheManager.h; path = LocalManager/DiskCacheManager.h; sourceTree = "<group>"; };
+		39C060171B861F2300BB2AA9 /* DiskCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DiskCacheManager.m; path = LocalManager/DiskCacheManager.m; sourceTree = "<group>"; };
+		39C060191B8621AC00BB2AA9 /* NSString+MD5String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5String.h"; path = "LocalManager/NSString+MD5String.h"; sourceTree = "<group>"; };
+		39C0601A1B8621AC00BB2AA9 /* NSString+MD5String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5String.m"; path = "LocalManager/NSString+MD5String.m"; sourceTree = "<group>"; };
 		39C425A51B7A397F00F82658 /* WeiboDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WeiboDetailViewController.h; path = WeiboDetailViewController/WeiboDetailViewController.h; sourceTree = "<group>"; };
 		39C425A61B7A397F00F82658 /* WeiboDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WeiboDetailViewController.m; path = WeiboDetailViewController/WeiboDetailViewController.m; sourceTree = "<group>"; };
 		39C425AA1B7A3A5600F82658 /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailView.h; path = WeiboDetailViewController/DetailView.h; sourceTree = "<group>"; };
@@ -1287,6 +1299,14 @@
 				39CAD8BB1B72565100B9BB58 /* WeiboCommentManager.m */,
 				39C4B2611B77596C003B3EDF /* WeiboAtMeManaer.h */,
 				39C4B2621B77596C003B3EDF /* WeiboAtMeManaer.m */,
+				39C060101B861D8B00BB2AA9 /* UserManager.h */,
+				39C060111B861D8B00BB2AA9 /* UserManager.m */,
+				39C060131B861E2B00BB2AA9 /* CoreDataManager.h */,
+				39C060141B861E2B00BB2AA9 /* CoreDataManager.m */,
+				39C060161B861F2300BB2AA9 /* DiskCacheManager.h */,
+				39C060171B861F2300BB2AA9 /* DiskCacheManager.m */,
+				39C060191B8621AC00BB2AA9 /* NSString+MD5String.h */,
+				39C0601A1B8621AC00BB2AA9 /* NSString+MD5String.m */,
 			);
 			name = LocalManager;
 			sourceTree = "<group>";
@@ -2506,6 +2526,7 @@
 				39CE3C911B219191004E4D92 /* FollowingListTableViewController.m in Sources */,
 				39CAD73B1B72552000B9BB58 /* WeiboStoreManager.m in Sources */,
 				39CED5D71B0B45DC005DBA93 /* ProfileViewController.m in Sources */,
+				39C0601B1B8621AC00BB2AA9 /* NSString+MD5String.m in Sources */,
 				39CC40251B398FB000D94A09 /* WBImagePickerGroupCell.m in Sources */,
 				39CAD9051B72567A00B9BB58 /* CHANGELOG.md in Sources */,
 				39D07B121B0893F800385D3E /* WebViewController.m in Sources */,
@@ -2534,6 +2555,7 @@
 				39CAD8FF1B72567A00B9BB58 /* FeThreeDotGlow.m in Sources */,
 				39E02BEB1B5A836B0064A8A3 /* NSString+FontAwesome.m in Sources */,
 				39C4B2631B77596C003B3EDF /* WeiboAtMeManaer.m in Sources */,
+				39C060121B861D8B00BB2AA9 /* UserManager.m in Sources */,
 				39C4B2661B777098003B3EDF /* AtMeRPC.m in Sources */,
 				39CC40EE1B7723C100038B10 /* AtMeTableViewCell.m in Sources */,
 				39CAD9011B72567A00B9BB58 /* FeVietNamLoader.m in Sources */,
@@ -2546,11 +2568,13 @@
 				39E5B4281B5AB21800C2A734 /* MainViewController.m in Sources */,
 				39CAD7231B723E5800B9BB58 /* BaseHeaderView.m in Sources */,
 				399AE4F31B30166300D4E81F /* FVNavigationController.m in Sources */,
+				39C060181B861F2300BB2AA9 /* DiskCacheManager.m in Sources */,
 				39D2DCB51B24083C00E51AB6 /* FollowingListViewCell.m in Sources */,
 				39D42F571B7B854400CF8933 /* BaseRetweetView.m in Sources */,
 				39D2274E1B0DDB0100038DB3 /* WeiboGetBlurImage.m in Sources */,
 				39CC40EB1B77214800038B10 /* WeiboStore.m in Sources */,
 				39CFCBD81B0E0CFC0096D263 /* WeiboTableView.m in Sources */,
+				39C060151B861E2B00BB2AA9 /* CoreDataManager.m in Sources */,
 				39DECDFB1B5B5AED0044FD39 /* WeiboVisibleInfo.m in Sources */,
 				39C425A71B7A397F00F82658 /* WeiboDetailViewController.m in Sources */,
 				39CC40221B398FB000D94A09 /* WBImagePickerAssetCell.m in Sources */,

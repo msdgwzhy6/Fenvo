@@ -11,6 +11,30 @@
 
 @class WeiboGeoInfo, WeiboMsg, WeiboUserInfo, WeiboVisibleInfo;
 
+#define SimpleDataKey_AttitudesCount @"attitudes_count"
+#define SimpleDataKey_BmiddlePic @"bmiddle_pic"
+#define SimpleDataKey_CommentCount @"comments_count"
+#define SimpleDataKey_CreatedAt @"created_at"
+#define SimpleDataKey_Favorited @"favorited"
+#define SimpleDataKey_ID @"id"
+#define SimpleDataKey_Mid @"mid"
+#define SimpleDataKey_IDStr @"idstr"
+#define SimpleDataKey_RepostsCount @"reposts_count"
+#define SimpleDataKey_Source @"source"
+#define SimpleDataKey_ThumbnailPic @"thumbnail_pic"
+#define SimpleDataKey_Truncated @"truncated"
+#define SimpleDataKey_Status @"status"
+#define SimpleDataKey_PicUrls @"pic_urls"
+#define SimpleDataKey_PicIDs @"pic_ids"
+#define SimpleDataKey_OriginalPicUrls @"original_pic_urls"
+#define SimpleDataKey_BmiddlePicUrls @"bmiddle_pic_urls"
+#define SimpleDataKey_OriginalPic @"original_pic"
+#define SimpleDataKey_Height @"height"
+#define CustomDataKey_Geo @"geo"
+#define CustomDataKey_RetweetedStatus @"retweeted_status"
+#define CustomDataKey_User @"user"
+#define CustomDataKey_Visible @"visible"
+
 @interface WeiboMsg : NSManagedObject<NSCoding>
 
 @property (nonatomic, retain) NSNumber * attitudes_count;

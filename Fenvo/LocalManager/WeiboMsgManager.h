@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class WeiboMsg;
 
 @interface WeiboMsgManager : NSObject<NSFetchedResultsControllerDelegate>
 + (void)saveInCoreData;
++ (WeiboMsg *)queryObject:(NSNumber *)ID;
 @end

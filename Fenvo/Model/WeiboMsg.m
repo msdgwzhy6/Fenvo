@@ -8,12 +8,11 @@
 
 #import "WeiboMsg.h"
 #import "WeiboGeoInfo.h"
-#import "WeiboMsg.h"
 #import "WeiboUserInfo.h"
 #import "WeiboVisibleInfo.h"
 #import "WeiboStoreManager.h"
 #import "StringFormatTool.h"
-
+#import "WeiboMsgManager.h"
 
 @implementation WeiboMsg
 
@@ -162,8 +161,33 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
-        
+        self.attitudes_count = [aDecoder decodeObjectForKey:SimpleDataKey_AttitudesCount];
+        self.bmiddle_pic = [aDecoder decodeObjectForKey:SimpleDataKey_BmiddlePic];
+        self.comments_count = [aDecoder decodeObjectForKey:SimpleDataKey_CommentCount];
+        self.created_at = [aDecoder decodeObjectForKey:SimpleDataKey_CreatedAt];
+        self.ids = [aDecoder decodeObjectForKey:SimpleDataKey_ID];
+        self.idstr = [aDecoder decodeObjectForKey:SimpleDataKey_IDStr];
+        self.mid = [aDecoder decodeObjectForKey:SimpleDataKey_Mid];
+        self.reposts_count = [aDecoder decodeObjectForKey:SimpleDataKey_RepostsCount];
+        self.source = [aDecoder decodeObjectForKey:SimpleDataKey_Source];
+        self.truncated = [aDecoder decodeObjectForKey:SimpleDataKey_Truncated];
+        self.wbDetail = [aDecoder decodeObjectForKey:SimpleDataKey_Status];
+        self.original_pic = [aDecoder decodeObjectForKey:SimpleDataKey_OriginalPic];
+        self.original_pic_urls = [aDecoder decodeObjectForKey:SimpleDataKey_OriginalPicUrls];
+        self.bmiddle_pic = [aDecoder decodeObjectForKey:SimpleDataKey_BmiddlePic];
+        self.bmiddle_pic_urls = [aDecoder decodeObjectForKey:SimpleDataKey_BmiddlePicUrls];
+        self.thumbnail_pic = [aDecoder decodeObjectForKey:SimpleDataKey_ThumbnailPic];
+        self.pic_urls = [aDecoder decodeObjectForKey:SimpleDataKey_PicUrls];
+        self.geo = [aDecoder decodeObjectForKey:CustomDataKey_Geo];
+        NSNumber *retweeted_status_ID = [aDecoder decodeObjectForKey:CustomDataKey_RetweetedStatus];
+        self.retweeted_status = [WeiboMsgManager queryObject:retweeted_status_ID];
+        NSNumber *userID = [aDecoder decodeObjectForKey:CustomDataKey_User];
+        self.visible = [aDecoder decodeObjectForKey:CustomDataKey_Visible];
     }
     return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    
 }
 @end

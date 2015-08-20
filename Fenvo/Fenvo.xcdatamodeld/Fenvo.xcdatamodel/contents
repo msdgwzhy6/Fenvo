@@ -124,7 +124,7 @@
         <element name="WeiboAtMeStore" positionX="-45" positionY="270" width="128" height="90"/>
         <element name="WeiboComment" positionX="72" positionY="198" width="128" height="195"/>
         <element name="WeiboGeoInfo" positionX="115" positionY="405" width="128" height="30"/>
-        <element name="WeiboMsg" positionX="-207" positionY="117" width="128" height="388"/>
+        <element name="WeiboMsg" positionX="-207" positionY="117" width="128" height="390"/>
         <element name="WeiboPrivacySetting" positionX="115" positionY="564" width="128" height="30"/>
         <element name="WeiboRemind" positionX="117" positionY="357" width="128" height="30"/>
         <element name="WeiboStore" positionX="-45" positionY="270" width="128" height="75"/>

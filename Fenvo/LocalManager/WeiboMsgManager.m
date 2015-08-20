@@ -139,4 +139,23 @@
     }
 }
 
++ (WeiboMsg *)queryObject:(NSNumber *)ID {
+
+    NSManagedObjectContext *context = [WeiboMsgManager context];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([WeiboMsg class])];
+    request.predicate = [NSPredicate predicateWithFormat:@"ids.longLongValue = %lld",ID.longLongValue];
+    
+    NSArray *result = [context executeFetchRequest:request error:nil];
+    
+    if (result.count > 0)return result[0];
+    else return nil;
+}
+
++ (NSManagedObjectContext *)context {
+    UIApplication *application = [UIApplication sharedApplication];
+    id delegate = application.delegate;
+    NSManagedObjectContext *context = [delegate managedObjectContext];
+    return context;
+}
 @end
