@@ -9,5 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @interface DiskCacheManager : NSObject
++ (void)setDiskCache:(NSString *)key
+              object:(id)object;
++ (void)getDiskCache:(NSString *)key
+             success:(void(^)(id responseObject))success
+             failure:(void(^)(NSString *decription))failure;
 
++ (void)compressObject:(NSArray *)arrTimeLine
+           autoSaveKey:(NSString *)key;
++ (void)extractObject:(NSString *)key
+              success:(void(^)(NSArray *arrTimeLine, NSNumber *since_id, NSNumber *max_id))success
+              failure:(void(^)(NSString *description))failure;
 @end

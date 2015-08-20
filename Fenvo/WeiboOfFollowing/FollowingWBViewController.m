@@ -27,7 +27,8 @@
 #import "NSString+FontAwesome.h"
 #import "UIImage+FontAwesome.h"
 #import "NewWeiboVC.h"
-
+#import "CoreDataManager.h"
+#import "DiskCacheManager.h"
 
 
 #define TEXT_COLOR	 [UIColor colorWithRed:87.0/255.0 green:108.0/255.0 blue:137.0/255.0 alpha:1.0]
@@ -134,6 +135,7 @@
 
 - (void)getWeiboMsg:(NSNotification *)notification {
     
+    
     [WeiboStoreManager queryAllWeiboStoreSucces:^(NSArray *timeLineArr, long long max_id) {
         _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];
         WeiboMsg *weibo = [_weiboMsgArray lastObject];
@@ -142,6 +144,7 @@
     } failure:^(NSString *desc) {
          [self getWeiboMsgFromRemote];
     }];
+    
     
     //[WeiboStoreManager saveInCoreData];
     

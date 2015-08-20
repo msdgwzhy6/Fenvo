@@ -9,6 +9,7 @@
 #import "DiskCacheManager.h"
 #import "WeiboMsg.h"
 #import "NSString+MD5String.h"
+#import "CoreDataManager.h"
 
 @implementation DiskCacheManager
 
@@ -51,13 +52,28 @@
 }
 
 + (void)extractObject:(NSString *)key
-              success:(void(^)(NSArray *arrTimeLine))success
+              success:(void(^)(NSArray *arrTimeLine, NSNumber *since_id, NSNumber *max_id))success
               failure:(void(^)(NSString *description))failure {
     if (!key || [key isEqualToString:@""]) {
         failure(@"DiskCacheManager-ExtractObject-Failure: !key || [key isEqualToString:@""]");
     }
     [DiskCacheManager getDiskCache:[NSString MD5:key] success:^(id responseObject) {
         NSArray *arrID = [NSKeyedUnarchiver unarchiveObjectWithData:responseObject];
+        if (!arrID || arrID.count == 0) {
+            failure(@"DiskCacheManager-ExtractObject-Failure: !arrID || arrID.count == 0");
+        }
+        NSMutableArray *arrTimeLine = [[NSMutableArray alloc]init];
+        for (NSNumber *ID in arrID) {
+            WeiboMsg *weibo = [CoreDataManager queryObjectInClass:NSStringFromClass([WeiboMsg class]) ID:ID];
+            [arrTimeLine addObject:weibo];
+        }
+        if (arrTimeLine.count > 0) {
+            WeiboMsg *firstObject = [arrTimeLine firstObject];
+            WeiboMsg *lastObject = [arrTimeLine lastObject];
+            success(arrTimeLine,firstObject.ids,lastObject.ids);
+        }else {
+            failure(@"DiskCacheManager-ExtractObject-Failure: arrTimeLine.count == 0");
+        }
     } failure:^(NSString *decription) {
         failure(decription);
     }];
