@@ -191,7 +191,6 @@
         
     NSNumber *since_id = _since_id;
     
-    
     [TimeLineRPC getHomeTimeLineWithSinceId:since_id
                                     orMaxId:nil
                                     success:^(NSArray *timeLineArr, NSNumber *since_id, NSNumber *max_id, NSNumber *previous_cursor, NSNumber *next_cursor) {
@@ -219,10 +218,29 @@
     
 }
 
+- (void)clearAndRefreshData {
+    [KVNProgress show];
+    [CoreDataManager removeAllObjectInClass:NSStringFromClass([WeiboMsg class])];
+    [TimeLineRPC getHomeTimeLineWithSinceId:nil orMaxId:nil success:^(NSArray *timeLineArr, NSNumber *since_id, NSNumber *max_id, NSNumber *previous_cursor, NSNumber *next_cursor) {
+        _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        [KVNProgress dismiss];
+        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [DiskCacheManager compressObject:[_weiboMsgArray copy] autoSaveKey:@"HomeTimeLine"];
+        });
+    } failure:^(NSString *desc, NSError *error) {
+        [KVNProgress dismiss];
+    }];
+}
+
 
 /*
 - (void)getMoreWeibo{
-    
+ 
     if (_isFindInCoredata == false) {
         [self getMoreWeiboFromRemote];
         return;

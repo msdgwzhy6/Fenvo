@@ -21,6 +21,25 @@
     else return nil;
 }
 
++ (void)removeAllObjectInClass:(NSString *)className {
+    NSManagedObjectContext *context = [CoreDataManager context];
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:className];
+    
+    NSArray *arr = [context executeFetchRequest:request error:nil];
+    
+    for (id object in arr) {
+        [context deleteObject:object];
+    }
+    
+    //save
+    if ([context save:nil]) {
+        NSLog(@"WeiboMsgManager--delete all object success");
+    }else {
+        NSLog(@"WeiboMsgManager--delete all object fail");
+    }
+}
+
 + (NSManagedObjectContext *)context {
     UIApplication *application = [UIApplication sharedApplication];
     id delegate = application.delegate;

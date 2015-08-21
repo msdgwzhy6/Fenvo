@@ -92,11 +92,11 @@
         AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         NSDictionary *dict;
         if (since_id == nil && max_id == nil) {
-            dict = @{@"access_token":appDelegate.access_token};
+            dict = @{@"access_token":appDelegate.access_token,@"count":@(50)};
         }else if(since_id != nil && max_id == nil){
-            dict = @{@"access_token":appDelegate.access_token, @"since_id":since_id};
+            dict = @{@"access_token":appDelegate.access_token,@"count":@(50), @"since_id":since_id};
         }else if(since_id == nil && max_id != nil){
-            dict = @{@"access_token":appDelegate.access_token, @"max_id":max_id};
+            dict = @{@"access_token":appDelegate.access_token, @"count":@(50), @"max_id":max_id};
         }
         
         

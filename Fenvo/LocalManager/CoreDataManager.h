@@ -10,4 +10,5 @@
 
 @interface CoreDataManager : NSObject
 + (id)queryObjectInClass:(NSString *)className ID:(NSNumber *)ID;
++ (void)removeAllObjectInClass:(NSString *)className;
 @end
