@@ -51,9 +51,9 @@
     }
 }
 
-+ (void)extractObject:(NSString *)key
-              success:(void(^)(NSArray *arrTimeLine, NSNumber *since_id, NSNumber *max_id))success
-              failure:(void(^)(NSString *description))failure {
++ (void)extractObjectWithKey:(NSString *)key
+                     success:(void(^)(NSArray *arrTimeLine, NSNumber *since_id, NSNumber *max_id))success
+                     failure:(void(^)(NSString *description))failure {
     if (!key || [key isEqualToString:@""]) {
         failure(@"DiskCacheManager-ExtractObject-Failure: !key || [key isEqualToString:@""]");
     }

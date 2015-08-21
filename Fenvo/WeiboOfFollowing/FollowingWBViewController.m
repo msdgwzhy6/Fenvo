@@ -52,12 +52,12 @@
     
     //刷新微博
     //下次返回比since_id晚的微博
-    long long _since_id;
+    NSNumber *_since_id;
     //根据max_id返回比max_id早的微博
-    long long _max_id;
+    NSNumber *_max_id;
     //next_cursor、previous_cursor指定返回的之后、之前的游标值。暂未支持
-    long long _next_cursor;
-    long long _previous_cursor;
+    NSNumber *_next_cursor;
+    NSNumber *_previous_cursor;
     
     
     //是从coredata中找数据还是从服务器上
@@ -112,7 +112,7 @@
 }
 - (void)addRefreshViewController{
     [self.tableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(refreshWeiboMsg)];
-    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getMoreWeibo)];
+    [self.tableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getMoreWeiboFromRemote)];
     
     //
     self.tableView.header.font = [UIFont systemFontOfSize:15];
@@ -134,18 +134,13 @@
 
 
 - (void)getWeiboMsg:(NSNotification *)notification {
-    
-    
-    [WeiboStoreManager queryAllWeiboStoreSucces:^(NSArray *timeLineArr, long long max_id) {
-        _weiboMsgArray = [[NSMutableArray alloc]initWithArray:timeLineArr];
-        WeiboMsg *weibo = [_weiboMsgArray lastObject];
-        _max_id = weibo.ids.integerValue;
-        
-    } failure:^(NSString *desc) {
-         [self getWeiboMsgFromRemote];
+    [DiskCacheManager extractObjectWithKey:@"HomeTimeLine" success:^(NSArray *arrTimeLine, NSNumber *since_id, NSNumber *max_id) {
+        _weiboMsgArray = [[NSMutableArray alloc]initWithArray:arrTimeLine];
+        _max_id = max_id;
+        _since_id = since_id;
+    } failure:^(NSString *description) {
+        [self getWeiboMsgFromRemote];
     }];
-    
-    
     //[WeiboStoreManager saveInCoreData];
     
 }
@@ -169,16 +164,12 @@
         
         [TimeLineRPC getHomeTimeLineWithSinceId:nil
                                         orMaxId:nil
-                                        success:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
+                                        success:^(NSArray *timeLineArr, NSNumber *since_id, NSNumber *max_id, NSNumber *previous_cursor, NSNumber *next_cursor) {
                                             [_weiboMsgArray addObjectsFromArray:timeLineArr];
                                             _since_id = since_id;
                                             _max_id = max_id;
                                             _previous_cursor = previous_cursor;
                                             _next_cursor = next_cursor;
-                                            
-                                            for (WeiboMsg *weiboMsg in timeLineArr) {
-                                                [WeiboStore createByWeiboMsg:weiboMsg];
-                                            }
                                             
                                             dispatch_async(dispatch_get_main_queue(), ^{
                                                 [self.tableView reloadData];
@@ -186,40 +177,50 @@
                                                 [_spinnerView removeFromSuperview];
                                             });
                                             
+                                            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                                                [DiskCacheManager compressObject:[_weiboMsgArray copy] autoSaveKey:@"HomeTimeLine"];
+                                            });
+                                            
                                         } failure:^(NSString *desc, NSError *error) {
                                             NSLog(@"%@", desc);
                                         }];
-        
     });
 
 }
 - (void)refreshWeiboMsg{
         
-        NSNumber *since_id = [NSNumber numberWithLongLong:_since_id];
-        
-        [TimeLineRPC getHomeTimeLineWithSinceId:since_id
-                                        orMaxId:nil
-                                        success:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
-                                            
-                                            if (timeLineArr.count > 0) {
-                                                for (long i = (timeLineArr.count - 1); i >= 0; i --) {
-                                                    WeiboMsg *weiboMsg = (WeiboMsg *)timeLineArr[i];
-                                                    [_weiboMsgArray insertObject:weiboMsg atIndex:0];
-                                                }
-                                            }else {
-                                                [KVNProgress showSuccessWithStatus:@"No More Weibo"];
+    NSNumber *since_id = _since_id;
+    
+    
+    [TimeLineRPC getHomeTimeLineWithSinceId:since_id
+                                    orMaxId:nil
+                                    success:^(NSArray *timeLineArr, NSNumber *since_id, NSNumber *max_id, NSNumber *previous_cursor, NSNumber *next_cursor) {
+                                        
+                                        if (timeLineArr.count > 0) {
+                                            for (long i = (timeLineArr.count - 1); i >= 0; i --) {
+                                                WeiboMsg *weiboMsg = (WeiboMsg *)timeLineArr[i];
+                                                [_weiboMsgArray insertObject:weiboMsg atIndex:0];
                                             }
-                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                [self.tableView reloadData];
-                                                [self.tableView.header endRefreshing];
-                                            });
-                                            
-                                        } failure:^(NSString *desc, NSError *error) {
+                                        }else {
+                                            [KVNProgress showSuccessWithStatus:@"No More Weibo"];
+                                        }
+                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                            [self.tableView reloadData];
                                             [self.tableView.header endRefreshing];
-                                            NSLog(@"public weibo get failure");
-                                        }];
+                                        });
+                                        
+                                        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                                            [DiskCacheManager compressObject:[_weiboMsgArray copy] autoSaveKey:@"HomeTimeLine"];
+                                        });
+                                    } failure:^(NSString *desc, NSError *error) {
+                                        [self.tableView.header endRefreshing];
+                                        NSLog(@"public weibo get failure");
+                                    }];
     
 }
+
+
+/*
 - (void)getMoreWeibo{
     
     if (_isFindInCoredata == false) {
@@ -227,7 +228,7 @@
         return;
     };
 
-    [WeiboStoreManager queryTimeLineWithMaxId:[NSNumber numberWithLongLong:_max_id]
+    [WeiboStoreManager queryTimeLineWithMaxId:_max_id
                                       success:^(NSArray *timeLineArr, long long max_id) {
                                           
                                           if (timeLineArr.count > 0) {
@@ -242,6 +243,7 @@
     
 
 }
+*/
 
 - (void)getMoreWeiboFromRemote {
     
@@ -249,16 +251,17 @@
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
-        NSNumber *max_id = [NSNumber numberWithLongLong:_max_id];
-        
+        NSNumber *max_id = _max_id;
         [TimeLineRPC getHomeTimeLineWithSinceId:nil
                                         orMaxId:max_id
-                                        success:^(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor) {
+                                        success:^(NSArray *timeLineArr, NSNumber *since_id, NSNumber *max_id, NSNumber *previous_cursor, NSNumber *next_cursor) {
                                             
                                             [self reloadData:timeLineArr];
                                             
                                             _max_id = max_id;
-                                            
+                                            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                                                [DiskCacheManager compressObject:[_weiboMsgArray copy] autoSaveKey:@"HomeTimeLine"];
+                                            });
                                         } failure:^(NSString *desc, NSError *error) {
                                             [self.tableView.footer endRefreshing];
                                             NSLog(@"public weibo get failure");
@@ -276,7 +279,6 @@
         }
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"%lld",_max_id);
         [self.tableView reloadData];
         [self.tableView.footer endRefreshing];
     });
@@ -285,7 +287,7 @@
 
 - (void)getMaxId:(WeiboMsg *)weiboMsg {
     
-    _max_id = weiboMsg.ids.longLongValue;
+    _max_id = weiboMsg.ids;
 }
 
 

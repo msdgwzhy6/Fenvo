@@ -46,10 +46,10 @@
                                           encoding:NSUTF8StringEncoding];
                  
                  NSDictionary *dict = [jsonStrings objectFromJSONString];
-                 long long since_id = [dict[@"since_id"] longLongValue];
-                 long long max_id = [dict[@"max_id"] longLongValue];
-                 long long previous_cursor = [dict[@"previous_cursor"] longLongValue];
-                 long long next_cursor = [dict[@"next_cursor"] longLongValue];
+                 NSNumber* since_id = @([dict[@"since_id"] longLongValue]);
+                 NSNumber* max_id = @([dict[@"max_id"] longLongValue]);
+                 NSNumber*  previous_cursor = @([dict[@"previous_cursor"] longLongValue]);
+                 NSNumber* next_cursor = @([dict[@"next_cursor"] longLongValue]);
                  
                  jsonStrings = [TimeLineRPC getNormalJSONString:jsonStrings];
                  
@@ -113,10 +113,10 @@
                                           encoding:NSUTF8StringEncoding];
                  
                  NSDictionary *dict = [jsonStrings objectFromJSONString];
-                 long long since_id = [dict[@"since_id"] longLongValue];
-                 long long max_id = [dict[@"max_id"] longLongValue];
-                 long long previous_cursor = [dict[@"previous_cursor"] longLongValue];
-                 long long next_cursor = [dict[@"next_cursor"] longLongValue];
+                 NSNumber* since_id = @([dict[@"since_id"] longLongValue]);
+                 NSNumber* max_id = @([dict[@"max_id"] longLongValue]);
+                 NSNumber*  previous_cursor = @([dict[@"previous_cursor"] longLongValue]);
+                 NSNumber* next_cursor = @([dict[@"next_cursor"] longLongValue]);
                  
                  jsonStrings = [self getNormalJSONString:jsonStrings];
                  

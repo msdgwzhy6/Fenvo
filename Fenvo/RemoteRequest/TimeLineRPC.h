@@ -12,8 +12,8 @@
 #define Public_TimeLine @"https://api.weibo.com/2/statuses/public_timeline.json"
 #define Home_TimeLine   @"https://api.weibo.com/2/statuses/home_timeline.json"
 
-typedef void(^publicTimeLineBlock)(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor);
-typedef void(^homeTimeLineBlock)(NSArray *timeLineArr, long long since_id, long long max_id, long long previous_cursor, long long next_cursor);
+typedef void(^publicTimeLineBlock)(NSArray *timeLineArr, NSNumber *since_id, NSNumber *max_id, NSNumber *previous_cursor, NSNumber *next_cursor);
+typedef void(^homeTimeLineBlock)(NSArray *timeLineArr, NSNumber *since_id, NSNumber *max_id, NSNumber *previous_cursor, NSNumber *next_cursor);
 typedef void(^failureBlock)(NSString *desc, NSError *error);
 
 @interface TimeLineRPC : NSObject

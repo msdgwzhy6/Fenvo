@@ -17,7 +17,7 @@
 
 + (void)compressObject:(NSArray *)arrTimeLine
            autoSaveKey:(NSString *)key;
-+ (void)extractObject:(NSString *)key
-              success:(void(^)(NSArray *arrTimeLine, NSNumber *since_id, NSNumber *max_id))success
-              failure:(void(^)(NSString *description))failure;
++ (void)extractObjectWithKey:(NSString *)key
+                     success:(void(^)(NSArray *arrTimeLine, NSNumber *since_id, NSNumber *max_id))success
+                     failure:(void(^)(NSString *description))failure;
 @end
