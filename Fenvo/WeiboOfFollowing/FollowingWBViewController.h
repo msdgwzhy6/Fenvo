@@ -14,4 +14,5 @@
 @interface FollowingWBViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,WeiboLabelDelegate>
 @property(strong, nonatomic)NSString *access_token;
 @property(strong, nonatomic)ANBlurredTableView *tableView;
+@property(strong, nonatomic)NSMutableArray *weiboMsgArray;
 @end

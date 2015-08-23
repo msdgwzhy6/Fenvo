@@ -35,7 +35,7 @@
 
 
 @interface FollowingWBViewController ()<WeiboLabelDelegate,FeSpinnerTenDotDelegate,UIScrollViewDelegate>{
-    NSMutableArray *_weiboMsgArray;
+
     NSMutableArray *_weiboCells;
     FeSpinnerTenDot *_spinnerHud;
     UIView *_spinnerView;
@@ -65,6 +65,10 @@
 }
 @end
 @implementation FollowingWBViewController
+
+@synthesize weiboMsgArray = _weiboMsgArray;
+@synthesize access_token = _access_token;
+
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
     self.navigationController.navigationBar.tintColor = RGBACOLOR(250, 143, 5, 1);
