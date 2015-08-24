@@ -286,7 +286,7 @@
                                             });
                                         } failure:^(NSString *desc, NSError *error) {
                                             [self.tableView.footer endRefreshing];
-                                            NSLog(@"public weibo get failure");
+                                            NSLog(@"%@",desc);
                                         }];
         
     });
