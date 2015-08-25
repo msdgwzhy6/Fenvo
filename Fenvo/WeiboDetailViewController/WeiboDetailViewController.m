@@ -53,15 +53,19 @@
     [self.tableView setEndTintAlpha:0.6f];
     [self.tableView setBackgroundImage:[UIImage imageNamed:@"beach.jpg"]];
     
-    _buttonView = [[BottomView alloc]init];
-    _buttonView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - [StyleOfRemindSubviews bottomHeight], IPHONE_SCREEN_WIDTH, [StyleOfRemindSubviews bottomHeight]);
-
-    
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
     [_buttonView removeFromSuperview];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    UIWindow *window = [UIApplication sharedApplication].windows[0];
+    [window addSubview:_buttonView];
 }
 
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg {
@@ -81,8 +85,10 @@
     self.tableView.tableHeaderView.frame = frame;
     
     UIWindow *window = [UIApplication sharedApplication].windows[0];
-    [window addSubview:_buttonView];
+    _buttonView = [[BottomView alloc]init];
+    _buttonView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - [StyleOfRemindSubviews bottomHeight], IPHONE_SCREEN_WIDTH, [StyleOfRemindSubviews bottomHeight]);
     _buttonView.weiboMsg = weiboMsg;
+    [window addSubview:_buttonView];
     
 }
 

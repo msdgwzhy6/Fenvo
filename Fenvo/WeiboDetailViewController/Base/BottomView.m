@@ -15,8 +15,8 @@
 
 @implementation BottomView
 
-- (instancetype)init {
-    
+- (instancetype)init
+{    
     self = [super init];
     if (self) {
         [self initSubviews];
@@ -51,7 +51,8 @@
     
 }
 
-- (void)setFrame:(CGRect)frame {
+- (void)setFrame:(CGRect)frame
+{
     [super setFrame:frame];
     
     CGFloat width = self.frame.size.width;
@@ -69,7 +70,8 @@
     _like.frame = praiseRect;
 }
 
-- (void)setWeiboMsg:(WeiboMsg *)weiboMsg {
+- (void)setWeiboMsg:(WeiboMsg *)weiboMsg
+{
     _weiboMsg = weiboMsg;
     
     [_comment addTarget:self

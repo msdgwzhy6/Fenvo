@@ -46,7 +46,7 @@
     
     _text = [[WeiboLabel alloc]init];
     _text.textColor = [UIColor whiteColor];
-    _text.font = [StyleOfRemindSubviews middleFont];
+    _text.font = WBStatusCellForwardFont;
     _text.numberOfLines = 0;
     _text.lineBreakMode = NSLineBreakByCharWrapping;
     _text.weiboLabelDelegate = self;
@@ -91,7 +91,7 @@
         _retweetView.frame = CGRectMake(spacing, textY, width, weiboMsg.retweeted_status.height.floatValue);
         [_retweetView setHidden:NO];
         textY = CGRectGetMaxY(_retweetView.frame) + spacing;
-    }else if(weiboMsg.pic_urls){
+    }else if(weiboMsg.pic_urls && ![weiboMsg.pic_urls isEqualToString:@""]){
         BaseImagesView *imagesView = [[BaseImagesView alloc]init];
         [self addSubview:imagesView];
         imagesView.frame = CGRectMake(spacing, textY, width, 0);
@@ -99,6 +99,8 @@
         imagesView.frame = CGRectMake(spacing, textY, width, imagesView.imagesHeight);
         textY = CGRectGetMaxY(imagesView.frame) + spacing;
     }
+    
+    
     
     self.frame = CGRectMake(0, 0, self.frame.size.width, textY);
     _height = textY;

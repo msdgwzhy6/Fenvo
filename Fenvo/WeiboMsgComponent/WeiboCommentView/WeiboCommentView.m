@@ -50,7 +50,6 @@
 }
 
 - (void)showCommentView:(long long)weiboID {
-    NSLog(@"%ld",weiboID);
     [self initComponent: weiboID];
    
     //增加监听，当键盘出现或改变时收出消息
@@ -68,6 +67,7 @@
     
     UITapGestureRecognizer *tap_closeView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeCommentView:)];
     [_mainView addGestureRecognizer:tap_closeView];
+    
     [_comment becomeFirstResponder];
 }
 
@@ -112,6 +112,8 @@
     _sentBtn.frame = CGRectMake(IPHONE_SCREEN_WIDTH - 60, CGRectGetMaxY(_remainText.frame) + 10, 50, 30);
     _sentBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
     _sentBtn.backgroundColor = RGBACOLOR(30, 40, 50, 1);
+    _sentBtn.layer.cornerRadius = 3.0;
+    _sentBtn.layer.masksToBounds = YES;
     [_sentBtn setTitle:@"Sent" forState:UIControlStateNormal];
     
     _atBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -122,12 +124,6 @@
     _emoijBtn.frame = CGRectMake(CGRectGetMinX(_atBtn.frame) - 40, CGRectGetMaxY(_remainText.frame) + 10, 40, 30);
     [_emoijBtn setImage:[UIImage imageWithIcon:@"fa-smile-o" backgroundColor:[UIColor clearColor] iconColor:[UIColor orangeColor] andSize:CGSizeMake(20, 20)] forState:UIControlStateNormal];
     
-    
-    
-    
-
-    
-    
     [_containView addSubview:_emoijBtn];
     [_containView addSubview:_atBtn];
     [_containView addSubview:_sentBtn];
@@ -136,7 +132,6 @@
     _containView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - height, IPHONE_SCREEN_WIDTH, height);
     
     [_sentBtn addTarget:self action:@selector(sentComment) forControlEvents:UIControlEventTouchUpInside];
-    
     
 }
 

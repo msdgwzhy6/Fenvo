@@ -25,8 +25,8 @@
 - (void)initSubviews
 {
     _text = [[WeiboLabel alloc]init];
-    _text.textColor = [UIColor whiteColor];
-    _text.font = [StyleOfRemindSubviews middleFont];
+    _text.textColor = [StyleOfRemindSubviews greyColor];
+    _text.font = WBStatusCellForwardFont;
     _text.numberOfLines = 0;
     _text.lineBreakMode = NSLineBreakByCharWrapping;
     _text.weiboLabelDelegate = self;
@@ -38,13 +38,15 @@
     [self addSubview:_imagesView];
 
     self.backgroundColor = [StyleOfRemindSubviews whiteOpaqueColor];
+    self.layer.cornerRadius = 5.0;
+    self.layer.masksToBounds = YES;
 }
 
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg {
     _weiboMsg = weiboMsg;
     
-    CGFloat width = self.frame.size.width - [StyleOfRemindSubviews componentSpacing_small]*2;
-    CGFloat spacing = [StyleOfRemindSubviews componentSpacing_small];
+    CGFloat width = self.frame.size.width - [StyleOfRemindSubviews componentSpacing]*2;
+    CGFloat spacing = [StyleOfRemindSubviews componentSpacing];
     
     NSString *text = [NSString stringWithFormat:@"@%@ :%@",weiboMsg.user.name, weiboMsg.wbDetail];
     CGSize textSize = [text
@@ -57,7 +59,7 @@
     [_text setEmojiText:text];
     CGFloat textY = CGRectGetMaxY(_text.frame) + spacing;
     
-    if (weiboMsg.pic_urls) {
+    if (weiboMsg.pic_urls && ![weiboMsg.pic_urls isEqualToString:@""]) {
         _imagesView.frame = CGRectMake(spacing, textY, width, 0);
         _imagesView.thumbnailUrl = weiboMsg.pic_urls;
         _imagesView.frame = CGRectMake(spacing, textY, width, _imagesView.imagesHeight);

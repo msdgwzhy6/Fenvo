@@ -157,7 +157,7 @@
 /////////////////////////////////////////////////////////
 - (void)setWeiboMsg:(WeiboMsg *)weiboMsg{
     
-    CGFloat width = self.frame.size.width - 20;
+    CGFloat width = IPHONE_SCREEN_WIDTH - 20;
     
     [self removeNeedRemoveView];
     
@@ -246,7 +246,7 @@
                 
                 CGFloat imageHight = 120;
                 CGFloat imageX = 10;
-                CGFloat imageWidth = self.frame.size.width - 30;
+                CGFloat imageWidth = IPHONE_SCREEN_WIDTH - 30;
                 CGFloat imageY = CGRectGetMaxY(_wbForwardText.frame) + WBStatusCellControlSpacing;
                 CGRect imageRect = CGRectMake(imageX, imageY, imageWidth, imageHight);
                 _imageView0.hidden = NO;
@@ -369,7 +369,7 @@
        if (weiboMsg.thumbnail_pic) {
            NSArray *pic_urls = [self getPicUrls:weiboMsg.pic_urls];
            if (pic_urls.count == 1) {
-               CGFloat imageWidth = self.frame.size.width - 30;
+               CGFloat imageWidth = IPHONE_SCREEN_WIDTH - 30;
                CGFloat imageHight = 120;
                CGFloat imageX = 10;
                CGFloat imageY = CGRectGetMaxY(_wbDetail.frame) + WBStatusCellControlSpacing;

@@ -115,6 +115,8 @@
     _sentBtn.frame = CGRectMake(IPHONE_SCREEN_WIDTH - 60, CGRectGetMaxY(_remainText.frame) + 10, 50, 30);
     _sentBtn.backgroundColor = RGBACOLOR(30, 40, 50, 1);
     _sentBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    _sentBtn.layer.cornerRadius = 3.0;
+    _sentBtn.layer.masksToBounds = YES;
     [_sentBtn setTitle:@"Sent" forState:UIControlStateNormal];
     
     _atBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -133,7 +135,6 @@
     _containView.frame = CGRectMake(0, IPHONE_SCREEN_HEIGHT - height, IPHONE_SCREEN_WIDTH, height);
     
     [_sentBtn addTarget:self action:@selector(forwardWeibo) forControlEvents:UIControlEventTouchUpInside];
-    
     
 }
 

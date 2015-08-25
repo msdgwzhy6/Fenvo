@@ -85,9 +85,9 @@
     _isFindInCoredata = true;
     
     //self.tableView = [[ANBlurredTableView alloc]initWithFrame:];
-    self.tableView = [[ANBlurredTableView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.tableView = [[ANBlurredTableView alloc]initWithFrame:CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height) style:UITableViewStylePlain];
     //self.tableView.style = UITableViewStylePlain;
-    self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
+    //self.tableView.frame = CGRectMake(0, 0, IPHONE_SCREEN_WIDTH, self.view.bounds.size.height);
     self.tableView.delegate =self;
     self.tableView.dataSource = self;
     
@@ -219,7 +219,6 @@
                                         [self.tableView.header endRefreshing];
                                         NSLog(@"public weibo get failure");
                                     }];
-    
 }
 
 - (void)clearAndRefreshData {
@@ -329,7 +328,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //去除重用机制
     NSString *cellIdentifier = @"followingCell";
-    //[NSString stringWithFormat:@"cell%ld%ld",indexPath.row,refreshtime];
 
     FollowingWBViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 
@@ -339,7 +337,6 @@
                 reuseIdentifier:cellIdentifier];
     }
     
-    // Configure the cell...
     WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
     cell.weiboMsg = weiboMsg;
     
@@ -352,13 +349,14 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(nonnull UITableView *)tableView willDisplayCell:(nonnull UITableViewCell *)cell forRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     if (indexPath.row == _weiboMsgArray.count - 10) {
         [self.tableView.footer beginRefreshing];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%ld",indexPath.row);
     WeiboMsg *weiboMsg = _weiboMsgArray[indexPath.row];
     WeiboDetailViewController *detailVC = [[WeiboDetailViewController alloc]initWithStyle:UITableViewStyleGrouped];
     detailVC.weiboMsg = weiboMsg;
