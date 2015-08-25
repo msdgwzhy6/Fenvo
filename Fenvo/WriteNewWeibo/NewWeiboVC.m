@@ -9,12 +9,13 @@
 #import "NewWeiboVC.h"
 #import "KVNProgress.h"
 #import "WBImagePickerVC.h"
+#import "StyleOfRemindSubviews.h"
 #import "MutiImageView.h"
 
 @interface NewWeiboVC ()<UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,WBImagePickerControllerDelegate>
 {
     UIActionSheet *_selection;
-    
+    UIScrollView *_scrollView;
     //image arr
     NSMutableArray *arr;
     
@@ -28,11 +29,13 @@
 
 @implementation NewWeiboVC
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.edgesForExtendedLayout = UIRectEdgeBottom;
     
     self.title = @"New Weibo";
     
@@ -42,16 +45,7 @@
                                               target:self
                                               action:@selector(send)];
     
-    //xib component setting
-    _wbDetail.delegate = self;
-
-    _addImg = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addImg.frame = CGRectMake(8, CGRectGetMaxY(_wbDetail.frame) + 8, 80, 80);
-    [_addImg setImage:[UIImage imageNamed:@"btn_add_photo"] forState:UIControlStateNormal];
-    [_addImg setImage:[UIImage imageNamed:@"btn_add_photo_hl"] forState:UIControlStateHighlighted];
-    [_addImg addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_addImg];
-    
+    [self initSubviews];
     //add delete imgae observer
     NSNotificationCenter *defult = [NSNotificationCenter defaultCenter];
     [defult removeObserver:self name:@"deleteImage" object:nil];
@@ -61,6 +55,39 @@
     _imageArray = [[NSMutableArray alloc]init];
     arr = [[NSMutableArray alloc]init];
     
+}
+
+- (void)initSubviews
+{
+    _scrollView = [[UIScrollView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    _scrollView.backgroundColor = [UIColor whiteColor];
+    _scrollView.contentSize = CGSizeMake(IPHONE_SCREEN_WIDTH, IPHONE_SCREEN_HEIGHT + 100);
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    [self.view addSubview:_scrollView];
+    
+    CGFloat spacing = [StyleOfRemindSubviews componentSpacing];
+    
+    _wbDetail = [[UITextView alloc]initWithFrame:CGRectMake(spacing, spacing, IPHONE_SCREEN_WIDTH - 2 *spacing, 180)];
+    _wbDetail.backgroundColor = [StyleOfRemindSubviews lightGreyColor];
+    _wbDetail.font = [StyleOfRemindSubviews largeFont];
+    _wbDetail.textColor = [StyleOfRemindSubviews deepBlackColor];
+    _wbDetail.layer.cornerRadius = 10.0;
+    _wbDetail.layer.masksToBounds = YES;
+    _wbDetail.delegate = self;
+    [_scrollView addSubview:_wbDetail];
+    
+    _addImg = [UIButton buttonWithType:UIButtonTypeCustom];
+    _addImg.frame = CGRectMake(8, CGRectGetMaxY(_wbDetail.frame) + 8, 80, 80);
+    [_addImg setImage:[UIImage imageNamed:@"btn_add_photo"] forState:UIControlStateNormal];
+    [_addImg setImage:[UIImage imageNamed:@"btn_add_photo_hl"] forState:UIControlStateHighlighted];
+    [_addImg addTarget:self action:@selector(openMenu) forControlEvents:UIControlEventTouchUpInside];
+    [_scrollView addSubview:_addImg];
+
+    [_wbDetail becomeFirstResponder];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(closeKeyboard:)];
+    [_scrollView addGestureRecognizer:tap];
 }
 
 - (void)openMenu {
@@ -315,14 +342,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)closeKeyboard: (UITapGestureRecognizer *)tap
+{
+    [_wbDetail resignFirstResponder];
 }
-*/
-
 @end

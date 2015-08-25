@@ -371,7 +371,7 @@
 }
 
 - (void)writeWeibo {
-    NewWeiboVC *newWeiboVC = [[NewWeiboVC alloc]initWithNibName:@"NewWeiboVC" bundle:[NSBundle mainBundle]];
+    NewWeiboVC *newWeiboVC = [[NewWeiboVC alloc]init];
     newWeiboVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:newWeiboVC animated:YES];
 }

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NewWeiboVC : UIViewController
-@property (strong, nonatomic) IBOutlet UITextView *wbDetail;
+@property (strong, nonatomic) UITextView *wbDetail;
 @property (strong, nonatomic) UIButton *addImg;
 
 @property (strong, nonatomic)NSMutableArray *imgPaths;
